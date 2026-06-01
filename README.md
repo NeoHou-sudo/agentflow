@@ -1,138 +1,142 @@
 # AgentFlow
 
-> 15+ AI Agent 工作流，拿来即用，不用每次从零憋提示词。
+> 18+ Production AI Agent Workflows. Copy, paste, automate — in 2 minutes.
 
 ---
 
-## 一句话定位
+## What It Does
 
-做跨境电商的里昂、投资的小陈、写短剧糖糖——这些真实用户每天都在用这些工作流。
-不是理论，不是「10个超好用的ChatGPT提示词」——是真跑过、真出过结果的。
-
----
-
-## 实际效果
-
-### 电商选品（3分钟）
-
-你的输入：
-> 芯片：J4125 / 屏幕：15.6寸 / 成本：¥790
-> 目标：Amazon.ca 加拿大站
-
-AI Agent 跑完：
-> 这配置建议卖 $220-250，毛利 18-22%。
-> 中间价位玩家有15家，红海。但 $280+ 只有3家，还有空位。
-> 建议先小批量测30台，别一口气压货。
-
-### 持仓诊断（2分钟）
-
-你的输入：
-> 科创板C：¥184（占总资产0.6%）/ 黄金：¥1,335
-> 总资产：¥128,000 / 目标1年：¥90,000
-
-AI Agent 跑完：
-> 科创板建仓太慢，离目标差 ¥16,000。
-> 立即做两件事：科创板日投从25元提到60元，标普500下周建仓。
+See what a real workflow looks like before you copy it.
 
 ---
 
-## 工作流长什么样
+## Real Example: E-Commerce Product Research (3 min)
 
-每个工作流都是一套完整的提示词 + 输出格式说明。
+**Your input:**
+> Category: Laptops / CPU: Intel N100 / Screen: 15.6" IPS  
+> Cost: ¥800 / Target: Amazon.com US
 
-**举个子：选品调研工作流的核心提示词**
+**Agent output:**
+> ✅ Entry point found in the $280–350 range (only 3 major sellers).  
+> Recommended sell price: $299–329. Margin: 22–26%.  
+> Risk: CE certification required for EU, FCC for US.  
+> Suggestion: Start with 20-unit test batch.
+
+---
+
+## Real Example: Investment Portfolio Diagnosis (2 min)
+
+**Your input:**
+> Portfolio: E-Commerce Store (¥50,000) + Growth Fund (¥30,000)  
+> Total Assets: ¥120,000 / Annual Goal: ¥100,000
+
+**Agent output:**
+> ⚠️ E-commerce holdings are 41% of portfolio — too concentrated.  
+> Action: Rebalance to 60/40 (equity/bonds) within 30 days.  
+> Current drawdown risk: HIGH.  
+> Add: Low-cost S&P 500 ETF to diversify geographically.
+
+---
+
+## How It Works
+
+Every workflow is a complete prompt + output format guide.
+
+**Product Research Workflow core prompt (example):**
 
 ```
-你是一位跨境电商选品专家。请帮我分析这款笔记本是否值得在 Amazon.ca 销售。
+You are an e-commerce product research expert.
 
-## 产品信息
-- 芯片：[J4125 / N5095 / 其他]
-- 屏幕：[14寸 / 15.6寸] [TN / IPS]
-- 配置：[8G+0 / 其他]
+## Product Info
+- Category: [laptops / electronics / home goods]
+- CPU/Chip: [model]
+- Screen: [size + type]
+- Your cost: ¥[amount]
 
-## 请分析
-1. 市场机会：搜索结果数、月销量估算、白牌占比
-2. 竞争分析：TOP10竞品价格区间、找价格空缺
-3. 定价建议：成本¥X → 建议售价、毛利估算
-4. 风险提示：认证、品牌、竞争等坑点
+## Analyze
+1. Market size and competition density
+2. Price gap opportunity in top 10 sellers
+3. Suggested sell price → margin estimate
+4. Risk flags (certification, competition, seasonality)
 ```
 
-**对应的输出格式**
+**Output format:**
 
 ```
-## 结论：🟡 可尝试
+## Verdict: 🟡 Worth Testing
 
-## 市场机会
-| 搜索结果 | 预估月销 | 白牌占比 | 市场评级 |
-|----------|----------|----------|----------|
-| ~200个   | 300-500台 | 15%    | 🟡 中等  |
+## Market
+| Metric          | Value    |
+|-----------------|----------|
+| Top sellers     | 12       |
+| Avg rating      | 4.1★     |
+| Price range     | $180-350 |
 
-## 竞争分析
-| 价格区间    | 玩家数 | 机会 |
-|-------------|--------|------|
-| $180-$220  | 8家    | 🟡   |
-| $280-$350  | 3家    | 🟢   |
+## Opportunity
+| Price range    | Players | Gap? |
+|----------------|---------|------|
+| $180–$220     | 6       | 🟡   |
+| $280–$350     | 3       | 🟢   |
 
-## 定价建议
-- 建议售价：$CAD 220-250
-- 预估毛利：18-22%
-- 建议先测30台
+## Risks
+- FCC certification required
+- Seasonal demand spike Q4
 ```
 
 ---
 
-## 包含的工作流
+## Included Workflows
 
-**电商运营**（3个）
-- 选品调研 / 竞品分析 / Listing 优化
+**E-Commerce** (3)
+- Product Research / Competitor Analysis / Listing Optimization
 
-**投资分析**（3个）
-- 持仓诊断 / 市场分析 / 资产配置
+**Investment** (3)
+- Portfolio Diagnosis / Market Analysis / Asset Allocation
 
-**内容创作**（3个）
-- 分镜脚本 / 人设设计 / 趋势分析
+**Content Creation** (3)
+- Short Video Script / Topic Ideation / Batch Content
 
-**医学研究**（2个）
-- 临床决策 / 鉴别诊断
+**Medical** (2)
+- Clinical Decision Support / Differential Diagnosis
 
-**安全审计**（2个）
-- 威胁建模 / 漏洞扫描
-
----
-
-## 怎么用
-
-1. 打开 `workflows/` 找到你的场景
-2. 复制提示词，粘贴到任意 AI Agent
-3. 改改参数，执行
-
-每个工作流都有完整提示词（中文 + 英文）+ 输出格式 + 真实案例。
+**Security** (2)
+- Threat Modeling / Vulnerability Scanning
 
 ---
 
-## 常见问题
+## Quick Start
 
-**Q: 需要技术背景吗？**
-不需要。复制粘贴就行，唯一要做的就是改参数。
+1. Open `workflows/` — pick your use case
+2. Copy the prompt into any AI Agent (ChatGPT, Claude, DeepSeek…)
+3. Fill in your own values, run
 
-**Q: 哪些 AI Agent 能用？**
-ChatGPT / Claude / QClaw / 通义 / Kimi / 任意支持长文本的模型。
-
-**Q: 这些工作流来源是什么？**
-来自真实用户在真实场景里跑过的对话记录，不是理论生成。
-
-**Q: 可以自己修改吗？**
-可以，随便改。MIT 协议。
+Bilingual: every workflow has Chinese + English versions.
 
 ---
 
-## 想贡献？
+## FAQ
 
-欢迎。规则只有两条：
-1. 必须是你自己真跑过的，不是网上抄的
-2. 要有实际案例
+**Q: Do I need technical skills?**  
+No. Copy, paste, change the parameters.
 
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+**Q: Which AI models work?**  
+Any model that handles long text: GPT-4, Claude, DeepSeek, Qwen, Kimi…
+
+**Q: Where do these workflows come from?**  
+Real users running real tasks — not generated from scratch.
+
+**Q: Can I modify them?**  
+MIT license. Change whatever you want.
+
+---
+
+## Contribute
+
+Rules:
+1. Must be something you actually ran, not scraped from the internet
+2. Must include a real example with input → output
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
