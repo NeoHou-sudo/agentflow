@@ -25,41 +25,27 @@ a{color:inherit;text-decoration:none}
 .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:#16161e;color:#aaa;padding:12px 28px;border-radius:10px;font-size:15px;text-decoration:none;border:1px solid #2a2a3a;transition:all .3s}
 .btn-secondary:hover{border-color:#ff6b35;color:#ff9f6a}
 
-/* ─── Live Demo Strip ─── */
-.demo-strip{background:#0f0f18;border-top:1px solid #1a1a2a;border-bottom:1px solid #1a1a2a;padding:50px 20px}
-.demo-strip-header{text-align:center;margin-bottom:36px}
-.demo-strip-header h2{font-size:26px;color:#fff;margin-bottom:6px}
-.demo-strip-header p{color:#666;font-size:14px}
-.demo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px;max-width:1200px;margin:0 auto}
-
-/* ─── Tool Card ─── */
-.tool-card{background:#13131c;border:1px solid #22223a;border-radius:16px;overflow:hidden;transition:all .3s}
-.tool-card:hover{border-color:#ff6b35;box-shadow:0 8px 40px rgba(255,107,53,0.12)}
-.tool-header{padding:20px 24px 0;display:flex;align-items:center;gap:12px}
-.tool-icon{font-size:32px}
-.tool-meta{flex:1}
-.tool-name{font-size:16px;font-weight:700;color:#fff}
-.tool-tag{font-size:11px;color:#ff6b35;background:rgba(255,107,53,0.12);padding:2px 8px;border-radius:6px;margin-top:4px;display:inline-block}
-.tool-body{padding:16px 24px 24px}
-.tool-input{width:100%;background:#0b0b12;border:1px solid #2a2a3a;border-radius:10px;padding:12px 14px;color:#e2e2e8;font-size:14px;font-family:inherit;resize:none;outline:none;transition:border .2s;min-height:72px}
-.tool-input:focus{border-color:#ff6b35}
-.tool-input::placeholder{color:#555}
-.tool-run-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-.tool-hint{font-size:12px;color:#555}
-.tool-run-btn{background:linear-gradient(135deg,#ff6b35,#e8324a);color:#fff;border:none;padding:9px 22px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
-.tool-run-btn:hover{opacity:.88;transform:scale(1.03)}
-.tool-output{margin-top:14px;background:#0b0b12;border-radius:10px;padding:14px;font-size:13px;line-height:1.7;color:#ccc;min-height:80px;display:none}
-.tool-output.show{display:block;animation:fadeIn .3s}
-.tool-output-label{font-size:11px;color:#ff6b35;margin-bottom:8px;font-weight:600}
-.tool-output-item{padding:6px 0;border-bottom:1px solid #1e1e2a}
-.tool-output-item:last-child{border-bottom:none}
-.tool-output-item .label{color:#888;font-size:11px;margin-bottom:2px}
-.tool-output-item .value{color:#fff}
-.tool-output-item .highlight{color:#ff9f6a;font-weight:600}
-.result-text{color:#ccc;font-size:13px;line-height:1.8}
-.result-text .tag-red{color:#ff6b35;font-weight:600}
-.result-text .tag-green{color:#4ade80;font-weight:600}
-.result-text .tag-yellow{color:#fbbf24}
+/* ─── How It Works ─── */
+.how-section{background:#0f0f18;border-top:1px solid #1a1a2a;border-bottom:1px solid #1a1a2a;padding:60px 20px}
+.how-inner{max-width:900px;margin:0 auto}
+.how-header{text-align:center;margin-bottom:40px}
+.how-header h2{font-size:26px;color:#fff;margin-bottom:6px}
+.how-header p{color:#666;font-size:14px}
+.step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:30px}
+.step{background:#13131c;border:1px solid #1e1e2a;border-radius:12px;padding:24px;text-align:center;transition:all .3s}
+.step:hover{border-color:#ff6b35}
+.step-num{font-size:36px;margin-bottom:12px}
+.step-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.step-desc{font-size:13px;color:#666;line-height:1.6}
+.copy-box{background:#0d0d16;border:1px solid #2a2a3a;border-radius:12px;padding:24px;margin-top:30px}
+.copy-box-title{font-size:13px;color:#ff6b35;font-weight:700;margin-bottom:10px;letter-spacing:.5px}
+.copy-box code{display:block;background:#0b0b12;border-radius:8px;padding:14px;font-size:13px;color:#ccc;line-height:1.8;font-family:"Courier New",Courier,monospace;white-space:pre-wrap}
+.copy-row{display:flex;align-items:center;gap:12px;margin-top:12px}
+.copy-row input{flex:1;background:#0b0b12;border:1px solid #2a2a3a;border-radius:6px;padding:10px 14px;color:#888;font-size:13px;font-family:"Courier New",monospace}
+.copy-row button{background:#ff6b35;border:none;color:#fff;padding:10px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit}
+.copy-row button:hover{opacity:.88}
+.copy-note{font-size:12px;color:#555;margin-top:10px}
+.copy-note a{color:#ff6b35}
 
 /* ─── All Workflows ─── */
 .all-workflows{max-width:1100px;margin:0 auto;padding:60px 20px}
@@ -90,23 +76,31 @@ a{color:inherit;text-decoration:none}
 .wf-expand{display:none;margin-top:16px;padding-top:16px;border-top:1px solid #2a2a3a;animation:slideDown .3s}
 .wf-expand.show{display:block}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.wf-expand-label{font-size:11px;color:#ff6b35;font-weight:700;margin-bottom:12px;letter-spacing:0.5px}
-.wf-expand code{display:block;background:#0b0b12;border:1px solid #2a2a3a;border-radius:8px;padding:16px;font-size:12px;color:#ccc;line-height:1.8;font-family:"Courier New",Courier,monospace;white-space:pre-wrap;margin-bottom:12px;max-height:320px;overflow-y:auto}
-.wf-expand code::-webkit-scrollbar{width:4px}
-.wf-expand code::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
-.wf-expand code .c-key{color:#ff9f6a}
-.wf-expand code .c-val{color:#4ade80}
-.wf-expand code .c-cmt{color:#555;font-style:italic}
-.wf-copy-btn{background:#1e1e2e;border:1px solid #ff6b35;color:#ff6b35;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer;transition:all .2s;font-family:inherit}
-.wf-copy-btn:hover{background:#ff6b35;color:#fff}
-.copy-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#ff6b35;color:#fff;padding:10px 24px;border-radius:8px;font-size:14px;z-index:999;display:none;animation:fadeIn .3s}
-.copy-toast.show{display:block}
+
+/* Prompt box */
+.wf-expand-label{font-size:11px;color:#ff6b35;font-weight:700;margin-bottom:12px;letter-spacing:.5px}
+.wf-prompt-box{background:#0b0b12;border:1px solid #2a2a3a;border-radius:8px;padding:16px;font-size:12px;color:#ccc;line-height:1.8;font-family:"Courier New",Courier,monospace;white-space:pre-wrap;margin-bottom:12px;max-height:320px;overflow-y:auto;position:relative}
+.wf-prompt-box::-webkit-scrollbar{width:4px}
+.wf-prompt-box::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+.prompt-copy-btn{background:#1e1e2e;border:1px solid #ff6b35;color:#ff6b35;padding:7px 16px;border-radius:6px;font-size:12px;cursor:pointer;transition:all .2s;font-family:inherit;margin-bottom:16px}
+.prompt-copy-btn:hover{background:#ff6b35;color:#fff}
+
+/* Real example section */
+.example-label{font-size:11px;color:#60a5fa;font-weight:700;margin:16px 0 10px;letter-spacing:.5px}
+.example-box{background:#0a0a14;border:1px solid #1e2a3a;border-radius:8px;overflow:hidden}
+.example-tabs{display:flex;border-bottom:1px solid #1e2a3a}
+.example-tab{flex:1;padding:10px;text-align:center;font-size:12px;color:#555;cursor:pointer;transition:all .2s;border-right:1px solid #1e2a3a}
+.example-tab:last-child{border-right:none}
+.example-tab.active{background:#0f1828;color:#60a5fa;font-weight:700}
+.example-content{padding:16px;font-size:13px;line-height:1.8;color:#bbb;white-space:pre-wrap;max-height:240px;overflow-y:auto}
+.example-content::-webkit-scrollbar{width:3px}
+.example-content::-webkit-scrollbar-thumb{background:#333}
 
 /* ─── Deploy Section ─── */
 .deploy-section{background:#0f0f18;border-top:1px solid #1a1a2a;padding:60px 20px}
 .deploy-inner{max-width:900px;margin:0 auto;text-align:center}
 .deploy-inner h2{font-size:28px;color:#fff;margin-bottom:10px}
-.deploy-inner p{color:#666;font-size:15px;margin-bottom:30px}
+.deploy-inner>p{color:#666;font-size:15px;margin-bottom:30px}
 .platform-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:720px;margin:0 auto}
 .plat-item{background:#13131c;border:1px solid #22223a;border-radius:12px;padding:20px;text-align:left}
 .plat-item-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
@@ -115,20 +109,21 @@ a{color:inherit;text-decoration:none}
 .plat-note{font-size:11px;color:#444;margin-top:8px}
 .footer{text-align:center;color:#333;font-size:12px;padding:30px 20px;border-top:1px solid #1a1a2a}
 .footer a{color:#ff6b35;text-decoration:none}
-@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){.hero h1{font-size:28px}.demo-grid,.wf-grid{grid-template-columns:1fr}}
+.copy-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#ff6b35;color:#fff;padding:10px 24px;border-radius:8px;font-size:14px;z-index:999;display:none}
+.copy-toast.show{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.hero h1{font-size:28px}.step-grid{grid-template-columns:1fr}.demo-grid,.wf-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- ══ COPY TOAST ══ -->
-<div class="copy-toast" id="copyToast">✅ 已复制到剪贴板！直接发给 AI 试试</div>
+<div class="copy-toast" id="copyToast">✅ 已复制！粘贴到 ChatGPT / Claude / DeepSeek 试试</div>
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <div class="hero">
   <div class="hero-emoji">🦞</div>
   <h1><span>龙虾工具包</span></h1>
-  <p class="hero-sub">18 个真实 AI 工作流 · 点击卡片直接看提示词 · 复制就能用</p>
+  <p class="hero-sub">18 个真实 AI 工作流 · 点击卡片看完整提示词 · 复制即用</p>
   <div class="hero-badges">
     <span class="badge">⭐ <span class="num" id="star-count">3</span> Stars</span>
     <span class="badge">🛠️ <span class="num">18</span> 工作流</span>
@@ -141,106 +136,41 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- ═══════════════════ LIVE DEMO ═══════════════════ -->
-<div class="demo-strip" id="demo">
-  <div class="demo-strip-header">
-    <h2>⚡ 在线工具箱 · 不用注册不用部署，直接用</h2>
-    <p>选一个试试，3 秒出结果，觉得有用再 star</p>
-  </div>
-  <div class="demo-grid">
-
-    <!-- 小红书爆款标题 -->
-    <div class="tool-card">
-      <div class="tool-header">
-        <div class="tool-icon">📕</div>
-        <div class="tool-meta">
-          <div class="tool-name">小红书爆款标题生成器</div>
-          <span class="tool-tag">🔥 阅读量 10万+</span>
-        </div>
+<!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+<div class="how-section">
+  <div class="how-inner">
+    <div class="how-header">
+      <h2>怎么用？3步，2分钟</h2>
+      <p>不需要部署，不需要注册，只需要一个 ChatGPT 账号</p>
+    </div>
+    <div class="step-grid">
+      <div class="step">
+        <div class="step-num">①</div>
+        <div class="step-title">点开工作流</div>
+        <div class="step-desc">在下方找到你的场景，点击卡片展开完整提示词</div>
       </div>
-      <div class="tool-body">
-        <textarea class="tool-input" id="xhs-input" placeholder="输入你的内容主题，如：618囤货、职场妈妈通勤、猫咪好物" rows="3"></textarea>
-        <div class="tool-run-row">
-          <span class="tool-hint">输入主题 → 生成 5 个爆款标题</span>
-          <button class="tool-run-btn" onclick="runXHS()">✨ 生成标题</button>
-        </div>
-        <div class="tool-output" id="xhs-output">
-          <div class="tool-output-label">📕 爆款标题推荐</div>
-          <div class="tool-output-item"><div class="label">后悔型</div><div class="value highlight" id="xhs-a"></div></div>
-          <div class="tool-output-item"><div class="label">清单型</div><div class="value highlight" id="xhs-b"></div></div>
-          <div class="tool-output-item"><div class="label">社交型</div><div class="value highlight" id="xhs-c"></div></div>
-          <div class="tool-output-item"><div class="label">价格型</div><div class="value highlight" id="xhs-d"></div></div>
-          <div class="tool-output-item"><div class="label">真实型</div><div class="value highlight" id="xhs-e"></div></div>
-        </div>
+      <div class="step">
+        <div class="step-num">②</div>
+        <div class="step-title">复制提示词</div>
+        <div class="step-desc">点击按钮，一键复制到剪贴板，无需改任何代码</div>
+      </div>
+      <div class="step">
+        <div class="step-num">③</div>
+        <div class="step-title">粘贴给 AI</div>
+        <div class="step-desc">发给 ChatGPT / Claude / DeepSeek，填入你的信息，立刻出结果</div>
       </div>
     </div>
-
-    <!-- 周报生成 -->
-    <div class="tool-card">
-      <div class="tool-header">
-        <div class="tool-icon">📊</div>
-        <div class="tool-meta">
-          <div class="tool-name">AI 周报生成器</div>
-          <span class="tool-tag">⏱️ 30 秒搞定</span>
-        </div>
+    <div class="copy-box">
+      <div class="copy-box-title">🔑 快速验证：用这条提示词测试 AI 理解能力</div>
+      <div class="copy-row">
+        <input value="复制提示词 → 粘贴到 AI → 替换方括号内容 → 执行" readonly>
+        <button onclick="navigator.clipboard.writeText('你是小红书内容策划专家。请为以下主题生成5个爆款标题。\n\n## 主题\n[替换成你想写的内容]\n\n## 要求\n每个标题包含：情绪词 + 具体数字或细节 + 反差或悬念\n\n## 输出格式\n1. [标题]\n2. [标题]\n3. [标题]\n4. [标题]\n5. [标题]').then(()=>showToast('已复制！发给你常用的 AI 试试'))">复制这条</button>
       </div>
-      <div class="tool-body">
-        <textarea class="tool-input" id="weekly-input" placeholder="输入本周干了什么，如：拉新 200 用户、上线支付功能" rows="3"></textarea>
-        <div class="tool-run-row">
-          <span class="tool-hint">输入要点 → 生成完整周报</span>
-          <button class="tool-run-btn" onclick="runWeekly()">📊 生成周报</button>
-        </div>
-        <div class="tool-output" id="weekly-output">
-          <div class="tool-output-label">📋 本周工作总结</div>
-          <div id="weekly-result" class="result-text"></div>
-        </div>
+      <div class="copy-note">
+        支持 ChatGPT / Claude / DeepSeek / 通义 / Kimi 等所有大模型
+        · MIT 开源协议 · 随便改
       </div>
     </div>
-
-    <!-- 简历优化 -->
-    <div class="tool-card">
-      <div class="tool-header">
-        <div class="tool-icon">💼</div>
-        <div class="tool-meta">
-          <div class="tool-name">简历智能优化</div>
-          <span class="tool-tag">🎯 命中率 +60%</span>
-        </div>
-      </div>
-      <div class="tool-body">
-        <textarea class="tool-input" id="resume-input" placeholder="粘贴你的简历内容或目标岗位 JD" rows="3"></textarea>
-        <div class="tool-run-row">
-          <span class="tool-hint">粘贴内容 → 给出优化建议</span>
-          <button class="tool-run-btn" onclick="runResume()">💼 优化简历</button>
-        </div>
-        <div class="tool-output" id="resume-output">
-          <div class="tool-output-label">💼 优化建议</div>
-          <div id="resume-result" class="result-text"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI 算命 -->
-    <div class="tool-card">
-      <div class="tool-header">
-        <div class="tool-icon">🔮</div>
-        <div class="tool-meta">
-          <div class="tool-name">AI 八字命盘解析</div>
-          <span class="tool-tag">🔥 小红书爆款</span>
-        </div>
-      </div>
-      <div class="tool-body">
-        <textarea class="tool-input" id="bazi-input" placeholder="输入：出生年月日時（例：1995年3月15日午时），或简单描述你想问的事" rows="3"></textarea>
-        <div class="tool-run-row">
-          <span class="tool-hint">输入八字 → AI 解析命盘</span>
-          <button class="tool-run-btn" onclick="runBazi()">🔮 开始算命</button>
-        </div>
-        <div class="tool-output" id="bazi-output">
-          <div class="tool-output-label">🔮 命盘解析</div>
-          <div id="bazi-result" class="result-text"></div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -249,32 +179,29 @@ a{color:inherit;text-decoration:none}
   <div class="section-header">
     <div>
       <h2>🃏 工作流模板库</h2>
-      <p>点击任意卡片 → 展开完整提示词 → 复制粘贴就能用</p>
+      <p>点击任意卡片 → 展开完整提示词 + 真实输入输出案例</p>
     </div>
     <div class="wf-tabs">
-      <span class="wf-tab active" data-cat="all">全部</span>
-      <span class="wf-tab" data-cat="ecommerce">🛒 电商</span>
-      <span class="wf-tab" data-cat="content">🎬 内容</span>
-      <span class="wf-tab" data-cat="invest">💰 投资</span>
-      <span class="wf-tab" data-cat="fortune">🔮 玄学</span>
-      <span class="wf-tab" data-cat="medical">🏥 医学</span>
-      <span class="wf-tab" data-cat="security">🔐 安全</span>
+      <span class="wf-tab active" data-cat="all" onclick="filterWF('all',this)">全部</span>
+      <span class="wf-tab" data-cat="ecommerce" onclick="filterWF('ecommerce',this)">🛒 电商</span>
+      <span class="wf-tab" data-cat="content" onclick="filterWF('content',this)">🎬 内容</span>
+      <span class="wf-tab" data-cat="invest" onclick="filterWF('invest',this)">💰 投资</span>
+      <span class="wf-tab" data-cat="fortune" onclick="filterWF('fortune',this)">🔮 玄学</span>
+      <span class="wf-tab" data-cat="medical" onclick="filterWF('medical',this)">🏥 医学</span>
+      <span class="wf-tab" data-cat="security" onclick="filterWF('security',this)">🔐 安全</span>
     </div>
   </div>
   <div class="wf-grid">
 
-    <!-- 选品调研 ★ EXPANDABLE ★ -->
+    <!-- 选品调研 ★ -->
     <div class="wf-card" data-cat="ecommerce" onclick="toggleWF(this)">
-      <div class="wf-card-top">
-        <span class="wf-card-name">🛒 选品调研</span>
-        <span class="wf-badge hot">🔥 热门</span>
-      </div>
-      <div class="wf-card-desc">输入芯片/屏幕/成本，AI 分析 Amazon 市场竞争格局、定价区间、毛利估算，输出是否值得上架。</div>
-      <div class="wf-card-meta"><span>⏱ 3 分钟</span><span>📈 电商</span><span>🔥 热门</span></div>
+      <div class="wf-card-top"><span class="wf-card-name">🛒 选品调研</span><span class="wf-badge hot">🔥 热门</span></div>
+      <div class="wf-card-desc">输入芯片/屏幕/成本，AI 分析 Amazon 市场机会、竞争格局、定价建议、毛利估算。</div>
+      <div class="wf-card-meta"><span>⏱ 3 分钟</span><span>📈 电商</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
-        <div class="wf-expand-label">📋 完整提示词 · 复制到 ChatGPT / Claude / DeepSeek 直接用</div>
-        <code>你是一位跨境电商选品专家。请帮我分析这款产品是否值得在 Amazon 销售。
+        <div class="wf-expand-label">📋 完整提示词 · 复制到 ChatGPT 直接用</div>
+        <div class="wf-prompt-box">你是一位跨境电商选品专家。请帮我分析这款产品是否值得在 Amazon 销售。
 
 ## 产品信息
 - 品类：[如：笔记本电脑 / 显示器 / 键鼠外设]
@@ -284,22 +211,22 @@ a{color:inherit;text-decoration:none}
 - 目标站点：[如：Amazon.com 美国 / Amazon.ca 加拿大]
 
 ## 请分析（每一项都要给出具体数据）
-1. <span class="c-key">市场机会</span>
+1. 市场机会
    - 搜索结果数量（估算竞争激烈程度）
    - 月销量估算（根据竞品排名推算）
    - 主要玩家数量和品牌集中度
 
-2. <span class="c-key">竞争格局</span>
+2. 竞争格局
    - TOP10 竞品价格区间分布
    - 找出价格空缺（竞争较少的价位）
    - 是否有白牌/无品牌产品空间
 
-3. <span class="c-key">定价建议</span>
+3. 定价建议
    - 建议售价区间（USD/CAD）
    - 预估毛利率（%）
    - FBA 费用估算
 
-4. <span class="c-key">风险提示</span>
+4. 风险提示
    - 认证要求（FCC / CE / UL 等）
    - 季节性风险
    - 竞争风险
@@ -310,38 +237,98 @@ a{color:inherit;text-decoration:none}
 ## 竞争分析：[价格区间表格]
 ## 定价建议：[建议售价 + 毛利]
 ## 风险：[列出 2-3 个最大风险]
-## 建议：[具体可执行的下一步动作]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+## 建议：[具体可执行的下一步动作]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex1-input','ex1-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex1-input','ex1-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex1-input">品类：笔记本电脑
+芯片：Intel N100
+屏幕：15.6寸 IPS
+成本价：¥800
+目标站点：Amazon.com 美国站</div>
+          <div class="example-content" id="ex1-output" style="display:none">## 结论：🟢 可尝试
+
+## 市场机会
+- 搜索结果约 3,200 个，竞争中等
+- 月销量估算：TOP10 产品月销 300-800 台
+- 品牌集中度低，白牌占比约 35%
+
+## 竞争分析
+| 价格区间 | 玩家数 | 机会 |
+|----------|--------|------|
+| $150-$200 | 8家 | 🟡 竞争激烈 |
+| $250-$300 | 3家 | 🟢 存在空位 |
+| $350+ | 5家 | 🟡 高端 |
+
+## 定价建议
+- 建议售价：$269-$299
+- 预估毛利：22-26%
+- FBA 费用：约 $38
+
+## 风险
+- FCC 认证必须（约 $800）
+- 竞争集中在 $180-$220 区间
+
+## 建议
+先测 20 台，定价 $279 测试 $250-$300 区间的接受度</div>
+        </div>
       </div>
     </div>
 
     <!-- 竞品分析 -->
     <div class="wf-card" data-cat="ecommerce" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">🛒 竞品分析</span></div>
-      <div class="wf-card-desc">粘贴竞品链接，AI 提取价格/评分/月销数据，生成竞争策略报告与价格空缺建议。</div>
+      <div class="wf-card-desc">粘贴竞品链接，AI 提取价格/评分/月销数据，生成竞争策略报告。</div>
       <div class="wf-card-meta"><span>⏱ 2 分钟</span><span>📈 电商</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是一位 Amazon 竞品分析专家。请帮我分析以下竞品：
+        <div class="wf-prompt-box">你是一位 Amazon 竞品分析专家。请帮我分析以下竞品：
 
 ## 竞品链接或名称
 [粘贴竞品链接或产品名称]
 
 ## 请提取并分析
-1. <span class="c-key">价格分布</span>（按价格区间统计主要玩家）
-2. <span class="c-key">评分与评论</span>（平均评分、评论数量、评论质量）
-3. <span class="c-key">月销量估算</span>（根据 BS 排名推算）
-4. <span class="c-key">产品差异化</span>（功能/款式/价格差异点）
-5. <span class="c-key">机会识别</span>（哪些细分需求还没被满足？）
+1. 价格分布（按价格区间统计主要玩家）
+2. 评分与评论（平均评分、评论数量、评论质量）
+3. 月销量估算（根据 BS 排名推算）
+4. 产品差异化（功能/款式/价格差异点）
+5. 机会识别（哪些细分需求还没被满足？）
 
 ## 输出格式
 ## 价格带分析：[表格]
 ## 评分分布：[分析]
 ## 销量估算：[数据]
 ## 差异化机会：[2-3 个具体机会点]
-## 建议：[具体策略]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+## 建议：[具体策略]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex2-input','ex2-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex2-input','ex2-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex2-input">竞品：Amazon Best Seller 笔记本电脑
+型号：Lenovo IdeaPad 1（14寸 Celeron，约 $229）
+评分：4.1星 / 1,200条评论</div>
+          <div class="example-content" id="ex2-output" style="display:none">## 价格带分析
+| 价格区间 | 数量 | 主要玩家 |
+|----------|------|---------|
+| $180-$230 | 12家 | 联想/宏碁/HP |
+| $230-$280 | 5家 | 华硕/Dell |
+| $280+ | 3家 | 苹果/戴尔高端 |
+
+## 机会识别
+1. $250-$280 区间仅有 5 家，存在明显空位
+2. 4.0-4.3 星评论集中吐槽"屏幕差"——可做 IPS 高色域差异化
+3. 评论中"发热严重"出现频率高，可主打散热作为卖点</div>
+        </div>
       </div>
     </div>
 
@@ -353,7 +340,7 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是 Amazon Listing 优化专家。请对比我的产品与 TOP 竞品，给出优化建议。
+        <div class="wf-prompt-box">你是 Amazon Listing 优化专家。请对比我的产品与 TOP 竞品，给出优化建议。
 
 ## 我的产品 Listing
 标题：[当前标题]
@@ -361,62 +348,92 @@ a{color:inherit;text-decoration:none}
 产品描述：[当前描述]
 
 ## 请分析
-1. <span class="c-key">标题优化</span>（对比 TOP3 竞品，给出修改版本，含核心关键词）
-2. <span class="c-key">五点优化</span>（按重要性和吸引力重新排序，给出修改版本）
-3. <span class="c-key">描述优化</span>（补充缺失卖点和场景化表达）
-4. <span class="c-key">关键词补充</span>（从竞品标题/评论中提取被低估的关键词）
+1. 标题优化（对比 TOP3 竞品，给出修改版本，含核心关键词）
+2. 五点优化（按重要性和吸引力重新排序，给出修改版本）
+3. 描述优化（补充缺失卖点和场景化表达）
+4. 关键词补充（从竞品标题/评论中提取被低估的关键词）
 
 ## 输出格式
 ### 标题优化：[原版 → 修改版]
 ### 五点优化：[逐条列出，标注修改理由]
 ### 描述优化：[修改版全文]
-### 补充关键词：[列表]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+### 补充关键词：[列表]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex3-input','ex3-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex3-input','ex3-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex3-input">标题：Laptop Computer 15.6 Inch, 8GB RAM, 256GB SSD
+五点：轻薄/高性能/长续航/高清屏/正品保障</div>
+          <div class="example-content" id="ex3-output" style="display:none">### 标题优化
+原版 → Laptop Computer 15.6 Inch, 8GB RAM, 256GB SSD
+优化版 → 2024 New Laptop 15.6" IPS FHD, 8GB RAM, 256GB SSD, Intel Celeron N5095, Lightweight 1.65kg, for Home/Student/Business
+
+### 五点优化（逐条）
+① 原：轻薄 → 改：1.65kg 超轻设计，比同价位轻 20%（数据说话）
+② 原：高性能 → 改：Intel N5095 四核处理器 | 办公游戏两不误
+③ 原缺失 → 增：预装 Windows 11 + Office 2024，开机即用
+④ 原缺失 → 增：IPS 防眩光屏 | 户外强光依然清晰
+⑤ 原缺失 → 增：一年质保 + 30天退换 | 售后无忧</div>
+        </div>
       </div>
     </div>
 
     <!-- 小红书爆款选题 -->
     <div class="wf-card" data-cat="content" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">🎬 小红书爆款选题</span><span class="wf-badge new">NEW</span></div>
-      <div class="wf-card-desc">输入行业/赛道，AI 生成 15 个带爆火理由的选题，含热搜词植入、季节节点、情绪覆盖。</div>
+      <div class="wf-card-desc">输入行业/赛道，AI 生成 15 个带爆火理由的选题，含热搜词植入、季节节点。</div>
       <div class="wf-card-meta"><span>⏱ 3 分钟</span><span>🎬 内容</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是一位小红书内容策划专家。请为以下赛道生成 15 个爆款选题。
+        <div class="wf-prompt-box">你是一位小红书内容策划专家。请为以下赛道生成 15 个爆款选题。
 
 ## 你的赛道/行业
 [如：职场妈妈 / 健身 / 宠物 / 露营 / 美妆]
 
 ## 请生成 15 个选题，每个选题包含
-- <span class="c-key">标题</span>（含数字/情绪/悬念等爆款元素）
-- <span class="c-key">爆款类型</span>（后悔型/清单型/价格型/社交型/真实型）
-- <span class="c-key">适合切入的角度</span>（痛点/爽点/痒点）
-- <span class="c-key">植入热搜词</span>（2-3 个平台热搜相关词汇）
+- 标题（含数字/情绪/悬念等爆款元素）
+- 爆款类型（后悔型/清单型/价格型/社交型/真实型）
+- 适合切入的角度（痛点/爽点/痒点）
+- 植入热搜词（2-3 个平台热搜相关词汇）
 
 ## 输出格式
 | 序号 | 标题 | 类型 | 角度 | 热搜词 |
-|------|------|------|------|--------|
-| 01 | ... | ... | ... | ... |
 
 ## 要求
 - 标题要有画面感和情绪张力
 - 覆盖至少 3 种不同爆款类型
 - 至少 5 个标题含具体数字
-- 标注"[必爆]"给最有把握的 3 个</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+- 标注"[必爆]"给最有把握的 3 个</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex4-input','ex4-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex4-input','ex4-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex4-input">赛道：职场妈妈通勤包</div>
+          <div class="example-content" id="ex4-output" style="display:none">| 01 | "通勤包别乱买！当妈第3年，我只留了这款" [必爆] | 后悔型 | 痛点 | #职场妈妈 #通勤穿搭 |
+| 02 | "200元内，能装电脑+奶瓶的妈咪包，我只找到3款" | 价格型 | 爽点 | #平价好物 #妈咪包 |
+| 03 | "同事问：你包里装了什么这么能装？" | 社交型 | 痒点 | #职场女性 #通勤 |
+| 04 | "产后回归职场，我包里必带的5样东西" [必爆] | 清单型 | 实用 | #职场妈妈 #好物分享 |
+| 05 | "再也不怕忘带奶瓶了！老公说我买包终于开窍" | 故事型 | 共鸣 | #宝妈 #职场女性 |</div>
+        </div>
       </div>
     </div>
 
     <!-- 短视频脚本 -->
     <div class="wf-card" data-cat="content" onclick="toggleWF(this)">
-      <div class="wf-card-top"><span class="wf-card-name">🎬 短视频脚本工作流</span><span class="wf-badge new">NEW</span></div>
-      <div class="wf-card-desc">输入主题 → 输出完整脚本：开场钩子 + 正文结构 + 行动号召（CTA）。适配抖音/视频号/小红书。</div>
+      <div class="wf-card-top"><span class="wf-card-name">🎬 短视频脚本</span><span class="wf-badge new">NEW</span></div>
+      <div class="wf-card-desc">输入主题 → 输出完整脚本：开场钩子 + 正文结构 + 行动号召。适配抖音/视频号/小红书。</div>
       <div class="wf-card-meta"><span>⏱ 2 分钟</span><span>🎬 内容</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是短视频脚本专家。请为以下主题生成完整的短视频脚本。
+        <div class="wf-prompt-box">你是短视频脚本专家。请为以下主题生成完整的短视频脚本。
 
 ## 视频信息
 - 主题：[你想拍什么]
@@ -424,27 +441,44 @@ a{color:inherit;text-decoration:none}
 - 视频时长：[如：60 秒 / 30 秒]
 
 ## 请生成完整脚本，包含
-1. <span class="c-key">开场钩子</span>（前 3 秒，用什么抓住注意力）
-2. <span class="c-key">正文结构</span>（按时间轴列出每段内容和时长）
-3. <span class="c-key">字幕提示</span>（配合画面显示的文字）
-4. <span class="c-key">BGM 建议</span>（适合的音乐风格）
-5. <span class="c-key">CTA 结尾</span>（引导评论/点赞/关注的结尾设计）
+1. 开场钩子（前 3 秒，用什么抓住注意力）
+2. 正文结构（按时间轴列出每段内容和时长）
+3. 字幕提示（配合画面显示的文字）
+4. BGM 建议（适合的音乐风格）
+5. CTA 结尾（引导评论/点赞/关注的结尾设计）
 
 ## 输出格式
-### 🎬 开场钩子（0-3秒）
-[钩子内容]
+### 开场钩子（0-3秒）：[钩子内容]
+### 正文（3-X秒）：| 时长 | 画面 | 台词 | 字幕 |
+### CTA 结尾：[结尾内容]
+### BGM 建议：[风格 + 具体音乐建议]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex5-input','ex5-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex5-input','ex5-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex5-input">主题：露营装备测评
+目标平台：抖音
+时长：60 秒</div>
+          <div class="example-content" id="ex5-output" style="display:none">### 开场钩子（0-3秒）
+"花 ¥800 买的露营帐篷，和 ¥3000 的差在哪？"
 
-### 📍 正文（3-X秒）
+### 正文
 | 时长 | 画面 | 台词 | 字幕 |
-|------|------|------|------|
-| ... | ... | ... | ... |
+| 0-3s | 帐篷对比全景 | [不说话] | ¥800 vs ¥3000 |
+| 3-15s | 搭建过程 | "先看搭建难度，这款3分钟..." | 搭建：3分钟 |
+| 15-35s | 防水测试 | "防雨测试，直接浇水！" | 淋水测试 |
+| 35-50s | 细节对比 | "拉链、帐布厚度，一摸就知道差距" | 细节对比 |
+| 50-60s | 总结 | "如果你只是周末公园露营，800的够用" | 总结建议 |
 
-### 📣 CTA 结尾
-[结尾内容]
+### CTA 结尾
+"觉得有用就点个赞，关注我每周测评一个露营装备"
 
-### 🎵 BGM 建议
-[风格 + 具体音乐建议]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+### BGM
+节奏感强的户外/旅行风格，参考：Journey - Nick Nolan</div>
+        </div>
       </div>
     </div>
 
@@ -452,45 +486,54 @@ a{color:inherit;text-decoration:none}
     <div class="wf-card" data-cat="content" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">🎬 内容批量产出</span><span class="wf-badge hot">🔥 爆款</span></div>
       <div class="wf-card-desc">1 个主题 → 10 篇不同风格文案（标题+正文+标签）。30 秒完成，1 人顶一个团队。</div>
-      <div class="wf-card-meta"><span>⏱ 30 秒</span><span>🎬 内容</span><span>🔥</span></div>
+      <div class="wf-card-meta"><span>⏱ 30 秒</span><span>🎬 内容</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是自媒体内容创作专家。请为一个主题生成 10 篇不同风格的文案。
+        <div class="wf-prompt-box">你是自媒体内容创作专家。请为一个主题生成 10 篇不同风格的文案。
 
 ## 主题
 [如：618 囤货 / 职场女性通勤 / 猫咪好物]
 
 ## 要求
 生成 10 篇风格各异的文案，覆盖：
-1. 攻略型（实用性）
-2. 种草型（推荐感）
-3. 避坑型（警示感）
-4. 清单体型（清晰罗列）
-5. 故事型（有场景感）
-6. 对比型（before/after）
-7. 清单型（含数字）
-8. 情绪型（引发共鸣）
-9. 科普型（知识感）
-10. 引导型（引发互动）
+攻略型 / 种草型 / 避坑型 / 清单体型 / 故事型 / 对比型 / 情绪型 / 科普型 / 引导型 / 价格型
 
 ## 每篇文案格式
-<span class="c-key">标题：</span>[爆款标题]
-<span class="c-key">正文：</span>[50-200字]
-<span class="c-key">标签：</span>[8-10个相关标签，用 # 分隔]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+标题：[爆款标题]
+正文：[50-200字]
+标签：[8-10个相关标签，用 # 分隔]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex6-input','ex6-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex6-input','ex6-output')">AI 输出（节选）</div>
+          </div>
+          <div class="example-content" id="ex6-input">主题：猫咪好物</div>
+          <div class="example-content" id="ex6-output" style="display:none">① [攻略型] "养猫3年，这5样东西真的少不了 | 附购买攻略"
+② [种草型] "我家猫最爱的3款零食，第2款无限回购"
+③ [避坑型] "花了2000块踩坑后，告诉你猫爬架到底值不值"
+④ [清单型] "新手必买！养猫第一年购物清单（附花费清单）"
+⑤ [故事型] "捡到流浪猫第30天：它终于愿意让我抱了"
+⑥ [对比型] "vs100的猫窝 vs 自制纸箱：真实对比来了"
+⑦ [情绪型] "每次出差最放心不下的，还是家里的猫"
+⑧ [科普型] "猫粮成分表到底怎么看？一篇讲透"
+⑨ [引导型] "你家猫最奇怪的习惯是什么？评论区见"
+⑩ [价格型] "¥50内解决猫咪大部分需求｜穷养猫清单"</div>
+        </div>
       </div>
     </div>
 
-    <!-- AI 八字算命 -->
+    <!-- 八字命盘 -->
     <div class="wf-card" data-cat="fortune" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">🔮 八字命盘解析</span><span class="wf-badge fortune">🔥 小红书爆款</span></div>
-      <div class="wf-card-desc">输入出生年月日時，AI 解析命盘、大运流年、事业/感情/财运走向。玄学赛道流量极大。</div>
-      <div class="wf-card-meta"><span>⏱ 2 分钟</span><span>🔮 玄学</span><span>🔥 爆款</span></div>
+      <div class="wf-card-desc">输入出生年月日時，AI 解析命盘、大运流年、事业/感情/财运走向。</div>
+      <div class="wf-card-meta"><span>⏱ 2 分钟</span><span>🔮 玄学</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是一位资深命理师。请根据以下信息解读命盘。
+        <div class="wf-prompt-box">你是一位资深命理师。请根据以下信息解读命盘。
 
 ## 出生信息
 阳历出生年月日時：[如：1995年3月15日 14:30]
@@ -498,30 +541,63 @@ a{color:inherit;text-decoration:none}
 想问的方向：[事业 / 感情 / 财运 / 健康，或综合]
 
 ## 请分析
-1. <span class="c-key">基本命盘</span>（日主强弱、五行缺失、十神基础性格）
-2. <span class="c-key">性格画像</span>（用年轻人能理解的语言描述，不照搬古书）
-3. <span class="c-key">事业/财运</span>（适合职业方向、贵人方位、2025-2026年运势）
-4. <span class="c-key">感情</span>（恋爱观、理想伴侣类型、桃花方位）
-5. <span class="c-key">大运建议</span>（近5年大运走向，应该抓住什么）
-6. <span class="c-key">开运建议</span>（穿衣颜色、幸运数字、适合行业、旺运月份）
+1. 基本命盘（日主强弱、五行缺失、十神基础性格）
+2. 性格画像（用年轻人能理解的语言描述，不照搬古书）
+3. 事业/财运（适合职业方向、贵人方位、2025-2026年运势）
+4. 感情（恋爱观、理想伴侣类型、桃花方位）
+5. 大运建议（近5年大运走向，应该抓住什么）
+6. 开运建议（穿衣颜色、幸运数字、适合行业、旺运月份）
 
 ## 注意
 - 用现代语言解读，避免过度古文化表述
 - 语气温暖有温度，不要过于冷漠机械
-- 给出 1-2 个可立即执行的小行动</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+- 给出 1-2 个可立即执行的小行动</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex7-input','ex7-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex7-input','ex7-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex7-input">阳历：1995年3月15日 14:30
+性别：女
+想问：事业 + 感情</div>
+          <div class="example-content" id="ex7-output" style="display:none">## 基本命盘
+日主为甲木，生于卯月得令，身旺
+五行缺火、土偏弱，水旺为忌
+十神：比肩旺、印星弱——表面独立，内心渴望支持
+
+## 性格画像
+典型的"外强中干"型：看起来很能扛，实际上很需要被人认可。能力强但不爱主动表达，容易给人"高冷"的错觉，其实是被动型人格。
+
+## 事业/财运（2025-2026）
+🔥 2025年下半年事业运上升，有晋升或加薪机会
+适合方位：正东、正北
+贵人特征：属虎、属兔的人，或者生肖猪（今年太岁）
+
+## 感情
+恋爱观：慢热型，需要对方主动很长时间才会放下防备
+理想伴侣：成熟稳重型，小奶狗不太适合
+注意：2025年桃花旺，但烂桃花概率也高，要分辨
+
+## 开运建议
+☀️ 开运色：红色、金色
+🔢 幸运数字：3、7
+📅 旺运月：农历3月、7月
+💡 小行动：办公桌上放一盆小绿植，提升贵人运</div>
+        </div>
       </div>
     </div>
 
     <!-- 星座配对 -->
     <div class="wf-card" data-cat="fortune" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">🔮 星座配对分析</span><span class="wf-badge fortune">🔥 小红书爆款</span></div>
-      <div class="wf-card-desc">输入两个星座，AI 分析匹配度、性格差异、相处模式、建议改善点。极易引发评论互动。</div>
-      <div class="wf-card-meta"><span>⏱ 1 分钟</span><span>🔮 玄学</span><span>🔥 互动</span></div>
+      <div class="wf-card-desc">输入两个星座，AI 分析匹配度、性格差异、相处模式、建议改善点。极易引发评论。</div>
+      <div class="wf-card-meta"><span>⏱ 1 分钟</span><span>🔮 玄学</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是星座情感专家。请分析以下星座配对。
+        <div class="wf-prompt-box">你是星座情感专家。请分析以下星座配对。
 
 ## 配对信息
 男方星座：[如：天秤座]
@@ -529,31 +605,57 @@ a{color:inherit;text-decoration:none}
 关系状态：[追求中 / 恋爱中 / 已婚 / 朋友]
 
 ## 请分析
-1. <span class="c-key">基本匹配度</span>（给出 0-100 分，说明主要加分和减分项）
-2. <span class="c-key">性格差异</span>（最可能产生摩擦的 3 个点）
-3. <span class="c-key">相处模式</span>（日常谁主导？谁迁就谁？）
-4. <span class="c-key">沟通特点</span>（吵完架谁先低头？谁的表达方式更容易被误解？）
-5. <span class="c-key">性生活</span>（适合程度，调情方式差异）
-6. <span class="c-key">长期稳定性</span>（结婚后会怎样？潜在危机）
-7. <span class="c-key">改善建议</span>（3 个立刻可以做的改变）
+1. 基本匹配度（给出 0-100 分，说明主要加分和减分项）
+2. 性格差异（最可能产生摩擦的 3 个点）
+3. 相处模式（日常谁主导？谁迁就谁？）
+4. 沟通特点（吵完架谁先低头？谁的表达方式更容易被误解？）
+5. 长期稳定性（结婚后会怎样？潜在危机）
+6. 改善建议（3 个立刻可以做的改变）
 
 ## 格式要求
 - 每个星座用一句话概括核心特点（年轻人能 get 的语言）
 - 给出至少 2 个"如果你们吵架了怎么办"的实用建议
-- 结尾给一句扎心但温暖的总结</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+- 结尾给一句扎心但温暖的总结</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex8-input','ex8-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex8-input','ex8-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex8-input">男方：天秤座
+女方：狮子座
+关系状态：恋爱中</div>
+          <div class="example-content" id="ex8-output" style="display:none">## 基本匹配度：72/100
+加分：天秤的审美 + 狮子的气场，走到哪都是全场焦点
+减分：天秤纠结犹豫 vs 狮子说一不二，决策时容易摩擦
+
+## 性格差异TOP3
+1. 天秤要"想清楚"才行动，狮子觉得这是"磨叽"
+2. 狮子希望对象全心崇拜她，天秤给不了那么强烈的情绪价值
+3. 天秤社交广，狮子容易吃醋
+
+## 相处模式
+日常：狮子主导居多，天秤配合
+吵架：狮子先发火，天秤冷处理——这是最大雷区
+
+## 改善建议
+① 约定"冷暴力冷静期"不超过2小时
+② 重要决定先各自想清楚再讨论，不要当场逼答案
+③ 狮子适当给天秤"选择权"，他会更愿意配合</div>
+        </div>
       </div>
     </div>
 
     <!-- 职场运势 -->
     <div class="wf-card" data-cat="fortune" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">🔮 职场/学业运势</span><span class="wf-badge fortune">NEW</span></div>
-      <div class="wf-card-desc">输入当前处境，AI 从玄学角度给出方位、时机、贵人、避坑建议。打工人の精神支柱。</div>
+      <div class="wf-card-desc">输入当前处境，AI 从玄学角度给出方位、时机、贵人、避坑建议。</div>
       <div class="wf-card-meta"><span>⏱ 2 分钟</span><span>🔮 玄学</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是玄学职业顾问。请从中国传统命理角度给出职场/学业建议。
+        <div class="wf-prompt-box">你是玄学职业顾问。请从中国传统命理角度给出职场/学业建议。
 
 ## 当事人信息
 出生年份：[如：1995]
@@ -561,30 +663,58 @@ a{color:inherit;text-decoration:none}
 最想问的事：[如：能不能成功？什么时候有转机？]
 
 ## 请分析
-1. <span class="c-key">当前运势</span>（是蓄力期还是爆发期？适合进攻还是防守？）
-2. <span class="c-key">关键时机</span>（未来 3 个月内，哪个月份最重要？）
-3. <span class="c-key">方位建议</span>（哪个方向有利？工位朝向、出行方向）
-4. <span class="c-key">贵人识别</span>（什么特征的人是你的贵人？出现在哪类人里？）
-5. <span class="c-key">避坑提示</span>（最容易在哪里栽跟头？）
-6. <span class="c-key">本月行动清单</span>（3 件最该做的事，3 件绝对不能做的事）
+1. 当前运势（是蓄力期还是爆发期？适合进攻还是防守？）
+2. 关键时机（未来 3 个月内，哪个月份最重要？）
+3. 方位建议（哪个方向有利？工位朝向、出行方向）
+4. 贵人识别（什么特征的人是你的贵人？出现在哪类人里？）
+5. 避坑提示（最容易在哪里栽跟头？）
+6. 本月行动清单（3 件最该做的事，3 件绝对不能做的事）
 
-## 语气
-- 年轻人说话方式，不要太老气
-- 温暖但有立场，不模棱两可
-- 结尾给一句"今年最关键的 1 件事"</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+## 语气：年轻人说话方式，不要太老气。温暖但有立场，不模棱两可。结尾给一句"今年最关键的 1 件事"。</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex9-input','ex9-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex9-input','ex9-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex9-input">出生年份：1997
+当前处境：跳槽中，在看新机会
+最想问：能不能拿到好offer</div>
+          <div class="example-content" id="ex9-output" style="display:none">## 当前运势
+你现在处于蓄力期，不是爆发期。拿到 offer 会，但薪资可能要被压一点。稳住心态。
+
+## 关键时机
+农历三月（阳历4月）有重要机会，提前准备简历
+
+## 方位建议
+🧭 有利方向：正东、正北
+工位朝向东或北的公司优先考虑
+面试当天往东走，别往西走
+
+## 贵人识别
+今年你的贵人是"说话直接、有执行力的80后"
+出现在：猎头、行业前辈、直接汇报对象里
+
+## 避坑
+❌ 不要同时拒绝所有 offer 等"更好的"
+❌ 面试谈薪资时别急着亮底牌
+
+## 今年最关键的一件事
+先拿到一个 offer 再谈薪资，有筹码才能赢</div>
+        </div>
       </div>
     </div>
 
     <!-- 持仓诊断 -->
     <div class="wf-card" data-cat="invest" onclick="toggleWF(this)">
       <div class="wf-card-top"><span class="wf-card-name">💰 持仓诊断</span><span class="wf-badge hot">🔥 实用</span></div>
-      <div class="wf-card-desc">输入持仓明细，AI 诊断配置健康度，计算偏离度，给出定投调整方案和 1 年预期。</div>
+      <div class="wf-card-desc">输入持仓明细，AI 诊断配置健康度，计算偏离度，给出定投调整方案。</div>
       <div class="wf-card-meta"><span>⏱ 2 分钟</span><span>💰 投资</span></div>
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是资产配置专家。请帮我诊断当前持仓的健康度。
+        <div class="wf-prompt-box">你是资产配置专家。请帮我诊断当前持仓的健康度。
 
 ## 持仓信息
 总资产（人民币）：[如：¥120,000]
@@ -594,21 +724,49 @@ a{color:inherit;text-decoration:none}
 
 风险偏好：[保守型 / 稳健型 / 积极型 / 激进型]
 投资周期：[1年 / 3年 / 5年 / 10年]
-年度收益目标：[如有]
 
 ## 请分析
-1. <span class="c-key">集中度风险</span>（单一标的或行业占比是否过高）
-2. <span class="c-key">目标偏离度</span>（当前配置与理想配置偏差多大）
-3. <span class="c-key">相关性分析</span>（持仓之间的相关性，是否过度集中）
-4. <span class="c-key">流动性评估</span>（是否有流动性风险）
-5. <span class="c-key">调仓建议</span>（具体买/卖建议，含金额）
+1. 集中度风险（单一标的或行业占比是否过高）
+2. 目标偏离度（当前配置与理想配置偏差多大）
+3. 相关性分析（持仓之间的相关性，是否过度集中）
+4. 流动性评估（是否有流动性风险）
+5. 调仓建议（具体买/卖建议，含金额）
 
 ## 输出格式
 ## 健康评分：[X/100，附简评]
 ## 集中度：[超标项列出]
 ## 调仓计划：[优先级 + 具体操作]
-## 1年预期：[收益预测 + 风险提示]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+## 1年预期：[收益预测 + 风险提示]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex10-input','ex10-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex10-input','ex10-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex10-input">总资产：¥120,000
+持仓：
+- 科技股 ETF：¥50,000（占比 42%）
+- 债券基金：¥30,000（占比 25%）
+- 黄金 ETF：¥20,000（占比 17%）
+- 活期：¥20,000（占比 17%）
+风险偏好：稳健型
+投资周期：5年</div>
+          <div class="example-content" id="ex10-output" style="display:none">## 健康评分：65/100
+集中度过高，股票占比 42% 超稳健型建议（30%）
+
+## 集中度问题
+⚠️ 科技股占比 42% >> 建议上限 20%
+⚠️ 黄金+债券合计 42%，偏低
+
+## 调仓计划
+① 优先级高：科技股减至 ¥24,000（20%），释放 ¥26,000
+② 优先级中：增加债券至 35%（¥42,000）
+③ 优先级低：活期偏高，可转 500ETF 增强收益
+
+## 1年预期
+综合配置后预期年化收益 6-8%，最大回撤控制在 12% 以内</div>
+        </div>
       </div>
     </div>
 
@@ -620,26 +778,52 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是宏观策略分析师。请对以下行业/标的进行结构化分析。
+        <div class="wf-prompt-box">你是宏观策略分析师。请对以下行业/标的进行结构化分析。
 
 ## 分析标的
 行业/公司：[如：光伏行业 / 特斯拉 / 白酒板块]
 分析目的：[投资决策 / 学术研究 / 了解行业]
 
 ## 请从以下维度分析
-1. <span class="c-key">宏观背景</span>（政策环境、流动性、风险偏好）
-2. <span class="c-key">行业格局</span>（市场空间、增速、竞争结构）
-3. <span class="c-key">公司/标的分析</span>（核心竞争力、护城河、主要风险）
-4. <span class="c-key">估值分析</span>（当前估值合理吗？历史分位？）
-5. <span class="c-key">主要矛盾</span>（当前最需要关注的一个变量是什么）
-6. <span class="c-key">情景分析</span>（乐观/中性/悲观假设下的收益预测）
+1. 宏观背景（政策环境、流动性、风险偏好）
+2. 行业格局（市场空间、增速、竞争结构）
+3. 公司/标的分析（核心竞争力、护城河、主要风险）
+4. 估值分析（当前估值合理吗？历史分位？）
+5. 主要矛盾（当前最需要关注的一个变量是什么）
+6. 情景分析（乐观/中性/悲观假设下的收益预测）
 
 ## 输出格式
 ### 核心结论：[1-2 句话]
 ### 多空逻辑：[各列 3 条]
 ### 风险提示：[2-3 个最大风险]
-### 关键跟踪指标：[后续需要持续关注的指标]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+### 关键跟踪指标：[后续需要持续关注的指标]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex11-input','ex11-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex11-input','ex11-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex11-input">光伏行业
+分析目的：投资决策</div>
+          <div class="example-content" id="ex11-output" style="display:none">## 核心结论
+行业增速趋缓但估值已充分反映，短期难有系统性的beta行情，需精选有技术和成本优势的个股。
+
+## 多空逻辑
+多方：
+- 碳中和长期政策支撑明确，装机量年增 15%+
+- 组件成本下降推动平价上网加速
+空方：
+- 上游硅料价格波动压制中游利润
+- 欧美对中国光伏产品存在贸易壁垒风险
+
+## 主要矛盾
+硅料价格何时企稳 + 组件出口需求能否持续
+
+## 关键跟踪指标
+月频：硅料现货价格、月度装机量
+季频：组件出口金额</div>
+        </div>
       </div>
     </div>
 
@@ -651,7 +835,7 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是资产配置专家。请为以下情况设计配置方案。
+        <div class="wf-prompt-box">你是资产配置专家。请为以下情况设计配置方案。
 
 ## 个人信息
 总资产：[¥金额]
@@ -662,17 +846,45 @@ a{color:inherit;text-decoration:none}
 是否首套房已购：[是 / 否]
 
 ## 请给出
-1. <span class="c-key">目标配置</span>（大类资产比例：股票/债券/商品/现金/另类产品）
-2. <span class="c-key">境内境外</span>（人民币资产 vs 海外资产配置建议）
-3. <span class="c-key">具体标的建议</span>（ETF 或基金层面，不给个股）
-4. <span class="c-key">定投计划</span>（如果有持续收入，定投比例建议）
-5. <span class="c-key">避坑清单</span>（这类人群最容易犯的 3 个错误）
+1. 目标配置（大类资产比例：股票/债券/商品/现金/另类产品）
+2. 境内境外（人民币资产 vs 海外资产配置建议）
+3. 具体标的建议（ETF 或基金层面，不给个股）
+4. 定投计划（如果有持续收入，定投比例建议）
+5. 避坑清单（这类人群最容易犯的 3 个错误）
 
 ## 输出格式
 ### 推荐配置：[表格，含品种/比例/工具]
 ### 操作优先级：[先做什么，再做什么]
-### 避坑：[3 条]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+### 避坑：[3 条]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex12-input','ex12-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex12-input','ex12-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex12-input">总资产：¥120,000
+年龄：28岁
+风险偏好：积极型
+投资周期：10年
+收入：稳定
+首套房：未购</div>
+          <div class="example-content" id="ex12-output" style="display:none">## 推荐配置
+| 品种 | 比例 | 工具 |
+|------|------|------|
+| A股股票ETF | 40% | 510310 易方达沪深300 |
+| 美股ETF | 25% | 纳指ETF（513100）|
+| 债券 | 15% | 纯债基金 |
+| 商品/黄金 | 10% | 黄金ETF（518880）|
+| 现金/货币 | 10% | 余额宝 |
+
+## 定投计划
+每月定投 ¥3000，优先沪深300 + 纳指各 50%
+## 避坑清单
+① 买房前不要梭哈股市
+② 不要 All in 单一个股
+③ 不要因为短期亏损停止定投</div>
+        </div>
       </div>
     </div>
 
@@ -684,7 +896,7 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是一位循证医学临床决策专家。请帮助分析以下病例。
+        <div class="wf-prompt-box">你是一位循证医学临床决策专家。请帮助分析以下病例。
 
 ## 患者信息
 主诉：[症状描述]
@@ -694,18 +906,35 @@ a{color:inherit;text-decoration:none}
 辅助检查：[已做的检查和结果]
 
 ## 请按循证医学框架分析
-1. <span class="c-key">鉴别诊断</span>（按概率从高到低列出可能的诊断，附概率估计）
-2. <span class="c-key">诊断依据</span>（支持每个诊断的关键证据）
-3. <span class="c-key">需要进一步做的检查</span>（按优先级列出，附检查目的）
-4. <span class="c-key">不能漏掉的危险信号</span>（Red Flags，需立即处理的情况）
-5. <span class="c-key">初步处理建议</span>（等待检查结果期间的处置方案）
+1. 鉴别诊断（按概率从高到低列出可能的诊断，附概率估计）
+2. 诊断依据（支持每个诊断的关键证据）
+3. 需要进一步做的检查（按优先级列出，附检查目的）
+4. 不能漏掉的危险信号（Red Flags，需立即处理的情况）
+5. 初步处理建议（等待检查结果期间的处置方案）
 
 ## 注意
 - 遵循循证医学原则，引用诊疗指南或权威文献
 - 所有建议仅供参考，实际诊疗请遵医嘱
 - 给出每个诊断的可能性评分（%）
-- 明确标注需要立即处理的情况</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+- 明确标注需要立即处理的情况</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex13-input','ex13-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex13-input','ex13-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex13-input">主诉：胸痛2小时
+现病史：压榨样胸痛，放射至左臂，伴出汗
+既往史：高血压10年，吸烟史
+体格检查：BP 160/95，心率98次/分</div>
+          <div class="example-content" id="ex13-output" style="display:none">## 鉴别诊断
+1. 🔴 急性心肌梗死（AMI）：60%，典型心电图+危险因素
+2. 🟡 不稳定型心绞痛：20%，需心肌酶排除
+3. 🟡 主动脉夹层：5%，剧烈撕裂样疼痛需警惕
+4. 🟢 胃食管反流：10%，可能性较低
+5. 🟢 肌肉骨骼性胸痛：5%，无放射、无出汗</div>
+        </div>
       </div>
     </div>
 
@@ -717,7 +946,7 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是临床诊断专家。请为以下症状组合建立鉴别诊断路径。
+        <div class="wf-prompt-box">你是临床诊断专家。请为以下症状组合建立鉴别诊断路径。
 
 ## 症状信息
 主要症状：[核心症状]
@@ -726,16 +955,16 @@ a{color:inherit;text-decoration:none}
 患者基本信息：[年龄、性别、既往史]
 
 ## 请分析
-1. <span class="c-key">常见原因</span>（发病率最高的 2-3 种，附典型特征）
-2. <span class="c-key">次常见原因</span>（发病率中等，需要鉴别的 2-3 种）
-3. <span class="c-key">罕见但危险的原因</span>（不能漏掉的 1-2 种，附为什么危险）
-4. <span class="c-key">诊断路径图</span>（先用哪个检查排除什么，逐步缩小范围）
-5. <span class="c-key">最符合的方向</span>（基于现有信息，最可能的诊断）
+1. 常见原因（发病率最高的 2-3 种，附典型特征）
+2. 次常见原因（发病率中等，需要鉴别的 2-3 种）
+3. 罕见但危险的原因（不能漏掉的 1-2 种，附为什么危险）
+4. 诊断路径图（先用哪个检查排除什么，逐步缩小范围）
+5. 最符合的方向（基于现有信息，最可能的诊断）
 
 ## 输出格式
 诊断路径图（类似流程图，用文字描述分支逻辑）
-[入口] → [首先排除/确认 X] → [若阳性/阴性则...]</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+[入口] → [首先排除/确认 X] → [若阳性/阴性则...]</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
       </div>
     </div>
 
@@ -747,7 +976,7 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是安全架构专家。请对以下系统进行威胁建模（STRIDE 模型）。
+        <div class="wf-prompt-box">你是安全架构专家。请对以下系统进行威胁建模（STRIDE 模型）。
 
 ## 系统信息
 系统名称：[如：用户认证系统 / 电商支付系统]
@@ -756,21 +985,41 @@ a{color:inherit;text-decoration:none}
 信任边界：[系统内外边界在哪]
 
 ## 请用 STRIDE 模型分析
-<span class="c-key">S</span>poofing（身份伪造）：可能的威胁
-<span class="c-key">T</span>ampering（篡改）：可能的威胁
-<span class="c-key">R</span>epudiation（抵赖）：可能的威胁
-<span class="c-key">I</span>nformation Disclosure（信息泄露）：可能的威胁
-<span class="c-key">D</span>enial of Service（拒绝服务）：可能的威胁
-<span class="c-key">E</span>levation of Privilege（权限提升）：可能的威胁
+S - Spoofing（身份伪造）：可能的威胁
+T - Tampering（篡改）：可能的威胁
+R - Repudiation（抵赖）：可能的威胁
+I - Information Disclosure（信息泄露）：可能的威胁
+D - Denial of Service（拒绝服务）：可能的威胁
+E - Elevation of Privilege（权限提升）：可能的威胁
 
 ## 对每个威胁输出
-| 威胁 | 攻击方式 | 风险等级（高/中/低） | 缓解措施 | 优先级 |
-|------|---------|---------------------|---------|--------|
+| 威胁 | 攻击方式 | 风险等级 | 缓解措施 | 优先级 |
 
 ## 最后给出
 - Top 3 最需要立即修复的安全问题
-- 安全建设建议（先做什么，后做什么）</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+- 安全建设建议（先做什么，后做什么）</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
+        <div class="example-label">📖 真实案例 · 输入 → 输出</div>
+        <div class="example-box">
+          <div class="example-tabs">
+            <div class="example-tab active" onclick="switchEx(this,'ex15-input','ex15-output')">我的输入</div>
+            <div class="example-tab" onclick="switchEx(this,'ex15-input','ex15-output')">AI 输出</div>
+          </div>
+          <div class="example-content" id="ex15-input">系统：用户认证系统（JWT token）
+技术栈：Node.js + Redis + PostgreSQL
+核心资产：用户密码、Token、会话数据</div>
+          <div class="example-content" id="ex15-output" style="display:none">## TOP3 最高优先级
+1. [严重] 密码明文传输（未用 HTTPS）
+2. [严重] JWT secret 硬编码在代码中
+3. [高危] Redis 未设置访问密码
+
+## STRIDE 分析（节选）
+| 威胁 | 风险 | 缓解措施 |
+|------|------|---------|
+| Spoofing | 高 | 强密码策略 + 多因素认证 |
+| Information Disclosure | 严重 | 全站 HTTPS + Token 加密 |
+| Elevation of Privilege | 高 | 最小权限原则 + 定期审计 |</div>
+        </div>
       </div>
     </div>
 
@@ -782,7 +1031,7 @@ a{color:inherit;text-decoration:none}
       <div class="wf-card-arrow">▼</div>
       <div class="wf-expand">
         <div class="wf-expand-label">📋 完整提示词</div>
-        <code>你是 Web 安全专家。请检查以下代码/架构中的 OWASP Top 10 漏洞。
+        <div class="wf-prompt-box">你是 Web 安全专家。请检查以下代码/架构中的 OWASP Top 10 漏洞。
 
 ## 待检内容
 [粘贴代码片段或描述系统架构]
@@ -800,14 +1049,13 @@ a{color:inherit;text-decoration:none}
 10. SSRF（服务端请求伪造）
 
 ## 对每个发现的漏洞输出
-| 漏洞类型 | 位置 | 严重程度（严重/高/中/低） | 描述 | 修复建议 | CVSS评分 |
-|---------|------|--------------------------|------|---------|---------|
+| 漏洞类型 | 位置 | 严重程度 | 描述 | 修复建议 | CVSS评分 |
 
 ## 最后给出
 - Top 3 最高优先级修复
 - 安全加固建议
-- 参考标准（OWASP 2021 / CWE Top 25）</code>
-        <button class="wf-copy-btn" onclick="event.stopPropagation();copyWF(this)">📋 复制提示词</button>
+- 参考标准（OWASP 2021 / CWE Top 25）</div>
+        <button class="prompt-copy-btn" onclick="event.stopPropagation();copyPrompt(this)">📋 复制提示词</button>
       </div>
     </div>
 
@@ -849,109 +1097,64 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <script>
-// ─── Workflow Filter ───
-document.querySelectorAll('.wf-tab').forEach(tab => {
-  tab.addEventListener('click', function(e) {
-    e.stopPropagation();
-    document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
-    this.classList.add('active');
-    const cat = this.dataset.cat;
-    document.querySelectorAll('.wf-card').forEach(c => {
-      c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
-    });
+// Filter
+function filterWF(cat, el) {
+  document.querySelectorAll('.wf-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.wf-card').forEach(c => {
+    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
   });
-});
+}
 
-// ─── Expand/Collapse Workflow Card ───
+// Expand/collapse
 function toggleWF(card) {
   const wasOpen = card.classList.contains('open');
-  // Close all others
   document.querySelectorAll('.wf-card').forEach(c => {
     c.classList.remove('open');
     c.querySelector('.wf-expand')?.classList.remove('show');
   });
-  // Toggle this one
   if (!wasOpen) {
     card.classList.add('open');
     card.querySelector('.wf-expand')?.classList.add('show');
   }
 }
 
-// ─── Copy Workflow ───
-function copyWF(btn) {
+// Copy prompt
+function copyPrompt(btn) {
   const code = btn.previousElementSibling.textContent;
   navigator.clipboard.writeText(code).then(() => {
-    const toast = document.getElementById('copyToast');
     btn.textContent = '✅ 已复制';
-    toast.classList.add('show');
-    setTimeout(() => {
-      toast.classList.remove('show');
-      btn.textContent = '📋 复制提示词';
-    }, 2000);
+    showToast('已复制！发给 AI 试试');
+    setTimeout(() => { btn.textContent = '📋 复制提示词'; }, 2000);
   });
 }
 
-// ─── Tool 1: 小红书标题 ───
-function runXHS() {
-  const t = document.getElementById('xhs-input').value.trim();
-  if (!t) { alert('请输入内容主题~'); return; }
-  const outs = [
-    `"${t}，我真的后悔没早点知道"——后悔型，引发好奇`,
-    `"${t}，这 3 点必须知道"——清单型，高收藏率`,
-    `"同事说我:${t}太绝了"——社交型，引发评论`,
-    `"花 ¥${Math.floor(Math.random()*900+100)} 买的${t}，用到过期还没坏"——价格型，高点击`,
-    `"${t} | 普通人的真实体验，不吹不黑"——真实型，高信任`
-  ];
-  outs.forEach((v, i) => { document.getElementById('xhs-' + ['a','b','c','d','e'][i]).textContent = v; });
-  document.getElementById('xhs-output').classList.add('show');
+// Show toast
+function showToast(msg) {
+  const t = document.getElementById('copyToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// ─── Tool 2: 周报 ───
-function runWeekly() {
-  const t = document.getElementById('weekly-input').value.trim();
-  if (!t) { alert('请输入本周工作内容~'); return; }
-  document.getElementById('weekly-result').innerHTML = `
-    <p><span class="tag-red">📌 本周主要工作</span><br>${t}</p>
-    <p style="margin-top:8px"><span class="tag-green">✅ 成果量化</span><br>• 完成率：${Math.floor(Math.random()*3+8)}0%<br>• 效率提升：${Math.floor(Math.random()*20+10)}%</p>
-    <p style="margin-top:8px"><span class="tag-yellow">📅 下周计划</span><br>• 重点推进核心指标<br>• 优化工作流程</p>
-    <p style="margin-top:8px;color:#555;font-size:12px">💡 复制"周报生成"工作流到 ChatGPT，效果更完整</p>
-  `;
-  document.getElementById('weekly-output').classList.add('show');
+// Example tab switcher
+function switchEx(tab, inputId, outputId) {
+  tab.parentElement.querySelectorAll('.example-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  const parent = tab.closest('.example-box');
+  parent.querySelectorAll('.example-content').forEach(c => c.style.display = 'none');
+  document.getElementById(tab.dataset.show || outputId).style.display = '';
 }
 
-// ─── Tool 3: 简历 ───
-function runResume() {
-  const t = document.getElementById('resume-input').value.trim();
-  if (!t) { alert('请粘贴简历内容~'); return; }
-  const tips = ['用数据说话（+提高 60% 命中率）','突出跨部门协作经验','量化项目规模（团队 N 人/预算 ¥X）','补充工具栈关键词'];
-  const shuffled = tips.sort(() => Math.random() - 0.5);
-  document.getElementById('resume-result').innerHTML = `
-    <p><span class="tag-red">🎯 核心问题</span><br>建议针对目标岗位 JD 定制简历关键词，提升 ATS 系统通过率。</p>
-    <p style="margin-top:8px"><span class="tag-green">💡 立即优化（随机 4 条）</span><br>${shuffled.map((v, i) => `${i+1}. ${v}`).join('<br>')}</p>
-    <p style="margin-top:8px;color:#555;font-size:12px">💡 复制"简历优化"工作流到 AI，获得逐句修改版</p>
-  `;
-  document.getElementById('resume-output').classList.add('show');
-}
+// Fix tab onclick to show correct ids
+document.querySelectorAll('.example-tabs').forEach(container => {
+  const tabs = container.querySelectorAll('.example-tab');
+  const contents = container.parentElement.querySelectorAll('.example-content');
+  tabs[0].onclick = () => { tabs.forEach(t => t.classList.remove('active')); tabs[0].classList.add('active'); contents.forEach(c => c.style.display = c === contents[0] ? '' : 'none'); };
+  tabs[1].onclick = () => { tabs.forEach(t => t.classList.remove('active')); tabs[1].classList.add('active'); contents.forEach(c => c.style.display = c === contents[1] ? '' : 'none'); };
+});
 
-// ─── Tool 4: AI 算命 ───
-function runBazi() {
-  const t = document.getElementById('bazi-input').value.trim();
-  if (!t) { alert('请输入出生年月日時~'); return; }
-  const traits = ['务实、有责任感','好奇心强、学习能力出众','社交能力强、人缘好','独立、有主见、不随波逐流'];
-  const shuffled = traits.sort(() => Math.random() - 0.5).slice(0, 3);
-  const directions = ['正东方','正北方','西南方','东南方'];
-  const lucky = directions.sort(() => Math.random() - 0.5);
-  const months = ['3月','5月','8月','11月'].sort(() => Math.random() - 0.5);
-  document.getElementById('bazi-result').innerHTML = `
-    <p><span class="tag-red">🔮 命盘特征（AI 模拟解析）</span><br>${shuffled.map(v => `• ${v}`).join('<br>')}</p>
-    <p style="margin-top:8px"><span class="tag-yellow">💼 事业/财运</span><br>• 近两年处于上升期，2025 下半年有机会突破<br>• 适合技术型/创意类工作，打工比创业更稳</p>
-    <p style="margin-top:8px"><span class="tag-green">🍀 开运建议</span><br>• 幸运方向：${lucky[0]} 和 ${lucky[1]}<br>• 旺运月份：${months[0]} 和 ${months[1]}<br>• 幸运色：金色、白色<br>• 幸运数字：3、7、9</p>
-    <p style="margin-top:8px;color:#555;font-size:12px">💡 复制下方"八字命盘解析"工作流，获得完整定制解析</p>
-  `;
-  document.getElementById('bazi-output').classList.add('show');
-}
-
-// ─── Star counter ───
+// Star counter
 fetch('https://api.github.com/repos/NeoHou-sudo/agentflow')
   .then(r => r.json()).then(d => {
     document.getElementById('star-count').textContent = d.stargazers_count || 3;
