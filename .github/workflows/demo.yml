@@ -1,0 +1,18 @@
+name: Demo Workflow Runner
+
+on:
+  push:
+    paths:
+      - 'workflows/**'
+  schedule:
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Workflow Demo
+        run: |
+          echo "AgentFlow Demo - This workflow demonstrates workflow execution"
+          echo "To use: copy workflows/*.md prompts into your AI Agent"
