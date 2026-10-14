@@ -1,0 +1,30 @@
+// AgentFlow 站点 —— Cloudflare Worker + 静态资源 + Workers AI
+//
+// 部署前把 name / SITE_URL 改成你自己的；AI 绑定不需要额外 key，
+// 免费额度用完后在 CF Dashboard 里看 Workers AI 的用量。
+// Secrets 不写在这里，用 `wrangler secret put` 设置：
+//   MODEL        （可选）覆盖默认模型
+//   LLM_BASE_URL + LLM_API_KEY （可选）改走自己的 OpenAI 兼容端点
+//   RATE_LIMIT   （可选）绑一个 KV namespace 就能开启每 IP 限流
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "agentflow",
+  "main": "dist/_worker.js/index.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS"
+  },
+  "ai": {
+    "binding": "AI"
+  },
+  "vars": {
+    "SITE_URL": "https://agentflow.workers.dev",
+    "MODEL": "@cf/meta/llama-3.1-8b-instruct",
+    "RUN_MAX_PROMPT_CHARS": "12000"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

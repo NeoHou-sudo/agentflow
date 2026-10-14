@@ -1,0 +1,18 @@
+{
+  "name": "agentflow",
+  "version": "2.0.0",
+  "private": true,
+  "description": "18+ AI Agent 工作流 · 可搜索 / 可填空 / 可站内试跑",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "catalog": "node scripts/build-catalog.mjs",
+    "dev": "pnpm catalog && pnpm -C apps/site dev",
+    "build": "pnpm catalog && pnpm -C apps/site build",
+    "preview": "pnpm -C apps/site preview",
+    "deploy": "pnpm build && pnpm -C apps/site deploy"
+  }
+}

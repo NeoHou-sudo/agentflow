@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # 这一步就是内容校验：抽不到提示词、代码块没闭合都会 exit 1
+      - name: Build catalog from workflows/*.md
+        run: pnpm catalog
+
+      - name: Build site
+        run: pnpm -C apps/site build
+
+      - name: Show build footprint
+        run: |
+          du -sh apps/site/dist
+          echo "prerendered pages: $(find apps/site/dist -name '*.html' | wc -l)"
+          echo "workflows: $(node -e "console.log(require('./apps/site/src/data/workflows.json').workflows.length)")"

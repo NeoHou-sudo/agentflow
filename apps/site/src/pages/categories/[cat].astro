@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkflowCard from '../../components/WorkflowCard.astro';
+import { categories, byCategory } from '../../lib/catalog';
+import { abs } from '../../lib/site';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return categories.map((c) => ({ params: { cat: c.id }, props: { c } }));
+}
+
+interface Props { c: (typeof categories)[number] }
+const { c } = Astro.props;
+const list = byCategory(c.id);
+const path = `/categories/${c.id}/`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${c.name} AI Agent 工作流`,
+    description: c.desc,
+    url: abs(Astro, path),
+    inLanguage: 'zh-CN',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    numberOfItems: list.length,
+    itemListElement: list.map((w, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: w.title,
+      url: abs(Astro, `/workflows/${w.slug}/`),
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: abs(Astro, '/') },
+      { '@type': 'ListItem', position: 2, name: c.name, item: abs(Astro, path) },
+    ],
+  },
+];
+---
+
+<Base
+  title={`${c.name} AI Agent 工作流（${list.length} 个）`}
+  description={`${c.name}：${c.desc}。共 ${list.length} 个工作流，都支持在线填参数、一键复制提示词。`}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href="/">首页</a><span>/</span><a href="/workflows/">全部工作流</a><span>/</span>
+      <span style="color:var(--text-dim)">{c.name}</span>
+    </nav>
+
+    <section style="padding-bottom:12px">
+      <div class="sec-head" style="margin-bottom:8px">
+        <h2>{c.icon} {c.name} <span style="color:var(--text-mute);font-size:14px;font-weight:500">{c.nameEn}</span></h2>
+      </div>
+      <p style="color:var(--text-dim);font-size:15px;max-width:680px">{c.desc}</p>
+    </section>
+
+    <div class="grid cards" style="padding-bottom:52px">
+      {list.map((w) => <WorkflowCard w={w} showCategory={false} />)}
+    </div>
+
+    <section style="padding-top:0">
+      <div class="sec-head"><h2>其他分类</h2></div>
+      <div class="grid cats" style="padding-bottom:52px">
+        {categories.filter((x) => x.id !== c.id).map((x) => (
+          <a class="cat-tile" href={`/categories/${x.id}/`}>
+            <div class="ico">{x.icon}</div>
+            <b>{x.name}</b>
+            <small>{x.desc}</small>
+            <div class="n">{x.count} 个工作流 →</div>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkflowCard from '../components/WorkflowCard.astro';
+import { workflows, categories, byCategory, stats } from '../lib/catalog';
+import { SITE, abs } from '../lib/site';
+
+export const prerender = true;
+
+const featured = [
+  ...byCategory('ecommerce').slice(0, 2),
+  ...byCategory('content').slice(0, 2),
+  ...byCategory('investment').slice(0, 1),
+  ...byCategory('security').slice(0, 1),
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    alternateName: SITE.cn,
+    url: abs(Astro, '/'),
+    description: SITE.tagline,
+    inLanguage: 'zh-CN',
+    license: 'https://opensource.org/licenses/MIT',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'AI Agent 工作流分类',
+    itemListElement: categories.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      url: abs(Astro, `/categories/${c.id}/`),
+    })),
+  },
+];
+---
+
+<Base
+  title="AgentFlow"
+  description={`${workflows.length} 个真跑过的 AI Agent 工作流：电商选品、内容创作、持仓诊断、威胁建模…每个都能在线填参数、一键复制提示词，或直接在页面上跑出结果。MIT 开源。`}
+  path="/"
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <section class="hero">
+      <h1>不是「10 个超好用的提示词」<br />是<em>真跑过、真出过结果</em>的工作流</h1>
+      <p class="lead">
+        {workflows.length} 个工作流，覆盖 {categories.length} 个真实场景。每个都拆成了可以填的输入项：
+        填完参数，提示词自动拼好，复制走或者直接在这里跑一遍。
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="/workflows/">浏览全部 {workflows.length} 个工作流</a>
+        <a class="btn" href={SITE.repo} target="_blank" rel="noopener">⭐ Star on GitHub</a>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat"><b>{stats.total}</b><span>工作流</span></div>
+        <div class="stat"><b>{stats.fields}</b><span>可填参数</span></div>
+        <div class="stat"><b>{stats.bilingual}</b><span>中英双语</span></div>
+        <div class="stat"><b>{stats.categories}</b><span>应用领域</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>按场景找</h2>
+        <p>每类都是真实工作流，不是理论清单</p>
+      </div>
+      <div class="grid cats">
+        {categories.map((c) => (
+          <a class="cat-tile" href={`/categories/${c.id}/`}>
+            <div class="ico">{c.icon}</div>
+            <b>{c.name}</b>
+            <small>{c.desc}</small>
+            <div class="n">{c.count} 个工作流 →</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>怎么用</h2>
+        <p>从看到结果，三步</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <b><i>1</i>选一个工作流</b>
+          <p>按场景挑，卡片上标了难度、需要填几个参数、有没有英文版。</p>
+        </div>
+        <div class="step">
+          <b><i>2</i>把参数填进去</b>
+          <p>页面会自动识别工作流里的占位符，生成一张表单。填完提示词就拼好了，不用自己找哪里要改。</p>
+        </div>
+        <div class="step">
+          <b><i>3</i>复制走，或当场跑</b>
+          <p>一键复制到 ChatGPT / Claude / Coze / Dify；也可以直接点「用 AI 跑一遍」在这里出结果。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>拿几个先试试</h2>
+        <p>都有预期输出格式，结果能直接进会议</p>
+        <a class="more" href="/workflows/">全部 {workflows.length} 个 →</a>
+      </div>
+      <div class="grid cards">
+        {featured.map((w) => <WorkflowCard w={w} />)}
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>想在别的平台上用？</h2>
+        <p>提示词是纯文本，平台无关</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <b><i>🔌</i>任意 AI 客户端</b>
+          <p>ChatGPT / Claude / DeepSeek / Kimi / 通义 —— 复制提示词粘进去就行，不用装任何东西。</p>
+        </div>
+        <div class="step">
+          <b><i>⚙️</i>Coze / Dify</b>
+          <p>把提示词贴进 Bot 的 System Prompt，把 <code>{'[占位符]'}</code> 换成平台的变量节点，就是一条可调用的工作流。</p>
+        </div>
+        <div class="step">
+          <b><i>🐾</i>Agent 编排工具</b>
+          <p>本仓库的 <code>{'workflows/*.md'}</code> 就是纯 markdown + 提示词，任何 Agent 框架都能直接读。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>仓库</h2>
+        <p>MIT · 欢迎提你看过效果的工作流</p>
+      </div>
+      <div class="section-card">
+        <div class="prose">
+          <p>
+            这个站点的内容全部来自仓库里的 <code>workflows/**.md</code> —— 改 md 就改站，页面是构建时生成的，
+            没有数据库、没有后台。想加一个工作流，新建一个 md 文件（带
+            <code>## 📝 Exact Prompt</code> 和 <code>## 📊 Expected Output Format</code> 两节），提交即上线。
+          </p>
+          <p>
+            <a href={SITE.repo} target="_blank" rel="noopener">{SITE.repo}</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>

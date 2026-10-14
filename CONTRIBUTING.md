@@ -1,44 +1,120 @@
 # Contributing to AgentFlow / 贡献指南
 
-## How to Contribute / 如何贡献
+## 规则只有两条 / The only two rules
 
-### Method 1: Submit a Workflow / 方式一：提交工作流
-
-1. Fork this repository
-2. Add your workflow to the appropriate folder under `workflows/`
-3. Follow the workflow template format (see any existing workflow)
-4. Submit a Pull Request
-
-### 方式二：提交工作流
-
-1. Fork 本仓库
-2. 将你的工作流添加到 `workflows/` 对应目录下
-3. 按照现有格式编写（参考任意现有工作流）
-4. 提交 Pull Request
-
-## Workflow Format Requirements / 工作流格式要求
-
-Each workflow must include:
-- Workflow name & description
-- Exact prompt (in both Chinese and English)
-- Execution steps
-- Expected output format
-- Real examples
-
-每个工作流必须包含：
-- 工作流名称与描述
-- 完整提示词（中英双语）
-- 执行步骤
-- 预期输出格式
-- 真实案例
-
-## Quality Standards / 质量标准
-
-- ✅ Must be tested in production (not just theory)
-- ✅ Must include exact prompts
-- ✅ Must be bilingual (Chinese + English)
-- ✅ Must have real examples
+1. **是你自己真跑过的** —— 不是网上抄的、不是理论生成的。
+2. **有真实案例** —— 输入什么、出来什么，写清楚。
 
 ---
 
-*Any questions? Open an Issue on GitHub.*
+## 怎么提交 / How to submit
+
+```bash
+# 1. fork & clone
+git clone <your-fork> && cd agentflow
+pnpm install
+
+# 2. 新建工作流文件
+#    workflows/<分类>/<slug>.md
+#    分类只能是：ecommerce / content / investment / medicine / security
+
+# 3. 本地验证（构建脚本会替你检查结构）
+pnpm catalog      # 有问题会直接报错并指出是哪个文件
+pnpm dev          # http://localhost:4321 看渲染效果
+
+# 4. 提交 PR
+```
+
+---
+
+## 文件格式 / File format
+
+站点**不会**手写页面 —— 它读的就是这个 md。所以格式即接口：
+
+````markdown
+# 🎯 中文名 / English Name
+
+> **适用场景**: 什么时候用它
+> **来源**: 真实场景（写清楚，这是这个库的信誉来源）
+> **难度**: ⭐⭐⭐
+> **效果**: 可选，一句话说清产出
+
+---
+
+## 📝 Exact Prompt / 完整提示词
+
+### 中文版
+
+```
+你是一位……（提示词正文）
+
+需要用户替换的地方写成 [占位符]
+```
+
+### English Version
+
+```
+（可选。有英文版的话，站点会给它一个 English 标签页）
+```
+
+---
+
+## 📊 Expected Output Format / 预期输出格式
+
+```markdown
+（用三个反引号 + markdown 包起来，写清你希望模型输出成什么样：结论先行 + 表格）
+```
+
+---
+
+## ✅ Real Example / 真实案例
+
+> **输入**: ……
+> **结果**: ……
+````
+
+### 脚本怎么读这个文件（重要）
+
+| 它读什么 | 用来干什么 |
+|---|---|
+| `# 一级标题` | 页面标题。中英用 `/` 分隔，谁先谁后都行，脚本按「有没有汉字」区分 |
+| `## 📝 Exact Prompt` 里的代码块 | 提示词正文。有中文的当中文版，纯英文的当英文版 |
+| 提示词里的 `[xxx]` / `{{xxx}}` | **生成参数表单**。括号前面那行文字会变成字段名 |
+| `## 📊 Expected Output Format` | 详情页的「预期输出格式」卡片 |
+| `> **适用场景**` 等引用行 | 卡片摘要、难度星级、来源标注 |
+| 其余 `##` 小节 | 原样渲染到详情页底部（定制建议、公式库、适配指南……） |
+
+### 两个必须避开的坑
+
+1. **代码块嵌套**：提示词里如果还要展示代码块，外层用**四个反引号**包起来。
+   用三个会让块提前闭合 —— 提示词在 GitHub 上就是断的，构建脚本也会直接报错。
+2. **别在提示词末尾写「输出格式」示例**。那半段里的 `[占位符]` 会被误认成用户输入项。
+   放到独立的 `## 📊 Expected Output Format` 小节里就行，脚本会自动切掉那一段。
+
+### 参数表单好不好用，取决于占位符怎么写
+
+```markdown
+- 投资周期：[1年 / 5年 / 10年]      → 字段名「投资周期」+ 三个可选值按钮  好用
+- 产品特点：[特点1、特点2、特点3]    → 字段名「产品特点」，没有下拉        可以
+[你的主题，例如：AI副业 / 健身餐]     → 字段名「主题」，完整提示进 hint      可以
+```
+
+---
+
+## 质量标准
+
+- 真跑过，不是理论
+- 提示词里需要用户改的地方都写成了 `[占位符]`
+- 有预期输出格式，且结果真的能直接拿去用
+- 有真实案例（输入 → 输出）
+- 有英文版更好：现在 16 个里只有 7 个有，内容类和医学类缺得最多
+
+## 不要提交什么
+
+- 从别处抄来的提示词
+- 没跑过的「看起来很有用」的工作流
+- 需要付费数据源才能用的工作流（除非你写清了前提）
+
+---
+
+*有问题开 Issue。想改站点本身（`apps/site/`）也欢迎。*

@@ -1,0 +1,425 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkflowCard from '../../components/WorkflowCard.astro';
+import { workflows, bySlug, related, type Workflow } from '../../lib/catalog';
+import { SITE, abs, DIFFICULTY_LABEL } from '../../lib/site';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return workflows.map((w) => ({ params: { slug: w.slug }, props: { w } }));
+}
+
+interface Props { w: Workflow }
+const { w } = Astro.props;
+const url = `/workflows/${w.slug}/`;
+const others = related(w, 4);
+
+// 传给前端脚本的数据（页面上的表单/复制/试跑全靠它）
+const payload = JSON.stringify({
+  slug: w.slug,
+  title: w.title,
+  promptZh: w.promptZh,
+  promptEn: w.promptEn,
+  fields: w.fields,
+}).replace(/</g, '\\u003c');
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `${w.title}（AI Agent 工作流）`,
+    description: w.summary || w.scene,
+    url: abs(Astro, url),
+    ...(w.updatedAt ? { dateModified: w.updatedAt } : {}),
+    tool: [{ '@type': 'HowToTool', name: 'ChatGPT / Claude / Coze / Dify / 任意长文本模型' }],
+    step: [
+      { '@type': 'HowToStep', name: '填参数', text: `在页面上填写 ${w.fields.length} 个参数，脚本自动替换提示词里的占位符` },
+      { '@type': 'HowToStep', name: '复制或试跑', text: '一键复制完整提示词，或直接在页面上用 Workers AI 跑一遍看结果' },
+      { '@type': 'HowToStep', name: '按输出格式落地', text: '按工作流给出的输出格式收结果，可直接进会议或表格' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: '首页', item: abs(Astro, '/') },
+      { '@type': 'ListItem', position: 2, name: w.categoryName, item: abs(Astro, `/categories/${w.category}/`) },
+      { '@type': 'ListItem', position: 3, name: w.title, item: abs(Astro, url) },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: `${w.title} — 可复制的 AI Agent 提示词`,
+    description: w.summary || w.scene,
+    inLanguage: 'zh-CN',
+    url: abs(Astro, url),
+    isPartOf: { '@type': 'WebSite', name: SITE.name, url: abs(Astro, '/') },
+    license: 'https://opensource.org/licenses/MIT',
+  },
+];
+---
+
+<Base
+  title={`${w.title}${w.titleEn ? ` — ${w.titleEn}` : ''}`}
+  description={`${w.title}：${w.summary || w.scene}。可在线填空生成完整提示词、一键复制，或直接用 Workers AI 试跑。${w.promptEn ? '含中英双语提示词与预期输出格式。' : '含预期输出格式。'}`}
+  path={url}
+  type="article"
+  published={w.updatedAt || undefined}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="面包屑">
+      <a href="/">首页</a><span>/</span>
+      <a href={`/categories/${w.category}/`}>{w.icon} {w.categoryName}</a><span>/</span>
+      <span style="color:var(--text-dim)">{w.title}</span>
+    </nav>
+
+    <header class="wf-head">
+      <h1>{w.title}</h1>
+      {w.titleEn && <div class="sub">{w.titleEn}</div>}
+      <div class="wf-meta">
+        <span class="pill accent">{w.icon} {w.categoryName}</span>
+        <span class="pill">{'★'.repeat(w.difficulty)} {DIFFICULTY_LABEL[w.difficulty]}</span>
+        {w.fields.length > 0 && <span class="pill">{w.fields.length} 个可填参数</span>}
+        {w.promptEn && <span class="pill blue">中 / EN 双语</span>}
+        {w.version && <span class="pill">v{w.version}</span>}
+      </div>
+      <p style="margin-top:16px;color:var(--text-dim);font-size:14.5px">{w.summary || w.scene}</p>
+      {w.source && (
+        <p style="margin-top:8px;font-size:12.5px;color:var(--text-mute)">来源：{w.source}</p>
+      )}
+      {w.disclaimer && (
+        <div class="disclaimer">
+          <b>⚠️ 请先读这段</b>
+          {w.disclaimer.split('\n').filter(Boolean).map((l) => <div>{l.replace(/^[-*>\s]+/, '')}</div>)}
+        </div>
+      )}
+    </header>
+
+    <div class="wf-body">
+      <!-- 左：参数表单 -->
+      <div class="sticky">
+        <div class="panel">
+          <header>
+            <span>① 填参数</span>
+            <span class="hint" id="af-count">0 / {w.fields.length}</span>
+          </header>
+          <div class="body">
+            {w.fields.length === 0 ? (
+              <p style="font-size:13.5px;color:var(--text-mute)">
+                这个工作流不需要参数，直接复制右侧提示词即可。
+              </p>
+            ) : (
+              <form class="fields" id="af-form" onsubmit="return false">
+                {w.fields.map((f) => (
+                  <div class="field">
+                    <label for={`af-f${f.i}`}>{f.label}</label>
+                    <input
+                      id={`af-f${f.i}`}
+                      data-field={f.i}
+                      type="text"
+                      autocomplete="off"
+                      placeholder={f.options.length ? `例：${f.options[0]}` : '填写…'}
+                    />
+                    {f.options.length > 0 && (
+                      <div class="opts">
+                        {f.options.slice(0, 6).map((o) => (
+                          <button type="button" data-fill={f.i} data-value={o}>{o}</button>
+                        ))}
+                      </div>
+                    )}
+                    {f.options.length === 0 && f.hint !== f.label && (
+                      <div class="hint">提示：{f.hint}</div>
+                    )}
+                  </div>
+                ))}
+              </form>
+            )}
+            <div style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap">
+              <button class="btn sm" id="af-reset" type="button">清空</button>
+              <button class="btn sm" id="af-share" type="button">🔗 复制分享链接</button>
+              <button class="btn sm" id="af-download" type="button">⬇ 下载 .md</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右：提示词 + 试跑 -->
+      <div class="stack" style="padding-bottom:0">
+        <div class="panel">
+          <header>
+            <span>② 拿到提示词</span>
+            <span class="hint"><span id="af-chars">0</span> 字符</span>
+          </header>
+          <div class="codebar" style="padding:14px 17px 12px">
+            <div class="tabs">
+              <button class="chip" data-lang="zh" aria-pressed="true">中文</button>
+              {w.promptEn && <button class="chip" data-lang="en" aria-pressed="false">English</button>}
+            </div>
+            <button class="btn sm primary" id="af-copy" type="button" style="margin-left:auto">复制提示词</button>
+          </div>
+          <pre class="code" id="af-prompt" aria-live="polite"></pre>
+          <noscript>
+            <pre class="code">{w.promptZh}</pre>
+          </noscript>
+          <div class="body" style="padding-top:0">
+            <p class="run-note">
+              提示词里被替换掉的占位符会实时反映在上面的框里；没填的会原样保留，方便你对照。
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <header>
+            <span>③ 站内试跑（可选）</span>
+            <span class="hint">Workers AI · 免费额度</span>
+          </header>
+          <div class="body">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+              <button class="btn sm primary" id="af-run" type="button">▶ 用 AI 跑一遍</button>
+              <button class="btn sm" id="af-stop" type="button" disabled>停止</button>
+              <button class="btn sm" id="af-copy-out" type="button">复制结果</button>
+            </div>
+            <div class="run-out" id="af-out">点「用 AI 跑一遍」，把上面填好的提示词直接发给模型，结果流式打在这里。不用它也行 —— 复制提示词去你自己的 Agent 里跑，效果一样。</div>
+            <p class="run-note">
+              模型由部署者配置（默认 Llama 3.1 8B）。<strong style="color:var(--text-dim)">输出未经人工校验，涉及医学 / 投资 / 法律的内容请自行复核。</strong>
+            </p>
+          </div>
+        </div>
+
+        {w.outputFormat && (
+          <div class="panel">
+            <header>
+              <span>④ 预期输出格式</span>
+              <span class="hint">喂给模型，结果直接可用</span>
+            </header>
+            <div class="codebar" style="padding:14px 17px 0">
+              <button class="btn sm" data-copy="#af-format" data-copy-msg="输出格式已复制" type="button">复制格式</button>
+            </div>
+            <pre class="code" id="af-format">{w.outputFormat}</pre>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- 其余章节（定制建议 / 真实案例 / 公式库…） -->
+    {w.extras.length > 0 && (
+      <div class="stack">
+        {w.extras.map((e) => (
+          <div class="section-card">
+            <h2>📎 {e.title}</h2>
+            <div class="prose" set:html={e.html} />
+          </div>
+        ))}
+      </div>
+    )}
+
+    <!-- 相关 -->
+    <section>
+      <div class="sec-head">
+        <h2>接着看</h2>
+        <p>{w.categoryName} 里还有这些</p>
+        <a class="more" href="/workflows/">全部 {workflows.length} 个 →</a>
+      </div>
+      <div class="grid cards">
+        {others.map((o) => <WorkflowCard w={o} />)}
+      </div>
+    </section>
+  </div>
+
+  <script type="application/json" id="af-data" set:html={payload} />
+  <script>
+    const data = JSON.parse((document.getElementById('af-data') as HTMLElement).textContent || '{}');
+    // 布局里的公共函数（toast / copy）不能在这一层取引用：
+    // 两个 <script> 都是 module，执行顺序不保证，必须在调用时才去 window 上找。
+    const toast = (m: string) => (window as any).afToast?.(m);
+    const copy = async (t: string, m?: string) => {
+      const fn = (window as any).afCopy as ((x: string, y?: string) => Promise<void>) | undefined;
+      if (fn) return fn(t, m);
+      await navigator.clipboard.writeText(t).catch(() => {});
+      toast(m || '已复制');
+    };
+
+    const promptEl = document.getElementById('af-prompt') as HTMLPreElement;
+    const outEl = document.getElementById('af-out') as HTMLDivElement;
+    const charsEl = document.getElementById('af-chars') as HTMLElement;
+    const countEl = document.getElementById('af-count') as HTMLElement;
+    const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('#af-form input[data-field]'));
+
+    const state = { lang: 'zh', values: {} as Record<string, string> };
+
+    function currentPrompt(): string {
+      const base = state.lang === 'en' && data.promptEn ? data.promptEn : data.promptZh;
+      let text: string = base;
+      for (const f of data.fields) {
+        const v = state.values[String(f.i)];
+        if (!v) continue;
+        const token = state.lang === 'en' && f.enToken ? f.enToken : f.zhToken;
+        if (token) text = text.split(token).join(v);
+      }
+      return text;
+    }
+
+    function render() {
+      const text = currentPrompt();
+      promptEl.textContent = text;
+      charsEl.textContent = String(text.length);
+      if (countEl) {
+        const filled = Object.values(state.values).filter((v) => v && v.trim()).length;
+        countEl.textContent = `${filled} / ${data.fields.length}`;
+      }
+    }
+
+    // 表单输入
+    for (const el of inputs) {
+      el.addEventListener('input', () => {
+        state.values[el.dataset.field!] = el.value;
+        render();
+      });
+    }
+
+    // 快捷选项
+    document.querySelectorAll<HTMLButtonElement>('button[data-fill]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const i = btn.dataset.fill!;
+        const input = inputs.find((el) => el.dataset.field === i);
+        if (!input) return;
+        input.value = btn.dataset.value!;
+        state.values[i] = input.value;
+        render();
+      });
+    });
+
+    // 中英切换
+    document.querySelectorAll<HTMLButtonElement>('button[data-lang]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.lang = btn.dataset.lang as 'zh' | 'en';
+        document.querySelectorAll('button[data-lang]').forEach((b) =>
+          b.setAttribute('aria-pressed', String(b === btn)),
+        );
+        render();
+      });
+    });
+
+    // 清空 / 分享 / 下载
+    document.getElementById('af-reset')?.addEventListener('click', () => {
+      state.values = {};
+      for (const el of inputs) el.value = '';
+      render();
+      history.replaceState(null, '', location.pathname);
+    });
+
+    document.getElementById('af-share')?.addEventListener('click', () => {
+      const json = JSON.stringify(state.values);
+      const bytes = new TextEncoder().encode(json);
+      let bin = '';
+      for (const b of bytes) bin += String.fromCharCode(b);
+      const url = `${location.origin}${location.pathname}?p=${encodeURIComponent(btoa(bin))}`;
+      void copy(url, '分享链接已复制（含你填的参数）');
+    });
+
+    document.getElementById('af-download')?.addEventListener('click', () => {
+      const blob = new Blob(
+        [`# ${data.title}\n\n> 由 AgentFlow 生成 · ${location.href}\n\n---\n\n${currentPrompt()}\n`],
+        { type: 'text/markdown;charset=utf-8' },
+      );
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `agentflow-${data.slug}-${state.lang}.md`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    document.getElementById('af-copy')?.addEventListener('click', () => {
+      void copy(currentPrompt(), '提示词已复制，去 Agent 里粘贴');
+    });
+    document.getElementById('af-copy-out')?.addEventListener('click', () => {
+      void copy(outEl.textContent || '', '结果已复制');
+    });
+
+    // ---- 站内试跑 ----
+    const runBtn = document.getElementById('af-run') as HTMLButtonElement;
+    const stopBtn = document.getElementById('af-stop') as HTMLButtonElement;
+    let controller: AbortController | null = null;
+
+    runBtn?.addEventListener('click', async () => {
+      const prompt = currentPrompt();
+      outEl.textContent = '';
+      runBtn.disabled = true;
+      stopBtn.disabled = false;
+      controller = new AbortController();
+      try {
+        const res = await fetch('/api/run', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ slug: data.slug, prompt, lang: state.lang }),
+          signal: controller.signal,
+        });
+        if (!res.ok) {
+          const j = await res.json().catch(() => ({}));
+          outEl.textContent = `⚠️ ${(j as any).message || (j as any).error || `请求失败 ${res.status}`}`;
+          return;
+        }
+        const ct = res.headers.get('content-type') || '';
+        if (!ct.includes('text/event-stream') || !res.body) {
+          outEl.textContent = await res.text();
+          return;
+        }
+        const reader = res.body.getReader();
+        const dec = new TextDecoder();
+        let buf = '';
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          const lines = buf.split('\n');
+          buf = lines.pop() ?? '';
+          for (const line of lines) {
+            if (!line.startsWith('data:')) continue;
+            const raw = line.slice(5).trim();
+            if (!raw || raw === '[DONE]') continue;
+            try {
+              const j = JSON.parse(raw);
+              if (j.response) outEl.textContent += j.response;
+            } catch {
+              /* 非 JSON 的心跳行，忽略 */
+            }
+          }
+          outEl.scrollTop = outEl.scrollHeight;
+        }
+      } catch (err) {
+        if ((err as Error).name === 'AbortError') outEl.textContent += '\n\n[已停止]';
+        else outEl.textContent += `\n\n⚠️ ${(err as Error).message}`;
+      } finally {
+        runBtn.disabled = false;
+        stopBtn.disabled = true;
+        controller = null;
+        outEl.scrollTop = outEl.scrollHeight;
+      }
+    });
+
+    stopBtn?.addEventListener('click', () => controller?.abort());
+
+    // 从 ?p= 还原参数
+    try {
+      const p = new URLSearchParams(location.search).get('p');
+      if (p) {
+        const bin = atob(p);
+        const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+        const parsed = JSON.parse(new TextDecoder().decode(bytes));
+        for (const [k, v] of Object.entries(parsed)) {
+          state.values[k] = String(v);
+          const el = inputs.find((i) => i.dataset.field === k);
+          if (el) el.value = String(v);
+        }
+        void toast('已从分享链接还原参数');
+      }
+    } catch {
+      /* 参数坏了就当没有 */
+    }
+
+    render();
+  </script>
+</Base>

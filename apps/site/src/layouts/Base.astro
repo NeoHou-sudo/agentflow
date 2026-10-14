@@ -1,0 +1,136 @@
+---
+import '../styles/global.css';
+import { SITE, abs } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  jsonLd?: Record<string, unknown>[];
+  type?: string;
+  published?: string;
+}
+
+const { title, description, path, jsonLd = [], type = 'website', published } = Astro.props;
+const canonical = abs(Astro, path);
+const ogImage = abs(Astro, '/og.svg');
+const fullTitle = path === '/' ? `${SITE.name} · ${SITE.cn} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+const NAV = [
+  { href: '/workflows/', label: '全部工作流' },
+  { href: '/categories/ecommerce/', label: '电商' },
+  { href: '/categories/content/', label: '内容' },
+  { href: '/categories/investment/', label: '投资' },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    {published && <meta property="article:modified_time" content={published} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- 让 AI 爬虫直接找到给模型看的索引：/llms.txt -->
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM index" />
+
+    {jsonLd.map((obj) => (
+      <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+    ))}
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">
+          <span class="emoji">🦞</span>
+          <span>{SITE.name} <small>{SITE.cn}</small></span>
+        </a>
+        <nav class="nav">
+          {NAV.map((item) => (
+            <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>{item.label}</a>
+          ))}
+          <a href={SITE.repo} target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap row">
+        <span>🦞 {SITE.name} · {SITE.cn}</span>
+        <span>MIT License</span>
+        <span class="sp">
+          <a href="/llms.txt">llms.txt</a> · <a href="/sitemap.xml">sitemap</a> ·
+          <a href={SITE.repo} target="_blank" rel="noopener">GitHub</a>
+        </span>
+      </div>
+    </footer>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      // 全站共用的两个小工具：复制、toast 提示
+      const toastEl = document.getElementById('toast') as HTMLDivElement | null;
+      let toastTimer: number | undefined;
+      (window as any).afToast = (msg: string) => {
+        if (!toastEl) return;
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toastEl.classList.remove('show'), 1900);
+      };
+
+      (window as any).afCopy = async (text: string, okMsg = '已复制') => {
+        const toast = (window as any).afToast as (m: string) => void;
+        try {
+          await navigator.clipboard.writeText(text);
+          toast(okMsg);
+        } catch {
+          // 非 https / 无剪贴板权限时退回到老办法
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+          toast(okMsg);
+        }
+      };
+
+      // 声明式复制按钮：<button data-copy="#selector">
+      document.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement)?.closest('[data-copy]') as HTMLElement | null;
+        if (!btn) return;
+        const sel = btn.getAttribute('data-copy')!;
+        const src = document.querySelector(sel);
+        if (!src) return;
+        const text = (src as HTMLTextAreaElement).value ?? src.textContent ?? '';
+        void (window as any).afCopy(text, btn.getAttribute('data-copy-msg') ?? '已复制');
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { workflows } from '../lib/catalog';
+---
+
+<Base title="页面不存在" description="这个地址没有对应的页面。" path="/404/">
+  <div class="wrap" style="padding:80px 20px 120px;text-align:center">
+    <div style="font-size:56px">🦞</div>
+    <h1 style="font-size:26px;margin:14px 0 10px">这儿没有东西</h1>
+    <p style="color:var(--text-dim)">链接可能拼错了，或者这个工作流被改过名字。</p>
+    <div style="margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a class="btn primary" href="/workflows/">看全部 {workflows.length} 个工作流</a>
+      <a class="btn" href="/">回首页</a>
+    </div>
+  </div>
+</Base>

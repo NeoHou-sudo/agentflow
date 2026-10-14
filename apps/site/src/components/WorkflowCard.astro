@@ -1,0 +1,32 @@
+---
+import type { Workflow } from '../lib/catalog';
+import { DIFFICULTY_LABEL } from '../lib/site';
+
+interface Props {
+  w: Workflow;
+  showCategory?: boolean;
+}
+
+const { w, showCategory = true } = Astro.props;
+const href = `/workflows/${w.slug}/`;
+---
+
+<article class="card" data-cat={w.category} data-search={`${w.title} ${w.titleEn} ${w.scene} ${w.categoryName} ${w.summary}`.toLowerCase()}>
+  <div class="top">
+    <span class="pill accent">{w.icon} {showCategory ? w.categoryName : DIFFICULTY_LABEL[w.difficulty]}</span>
+    {w.fields.length > 0 && <span class="pill">{w.fields.length} 个参数</span>}
+    {w.promptEn && <span class="pill blue">中英双语</span>}
+  </div>
+  <h3>
+    <a href={href}>{w.title}</a>
+    {w.titleEn && <span class="en">{w.titleEn}</span>}
+  </h3>
+  <p>{w.summary || w.scene}</p>
+  <div class="foot">
+    <span>{'★'.repeat(w.difficulty)}</span>
+    <span>{DIFFICULTY_LABEL[w.difficulty]}</span>
+    <span class="acts">
+      <a href={href}>填参数 →</a>
+    </span>
+  </div>
+</article>

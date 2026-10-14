@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import WorkflowCard from '../../components/WorkflowCard.astro';
+import { workflows, categories, stats } from '../../lib/catalog';
+import { abs } from '../../lib/site';
+
+export const prerender = true;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: '全部 AI Agent 工作流',
+    url: abs(Astro, '/workflows/'),
+    inLanguage: 'zh-CN',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    numberOfItems: workflows.length,
+    itemListElement: workflows.map((w, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: w.title,
+      url: abs(Astro, `/workflows/${w.slug}/`),
+    })),
+  },
+];
+---
+
+<Base
+  title={`全部 ${workflows.length} 个 AI Agent 工作流`}
+  description={`可搜索的 AI Agent 工作流清单：${categories.map((c) => c.name).join(' / ')}，共 ${workflows.length} 个，全部支持在线填参数、一键复制提示词。`}
+  path="/workflows/"
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <section style="padding-bottom:14px">
+      <div class="sec-head" style="margin-bottom:10px">
+        <h2>全部工作流</h2>
+        <p>{workflows.length} 个 · {stats.fields} 个可填参数 · {stats.bilingual} 个中英双语</p>
+      </div>
+
+      <div class="toolbar">
+        <input
+          type="search"
+          id="q"
+          placeholder="搜场景 / 关键词，例如：选品、脚本、持仓、威胁…"
+          aria-label="搜索工作流"
+          autocomplete="off"
+        />
+        <div class="chips" role="group" aria-label="按分类筛选">
+          <button class="chip" data-cat="all" aria-pressed="true">全部</button>
+          {categories.map((c) => (
+            <button class="chip" data-cat={c.id} aria-pressed="false">{c.icon} {c.name}</button>
+          ))}
+        </div>
+      </div>
+
+      <p class="empty-hint" id="empty" hidden>没有匹配的工作流。换个关键词，或<a href={abs(Astro, '/workflows/')}>看全部</a>。</p>
+    </section>
+
+    <div class="grid cards" id="list" style="padding-bottom:52px">
+      {workflows.map((w) => <WorkflowCard w={w} />)}
+    </div>
+  </div>
+
+  <script>
+    const q = document.getElementById('q') as HTMLInputElement;
+    const list = document.getElementById('list') as HTMLDivElement;
+    const empty = document.getElementById('empty') as HTMLParagraphElement;
+    const cards = Array.from(list.querySelectorAll<HTMLElement>('.card'));
+    const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.chip[data-cat]'));
+
+    let cat = 'all';
+    const params = new URLSearchParams(location.search);
+    if (params.get('cat')) cat = params.get('cat')!;
+    if (params.get('q')) q.value = params.get('q')!;
+
+    function apply() {
+      const term = q.value.trim().toLowerCase();
+      let shown = 0;
+      for (const card of cards) {
+        const okCat = cat === 'all' || card.dataset.cat === cat;
+        const okTerm = !term || (card.dataset.search || '').includes(term);
+        const ok = okCat && okTerm;
+        card.style.display = ok ? '' : 'none';
+        if (ok) shown += 1;
+      }
+      empty.hidden = shown > 0;
+      for (const c of chips) c.setAttribute('aria-pressed', String(c.dataset.cat === cat));
+    }
+
+    q.addEventListener('input', apply);
+    for (const c of chips) {
+      c.addEventListener('click', () => {
+        cat = c.dataset.cat!;
+        apply();
+      });
+    }
+    apply();
+  </script>
+</Base>

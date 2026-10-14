@@ -1,0 +1,20 @@
+# deps
+node_modules/
+
+# build output（Cloudflare Worker 的产物，不提交）
+dist/
+apps/site/dist/
+apps/site/.astro/
+apps/site/.wrangler/
+.wrangler/
+
+# 构建期生成的目录数据，源是 workflows/**/*.md
+apps/site/src/data/workflows.json
+
+# 本地机密
+.env
+.dev.vars
+*.local
+
+# macOS
+.DS_Store
