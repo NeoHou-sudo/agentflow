@@ -115,10 +115,9 @@ const NAV = [
 
     <footer class="site-footer">
       <div class="wrap row">
-        <span>
-          {SHELL.mark} {SITE.name}{SITE.cn ? ` · ${SITE.cn}` : ''}
-          {SHELL.brand?.imageLine ? ` — ${SHELL.brand.imageLine}` : ''}
-        </span>
+        {/* 页脚不放标记 —— 页眉已经有 Logo 了，再放一个字符兜底在这儿
+            会读成「港 AgentFlow」这种奇怪的东西 */}
+        <span>{SITE.name}</span>
         <span>MIT License</span>
         <span class="sp">
           <a href="/llms.txt">llms.txt</a> · <a href="/sitemap.xml">sitemap</a> ·

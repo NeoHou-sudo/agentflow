@@ -20,9 +20,10 @@
 export const DEFAULT_SHELL = 'harness';
 
 /**
- * 浅忆云主符号（云 + 帆 + 水线，金色前帆）。
- * 从《浅忆云_品牌视觉手册_V1》里原样取出，只去了编辑平台注入的属性 ——
- * 手册第六条纪律：不许改色、不许变形、不许拆件，所以这里不做任何「优化」。
+ * Harbor 壳的标记：云 + 帆 + 水线，金色前帆。
+ * 图形照一份内部品牌视觉手册的原样取出，只去了编辑平台注入的属性 ——
+ * 那条手册的纪律是「不许改色、不许变形、不许拆件」，所以这里不做任何「优化」。
+ * 本壳不携带该公司品牌：没有公司名、没有 Slogan、没有商标声明。
  */
 const QIANYI_MARK_SVG = `<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg"> <rect fill="#0C2440" height="108" rx="30" width="108" x="6" y="6"/> <g fill="#F5F8FB"><circle cx="76" cy="28" r="6.5"/><circle cx="85" cy="25" r="8"/><circle cx="91.5" cy="29" r="5.5"/><rect height="7" rx="3.5" width="22" x="72" y="28"/></g> <path d="M56 82 L67 40 C 79 56 86 71 88 82 Z" fill="#F5F8FB"/> <path d="M54 82 L54 46 C 46 59 39 71 34 82 Z" fill="#D9A441"/> <path d="M20 90 Q 60 99 100 90" fill="none" stroke="#F5F8FB" stroke-linecap="round" stroke-width="5.5"/> </svg>`;
 
@@ -60,76 +61,52 @@ export const REQUIRED_TOKENS = [
 /** copy 里必须有的键 —— 缺了就是把「营销壳」做成了空壳 */
 export const REQUIRED_COPY = ['description', 'audience', 'props', 'pitch', 'tone'];
 
-/**
- * 品牌壳（有正式视觉手册的那种）用这两段声明出处。
- * 别的壳（harness / atelier / lobster）是项目自己的皮肤，没有 brand，也不该假装有。
- */
-const BRAND_KEYS = ['name', 'nameEn', 'manualTitle', 'manualUrl', 'slogan'];
-
-/** 有 brand 的壳，必须把品牌出处写全 —— 不然半年后没人知道色板哪来的 */
-function assertBrandValid(key, brand) {
-  for (const k of BRAND_KEYS) {
-    if (!brand?.[k]) throw new Error(`壳 ${key} 的 brand 缺少 ${k}（品牌壳要写清出处）`);
-  }
-}
-
 export const SHELLS = {
   /* ------------------------------------------------------------------ */
-  qianyi: {
-    id: 'qianyi',
-    label: '浅忆云（品牌壳）',
+  harbor: {
+    id: 'harbor',
+    label: 'Harbor 港口',
     note:
-      '完全按《浅忆云_品牌视觉手册_V1》做：靛海 + 曦金 + 月白，宋体标题 / 黑体正文 / Inter / JetBrains Mono。' +
-      '色板、字体、Logo 纪律的唯一真源是那份手册，不要凭感觉改这个壳。',
+      '浅色 + 靛海 / 曦金 / 月白 + 宋体标题。**配色与排版规范源自一份内部品牌视觉手册**' +
+      '（70/20/10 用色比例、字体分工、字距与行高纪律都照它来），但本壳不带任何公司品牌 ——' +
+      '名字、Slogan、Logo 归属都不在这里。视觉照抄，品牌不沾。',
     scheme: 'light',
     name: 'AgentFlow',
-    // 手册：英文行全大写 + 字距 +0.30em，作「辅助线」而非正文
-    subtitle: 'SHALLOW CLOUD',
-    // 没有 SVG 时的兜底字符。真标在 markSvg —— 手册：不许拆件、不许改色
-    mark: '浅',
+    // 不带公司英文名。壳的副标题位留给空 —— 页眉只有产品名，更像工具，不像公司门面。
+    subtitle: '',
+    // markSvg 是真标记（云 + 帆 + 水线，金色前帆）；mark 只是它加载失败时的字符兜底
+    mark: '港',
     markMono: false,
     markSvg: QIANYI_MARK_SVG,
-    brand: {
-      name: '浅忆云',
-      nameEn: 'SHALLOW CLOUD',
-      since: '2023.06.13',
-      slogan: '让世界记得中国工厂',
-      imageLine: '浅处起云，忆通四海',
-      manualTitle: '浅忆云_品牌视觉手册_V1',
-      manualUrl: 'https://www.workbuddy.cn/space/d/uqmKNDdieQ2CHutPSlF7TE',
-      note:
-        '主 Slogan 一份物料只出现一处；金色面积不超过 10%，超过就从「稳」滑向「促销」；' +
-        '不用红色做强调（外贸场景红绿会被误读）。手册里「先在自己公司跑通再卖」是可信度锚点，任何版本都不要删。',
-    },
-    title: 'AgentFlow · 浅忆云',
-    tagline: '{n} 条真跑过的 AI Agent 工作流 · 让世界记得中国工厂',
+    title: 'AgentFlow · Harbor',
+    tagline: '{n} 条真跑过的 AI Agent 工作流 · 可填空 · 可复制 · 可被程序调用',
     hero: {
-      line1: '把提示词',
-      line2Pre: '做成',
-      em: '记得住的资产',
+      line1: '别再从零憋提示词',
+      line2Pre: '填参数，',
+      em: '直接拿结果',
       line2Post: '',
       ogLead: '填参数 → 提示词自动拼好 → 复制走，或者当场跑一遍',
       lead:
-        '每一条都是真跑过、真出过结果的。填参数，拿到拼好的提示词，或者就在这里跑一遍看结果。' +
-        '浅处起云，忆通四海 —— 把复杂的事做到浅白可用。',
+        '每一条都是自己先跑通，才放上来的。填参数，拿到拼好的提示词，' +
+        '或者就在这里跑一遍看结果。',
     },
     copy: {
       description:
         '{n} 条真跑过的 AI Agent 工作流，覆盖电商选品、投资分析、内容创作、临床证据、安全审计五类场景。' +
         '每条都能在线填参数、一键复制提示词，或直接跑出结果。',
-      audience: '把中国工厂的生意做到海外的人 —— 以及所有不想每次从零憋提示词的人。',
+      audience: '不想每次从零憋提示词的人 —— 以及要把 AI 接进自己系统的人。',
       props: [
         { title: '真跑过', body: '每一条都有真实输入和真实产出，不是理论生成的' },
         { title: '填参数就够', body: '提示词自动拼好，不用自己找哪里要改' },
         { title: '输出有定式', body: '每条都规定输出格式，结果能直接进文档和会议' },
         { title: '能接进系统', body: 'JSON 与 raw.md 端点带 CORS，程序可以直接取走' },
       ],
-      pitch: '把提示词做成记得住的资产。',
+      pitch: '把提示词做成能交出去的东西。',
       tone: [
         '标题用宋体，正文用黑体，英文辅助行全大写 + 大字距',
-        '不用红色做强调 —— 外贸场景里红绿会被误读，强调只给曦金',
+        '不用红色做强调 —— 红与绿容易被误读，强调只给曦金',
         '一个画面里金色不超过 10%，超过就从「稳」滑向「促销」',
-        '不制造概念，不堆术语，把复杂的事做到浅白可用',
+        '不堆术语，把复杂的事讲清楚',
       ],
     },
     fonts: {
@@ -166,7 +143,7 @@ export const SHELLS = {
       'run-text': '#16202B',
       'header-bg': 'rgba(244,247,250,0.88)',
       'shadow-rgb': '12,36,64',
-      // 手册：徽章用圆角方形，比圆形更适合做图标
+      // 徽章用圆角方形，比圆形更适合做图标
       radius: '6px',
       'radius-sm': '4px',
     },
@@ -418,7 +395,6 @@ export function assertShellsValid(shells = SHELLS) {
         throw new Error(`壳 ${key} 的 copy.props[${i}] 必须是 {title, body}`);
       }
     }
-    if (s.brand) assertBrandValid(key, s.brand);
     if (s.markSvg && !s.markSvg.includes('<svg')) {
       throw new Error(`壳 ${key} 的 markSvg 不是一段 SVG`);
     }

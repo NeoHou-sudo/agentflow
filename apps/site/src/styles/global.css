@@ -402,143 +402,143 @@ pre.code.plain { border: 1px solid var(--line); border-radius: var(--radius-sm);
 [data-shell="lobster"] .brand .mark { font-size: 21px; }
 
 /* ==========================================================================
-   浅忆云（品牌壳）
-   色板 / 字体 / 纪律的唯一真源是《浅忆云_品牌视觉手册_V1》：
-     https://www.workbuddy.cn/space/d/uqmKNDdieQ2CHutPSlF7TE
-   改这个壳之前先读手册。这里只做「手册管不到、但 CSS 必须表态」的几件事。
+   Harbor 壳
+   配色 / 字体 / 纪律照一份内部品牌视觉手册来（70/20/10 用色比例、字体分工、
+   字距与行高纪律）。这个壳不携带那个品牌 —— 没有公司名、没有 Slogan。
+   这里只做「手册管不到、但 CSS 必须表态」的几件事。
    ========================================================================== */
 
 /* 手册排版纪律：正文行高 1.85，段距 ≥ 1 行 */
-[data-shell="qianyi"] body { line-height: 1.85; }
-[data-shell="qianyi"] p { margin-block: 0 1em; }
+[data-shell="harbor"] body { line-height: 1.85; }
+[data-shell="harbor"] p { margin-block: 0 1em; }
 
 /* 手册：中文标题用宋体，字距 +0.05~0.14em，越短字距越大 */
-[data-shell="qianyi"] .hero h1,
-[data-shell="qianyi"] .wf-head h1,
-[data-shell="qianyi"] .sec-head h2,
-[data-shell="qianyi"] .card h3,
-[data-shell="qianyi"] .section-card > h2,
-[data-shell="qianyi"] .step b {
+[data-shell="harbor"] .hero h1,
+[data-shell="harbor"] .wf-head h1,
+[data-shell="harbor"] .sec-head h2,
+[data-shell="harbor"] .card h3,
+[data-shell="harbor"] .section-card > h2,
+[data-shell="harbor"] .step b {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: 0.06em;
 }
-[data-shell="qianyi"] .brand b { letter-spacing: 0.1em; }
+[data-shell="harbor"] .brand b { letter-spacing: 0.1em; }
 
 /* 手册：英文行全大写 + 字距 +0.30em，作「辅助线」而非正文 */
-[data-shell="qianyi"] .brand small {
+[data-shell="harbor"] .brand small {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 11px;
   font-weight: 500;
 }
-[data-shell="qianyi"] .url,
-[data-shell="qianyi"] .pill,
-[data-shell="qianyi"] .chip { letter-spacing: 0.02em; }
+[data-shell="harbor"] .url,
+[data-shell="harbor"] .pill,
+[data-shell="harbor"] .chip { letter-spacing: 0.02em; }
 
 /* 手册：金色是「贵金属」，只给要人一眼看到的那一个点。
    所以 hero 高亮和 MIT 那枚用曦金，其余一律靛海 —— 不是「顺手也上个色」。 */
-[data-shell="qianyi"] .hero h1 em,
-[data-shell="qianyi"] .wf-head h1 em {
+[data-shell="harbor"] .hero h1 em,
+[data-shell="harbor"] .wf-head h1 em {
   background: none;
   -webkit-text-fill-color: currentColor;
   color: var(--accent);
 }
-[data-shell="qianyi"] .btn.primary {
+[data-shell="harbor"] .btn.primary {
   background: var(--brand);
   border-color: var(--brand);
 }
-[data-shell="qianyi"] .btn.primary:hover { box-shadow: 0 10px 30px rgba(var(--brand-rgb), 0.22); }
-[data-shell="qianyi"] .pill.new,
-[data-shell="qianyi"] .pill.hot {
+[data-shell="harbor"] .btn.primary:hover { box-shadow: 0 10px 30px rgba(var(--brand-rgb), 0.22); }
+[data-shell="harbor"] .pill.new,
+[data-shell="harbor"] .pill.hot {
   background: rgba(var(--accent-rgb), 0.12);
   border-color: var(--accent);
   color: #8A6416; /* 曦金的深一档，白底上做小字才够对比 */
 }
-[data-shell="qianyi"] .stat b,
-[data-shell="qianyi"] .cat-tile .n { background: none; -webkit-text-fill-color: currentColor; color: var(--brand); }
-[data-shell="qianyi"] .card:hover { border-color: var(--brand); box-shadow: 0 8px 28px rgba(var(--shadow-rgb), 0.10); }
-[data-shell="qianyi"] .site-footer .row { border-top-color: var(--line); }
+[data-shell="harbor"] .stat b,
+[data-shell="harbor"] .cat-tile .n { background: none; -webkit-text-fill-color: currentColor; color: var(--brand); }
+[data-shell="harbor"] .card:hover { border-color: var(--brand); box-shadow: 0 8px 28px rgba(var(--shadow-rgb), 0.10); }
+[data-shell="harbor"] .site-footer .row { border-top-color: var(--line); }
 
 /* 手册：辅助图形只允许靛海 / 曦金 / 云青，且透明度由深到浅 */
-[data-shell="qianyi"] .site-header::after {
+[data-shell="harbor"] .site-header::after {
   content: '';
   position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
   background: linear-gradient(90deg, rgba(var(--brand-rgb), 0.35), rgba(var(--brand-rgb), 0.08));
 }
 
 /* 真 Logo：手册不许改色，所以只控制尺寸，不动 fill */
-[data-shell="qianyi"] .brand .logo { display: inline-flex; }
-[data-shell="qianyi"] .brand .logo svg { width: 26px; height: 26px; display: block; }
-[data-shell="qianyi"] .brand .logo svg * { vector-effect: non-scaling-stroke; }
+[data-shell="harbor"] .brand .logo { display: inline-flex; }
+[data-shell="harbor"] .brand .logo svg { width: 26px; height: 26px; display: block; }
+[data-shell="harbor"] .brand .logo svg * { vector-effect: non-scaling-stroke; }
 
 /* ==========================================================================
-   浅忆云（品牌壳）
-   色板 / 字体 / 纪律的唯一真源是《浅忆云_品牌视觉手册_V1》：
-     https://www.workbuddy.cn/space/d/uqmKNDdieQ2CHutPSlF7TE
-   改这个壳之前先读手册。这里只做「手册管不到、但 CSS 必须表态」的几件事。
+   Harbor 壳
+   配色 / 字体 / 纪律照一份内部品牌视觉手册来（70/20/10 用色比例、字体分工、
+   字距与行高纪律）。这个壳不携带那个品牌 —— 没有公司名、没有 Slogan。
+   这里只做「手册管不到、但 CSS 必须表态」的几件事。
    ========================================================================== */
 
 /* 手册排版纪律：正文行高 1.85，段距 ≥ 1 行 */
-[data-shell="qianyi"] body { line-height: 1.85; }
-[data-shell="qianyi"] p { margin-block: 0 1em; }
+[data-shell="harbor"] body { line-height: 1.85; }
+[data-shell="harbor"] p { margin-block: 0 1em; }
 
 /* 手册：中文标题用宋体，字距 +0.05~0.14em，越短字距越大 */
-[data-shell="qianyi"] .hero h1,
-[data-shell="qianyi"] .wf-head h1,
-[data-shell="qianyi"] .sec-head h2,
-[data-shell="qianyi"] .card h3,
-[data-shell="qianyi"] .section-card > h2,
-[data-shell="qianyi"] .step b {
+[data-shell="harbor"] .hero h1,
+[data-shell="harbor"] .wf-head h1,
+[data-shell="harbor"] .sec-head h2,
+[data-shell="harbor"] .card h3,
+[data-shell="harbor"] .section-card > h2,
+[data-shell="harbor"] .step b {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: 0.06em;
 }
-[data-shell="qianyi"] .brand b { letter-spacing: 0.1em; }
+[data-shell="harbor"] .brand b { letter-spacing: 0.1em; }
 
 /* 手册：英文行全大写 + 字距 +0.30em，作「辅助线」而非正文 */
-[data-shell="qianyi"] .brand small {
+[data-shell="harbor"] .brand small {
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 11px;
   font-weight: 500;
 }
-[data-shell="qianyi"] .url,
-[data-shell="qianyi"] .pill,
-[data-shell="qianyi"] .chip { letter-spacing: 0.02em; }
+[data-shell="harbor"] .url,
+[data-shell="harbor"] .pill,
+[data-shell="harbor"] .chip { letter-spacing: 0.02em; }
 
 /* 手册：金色是「贵金属」，只给要人一眼看到的那一个点。
    所以 hero 高亮和 MIT 那枚用曦金，其余一律靛海 —— 不是「顺手也上个色」。 */
-[data-shell="qianyi"] .hero h1 em,
-[data-shell="qianyi"] .wf-head h1 em {
+[data-shell="harbor"] .hero h1 em,
+[data-shell="harbor"] .wf-head h1 em {
   background: none;
   -webkit-text-fill-color: currentColor;
   color: var(--accent);
 }
-[data-shell="qianyi"] .btn.primary {
+[data-shell="harbor"] .btn.primary {
   background: var(--brand);
   border-color: var(--brand);
 }
-[data-shell="qianyi"] .btn.primary:hover { box-shadow: 0 10px 30px rgba(var(--brand-rgb), 0.22); }
-[data-shell="qianyi"] .pill.new,
-[data-shell="qianyi"] .pill.hot {
+[data-shell="harbor"] .btn.primary:hover { box-shadow: 0 10px 30px rgba(var(--brand-rgb), 0.22); }
+[data-shell="harbor"] .pill.new,
+[data-shell="harbor"] .pill.hot {
   background: rgba(var(--accent-rgb), 0.12);
   border-color: var(--accent);
   color: #8A6416; /* 曦金的深一档，白底上做小字才够对比 */
 }
-[data-shell="qianyi"] .stat b,
-[data-shell="qianyi"] .cat-tile .n { background: none; -webkit-text-fill-color: currentColor; color: var(--brand); }
-[data-shell="qianyi"] .card:hover { border-color: var(--brand); box-shadow: 0 8px 28px rgba(var(--shadow-rgb), 0.10); }
-[data-shell="qianyi"] .site-footer .row { border-top-color: var(--line); }
+[data-shell="harbor"] .stat b,
+[data-shell="harbor"] .cat-tile .n { background: none; -webkit-text-fill-color: currentColor; color: var(--brand); }
+[data-shell="harbor"] .card:hover { border-color: var(--brand); box-shadow: 0 8px 28px rgba(var(--shadow-rgb), 0.10); }
+[data-shell="harbor"] .site-footer .row { border-top-color: var(--line); }
 
 /* 手册：辅助图形只允许靛海 / 曦金 / 云青，且透明度由深到浅 */
-[data-shell="qianyi"] .site-header::after {
+[data-shell="harbor"] .site-header::after {
   content: '';
   position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
   background: linear-gradient(90deg, rgba(var(--brand-rgb), 0.35), rgba(var(--brand-rgb), 0.08));
 }
 
 /* 真 Logo：手册不许改色，所以只控制尺寸，不动 fill */
-[data-shell="qianyi"] .brand .logo { display: inline-flex; }
-[data-shell="qianyi"] .brand .logo svg { width: 26px; height: 26px; display: block; }
-[data-shell="qianyi"] .brand .logo svg * { vector-effect: non-scaling-stroke; }
+[data-shell="harbor"] .brand .logo { display: inline-flex; }
+[data-shell="harbor"] .brand .logo svg { width: 26px; height: 26px; display: block; }
+[data-shell="harbor"] .brand .logo svg * { vector-effect: non-scaling-stroke; }
