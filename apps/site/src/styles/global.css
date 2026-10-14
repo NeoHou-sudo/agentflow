@@ -21,6 +21,15 @@
   --cyan: #22d3ee;
   --radius: 14px;
   --radius-sm: 9px;
+
+  /* 下面这些以前是写死的颜色，换浅色主题会露馅。现在全部由主题注入。 */
+  --brand-rgb: 255, 107, 53;
+  --brand2-rgb: 255, 45, 85;
+  --code-text: #d8d8e4;
+  --run-bg: #07070c;
+  --run-text: #c9c9d6;
+  --header-bg: rgba(10, 10, 15, 0.82);
+  --shadow-rgb: 0, 0, 0;
   --maxw: 1120px;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", "Fira Code", Menlo, Consolas, monospace;
 }
@@ -53,7 +62,7 @@ code {
 /* ---------------- header ---------------- */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(10, 10, 15, 0.82);
+  background: var(--header-bg);
   backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--line-soft);
 }
@@ -87,7 +96,7 @@ code {
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   border-color: transparent; color: #fff;
 }
-.btn.primary:hover { color: #fff; box-shadow: 0 10px 30px rgba(255, 107, 53, .25); }
+.btn.primary:hover { color: #fff; box-shadow: 0 10px 30px rgba(var(--brand-rgb), 0.25); }
 .btn.ghost { background: transparent; }
 .btn.sm { padding: 7px 13px; font-size: 13px; }
 .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
@@ -139,9 +148,9 @@ section { padding: 44px 0; }
   padding: 2.5px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 600;
   background: var(--panel-2); color: var(--text-dim); border: 1px solid var(--line-soft);
 }
-.pill.accent { color: var(--brand-soft); border-color: rgba(255, 107, 53, .3); background: rgba(255, 107, 53, .08); }
-.pill.green { color: var(--green); border-color: rgba(74, 222, 128, .25); background: rgba(74, 222, 128, .07); }
-.pill.blue { color: var(--blue); border-color: rgba(96, 165, 250, .25); background: rgba(96, 165, 250, .07); }
+.pill.accent { color: var(--brand-soft); border-color: rgba(var(--brand-rgb), 0.35); background: rgba(var(--brand-rgb), 0.09); }
+.pill.green { color: var(--green); border-color: color-mix(in srgb, var(--green) 30%, transparent); background: color-mix(in srgb, var(--green) 9%, transparent); }
+.pill.blue { color: var(--blue); border-color: color-mix(in srgb, var(--blue) 30%, transparent); background: color-mix(in srgb, var(--blue) 9%, transparent); }
 .pill.new { color: #fff; background: var(--brand-2); border-color: transparent; }
 
 /* ---------------- category tile ---------------- */
@@ -189,10 +198,12 @@ section { padding: 44px 0; }
 
 .disclaimer {
   margin-top: 20px; padding: 15px 17px; border-radius: var(--radius-sm);
-  background: rgba(255, 45, 85, .07); border: 1px solid rgba(255, 45, 85, .3);
-  color: #ffc9d3; font-size: 13.5px;
+  background: rgba(var(--brand2-rgb), 0.08);
+  border: 1px solid rgba(var(--brand2-rgb), 0.34);
+  color: color-mix(in srgb, var(--brand-2) 55%, var(--text));
+  font-size: 13.5px;
 }
-.disclaimer b { color: #ff8fa3; }
+.disclaimer b { color: var(--brand-2); }
 
 .wf-body { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 24px; padding: 30px 0; align-items: start; }
 @media (max-width: 900px) { .wf-body { grid-template-columns: 1fr; } }
@@ -229,7 +240,7 @@ section { padding: 44px 0; }
 pre.code {
   margin: 0; padding: 16px 18px; background: var(--panel-2);
   border-top: 1px solid var(--line-soft); max-height: 520px; overflow: auto;
-  font-family: var(--mono); font-size: 12.6px; line-height: 1.75; color: #d8d8e4;
+  font-family: var(--mono); font-size: 12.6px; line-height: 1.75; color: var(--code-text);
   white-space: pre-wrap; word-break: break-word;
 }
 pre.code:first-child { border-top: none; }
@@ -238,9 +249,9 @@ pre.code.plain { border: 1px solid var(--line); border-radius: var(--radius-sm);
 /* run panel */
 .run-out {
   font-family: var(--mono); font-size: 12.6px; line-height: 1.8;
-  background: #07070c; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--run-bg); border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 15px; min-height: 130px; max-height: 460px; overflow: auto;
-  white-space: pre-wrap; word-break: break-word; color: #c9c9d6;
+  white-space: pre-wrap; word-break: break-word; color: var(--run-text);
 }
 .run-out .cursor { color: var(--brand); animation: blink 1s steps(2) infinite; }
 @keyframes blink { 50% { opacity: 0 } }
@@ -262,7 +273,7 @@ pre.code.plain { border: 1px solid var(--line); border-radius: var(--radius-sm);
   background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 14px 16px; overflow: auto;
 }
-.prose pre code { background: none; border: none; padding: 0; color: #d8d8e4; }
+.prose pre code { background: none; border: none; padding: 0; color: var(--code-text); }
 .prose blockquote {
   border-left: 3px solid var(--brand); padding: 4px 0 4px 14px; color: var(--text-dim);
 }
@@ -292,7 +303,7 @@ pre.code.plain { border: 1px solid var(--line); border-radius: var(--radius-sm);
   background: var(--panel); border: 1px solid var(--brand); color: var(--text);
   padding: 11px 22px; border-radius: 10px; font-size: 13.5px; font-weight: 600;
   opacity: 0; pointer-events: none; transition: .22s; z-index: 999;
-  box-shadow: 0 16px 44px rgba(0, 0, 0, .55);
+  box-shadow: 0 16px 44px rgba(var(--shadow-rgb), 0.32);
 }
 #toast.show { opacity: 1; transform: translate(-50%, 0); }
 
@@ -311,3 +322,77 @@ pre.code.plain { border: 1px solid var(--line); border-radius: var(--radius-sm);
   .stats-row { gap: 28px; }
   .hero { padding-top: 46px; }
 }
+
+/* ==========================================================================
+   主题级差异
+   颜色已经全部走变量了；这里只放不能靠变量表达的东西 —— 字体、圆角语言、
+   以及少数「同一个组件在不同壳里该长得不一样」的细节。
+   换主题时先动 themes.mjs 的 tokens，实在表达不了才往这里加规则。
+   ========================================================================== */
+
+/* 深色壳 */
+[data-theme="harness"] .title,
+[data-theme="harness"] .hero h1,
+[data-theme="harness"] .sec-head h2,
+[data-theme="harness"] .card h3,
+[data-theme="harness"] .wf-head h1 {
+  font-family: var(--mono);
+  letter-spacing: -0.02em;
+}
+[data-theme="harness"] .hero h1 em {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--brand);
+}
+[data-theme="harness"] .brand .emoji,
+[data-theme="harness"] .brand .mark {
+  font-family: var(--mono);
+  font-weight: 700;
+}
+[data-theme="harness"] .stat b { background: none; -webkit-text-fill-color: currentColor; color: var(--brand); }
+
+/* 浅色高定壳：衬线标题、直角、大留白 */
+/* 只让标题走衬线：中文长段落用宋体读起来太累，正文保持无衬线 */
+[data-theme="atelier"] .hero h1,
+[data-theme="atelier"] .wf-head h1,
+[data-theme="atelier"] .sec-head h2,
+[data-theme="atelier"] .card h3,
+[data-theme="atelier"] .section-card > h2 {
+  font-family: "Songti SC", "STSong", Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+[data-theme="atelier"] .hero h1 em {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--brand);
+  font-style: italic;
+}
+[data-theme="atelier"] .card,
+[data-theme="atelier"] .cat-tile,
+[data-theme="atelier"] .step,
+[data-theme="atelier"] .toolbar,
+[data-theme="atelier"] .panel,
+[data-theme="atelier"] .section-card { box-shadow: 0 1px 0 rgba(var(--shadow-rgb), 0.05); }
+[data-theme="atelier"] .pill,
+[data-theme="atelier"] .chip { letter-spacing: 0.02em; }
+[data-theme="atelier"] .brand .mark {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: var(--brand);
+  border-radius: 3px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+[data-theme="atelier"] .site-header { border-bottom-color: var(--line); }
+[data-theme="atelier"] .stat b,
+[data-theme="atelier"] .hero p.lead { letter-spacing: 0.01em; }
+[data-theme="atelier"] .stat b { background: none; -webkit-text-fill-color: currentColor; color: var(--brand); }
+
+/* 龙虾壳（v1 原貌）：橙红渐变标题保持原样 */
+[data-theme="lobster"] .brand .mark { font-size: 21px; }

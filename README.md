@@ -1,6 +1,8 @@
-# 🦞 AgentFlow
+# AgentFlow
 
-> 16 个真跑过的 AI Agent 工作流。**填参数 → 提示词自动拼好 → 复制走，或者当场跑一遍。**
+> 16 条真跑过的 AI Agent 工作流。**填参数 → 提示词自动拼好 → 复制走，或者当场跑一遍。**
+
+外壳可换（见 [换壳](#换壳)），工作流不变 —— 内容和壳是分开的。
 
 站点跑在 Cloudflare Workers 上，免费档足够。
 
@@ -115,7 +117,8 @@ pnpm dev      # http://localhost:4321
 | `pnpm catalog` | 把 md 编译成数据 **+ 跑内容不变式检查**（有问题直接报错） |
 | `pnpm build` | 构建 Cloudflare 产物 |
 | `pnpm deploy` | 部署前检查 → 构建 → 推送 |
-| `pnpm og` | 重新生成分享卡 `og.png`（改了内容数字后跑） |
+| `pnpm og` | 重新生成分享卡 `og.png`（按当前主题） |
+| `pnpm theme` | 列/切换/预览主题（换壳） |
 
 ## 部署
 
@@ -184,6 +187,35 @@ pnpm deploy
    放到独立的 `## 📊 Expected Output Format` 小节里，脚本会自动切掉。
 
 详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+
+## 换壳
+
+这个仓库从一开始踩过的坑：把品牌写死在组件里（v1 的 🦞「龙虾工具包」散在
+`Base.astro`、`site.ts`、`404`、README 和分享卡模板里），结果「换个壳」等于重做一遍。
+
+现在外观与文案口吻全部由 `apps/site/themes.mjs` 定义，**换壳 = 改 `apps/site/theme.txt` 一行**：
+
+```bash
+pnpm theme                  # 列出所有壳 + 当前是哪个
+pnpm theme set atelier      # 切过去
+pnpm theme preview          # 把每个壳的分享卡都渲一张出来对比
+pnpm og                     # 重出分享卡
+```
+
+| id | 壳 | 说明 |
+|---|---|---|
+| `harness` | Harness 装配线 | 深色 + 冷绿 + 等宽标题。面向「能被程序调用」这件事 |
+| `atelier` | Atelier 高定 | 浅色 + 高定橙 + 宋体标题 + 直角。视觉上借鉴奢侈品的语言 |
+| `lobster` | 龙虾工具包 | v1 原貌，留档对比用 |
+
+一个主题要提供：25 个颜色/圆角变量、字体栈、logo 标记、副标题、tagline 模板、hero 文案。
+缺任何一个键 `pnpm catalog` 会直接报错（不然浅色壳会静默退回深色默认值）。
+
+> ⚠️ 视觉可以借鉴，**名字别用真实奢侈品牌**。`atelier` 这种通用词没问题，
+> 叫「爱马仕」就是商标问题，不是审美问题。
+>
+> 另外 `platforms/openclaw/` 那份部署指南是绑在 v1「小龙虾」这个概念上的，
+> 换壳之后它和站点已经没关系了 —— 要留要删自己定。
 
 ## 技术栈
 

@@ -10,10 +10,11 @@
   },
   "scripts": {
     "catalog": "node scripts/build-catalog.mjs && node scripts/check-catalog.mjs",
+    "theme": "node scripts/theme.mjs",
+    "og": "node scripts/build-og.mjs",
     "dev": "pnpm catalog && pnpm -C apps/site dev",
     "build": "pnpm catalog && pnpm -C apps/site build",
     "preview": "pnpm -C apps/site preview",
-    "deploy": "node scripts/preflight.mjs && pnpm build && pnpm -C apps/site deploy",
-    "og": "node scripts/build-og.mjs"
+    "deploy": "node scripts/preflight.mjs && pnpm build && pnpm -C apps/site deploy"
   }
 }

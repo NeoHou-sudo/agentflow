@@ -1,12 +1,15 @@
 import type { APIContext } from 'astro';
 import { stats } from './catalog';
+import { currentTheme, taglineWith } from './theme';
+
+/** 当前主题。整站外观与文案口吻都由它决定，见 apps/site/themes.mjs。 */
+export const THEME = currentTheme();
 
 export const SITE = {
-  name: 'AgentFlow',
-  cn: '龙虾工具包',
-  // 数字从 catalog 算出来 —— 早先硬编码成「18+」，实际只有 16 个，
-  // 于是 og:image:alt 和 meta 描述里一直挂着个假数字。
-  tagline: `${stats.total} 个真跑过的 AI Agent 工作流 · 可搜索 · 可填空 · 可站内试跑`,
+  name: THEME.name,
+  cn: THEME.subtitle,
+  // 数字从 catalog 算出来，tagline 口吻从主题来 —— 都不硬编码。
+  tagline: taglineWith(THEME, stats.total),
   repo: 'https://github.com/NeoHou-sudo/agentflow',
 };
 

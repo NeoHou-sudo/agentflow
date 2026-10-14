@@ -14,6 +14,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertThemesValid, themeIds, THEMES, DEFAULT_THEME } from '../apps/site/themes.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CATALOG = path.join(ROOT, 'apps/site/src/data/workflows.json');
@@ -45,6 +46,14 @@ function residual(prompt, fields, key) {
   }
   const text = ALLOWED_LEFTOVER(out);
   return [...new Set(text.match(PLACEHOLDER) ?? [])];
+}
+
+// 主题定义也得校验：tokens 少一个键、id 写错，都会让某个壳静默退回默认颜色
+try {
+  assertThemesValid();
+} catch (err) {
+  console.error(`✖ 主题定义有问题：${err.message}`);
+  process.exit(1);
 }
 
 const catalog = JSON.parse(await readFile(CATALOG, 'utf8'));
@@ -115,7 +124,7 @@ for (const w of catalog.workflows) {
   if (!w.raw) problems.push(`${where}: 缺 raw markdown（raw.md 端点会返回空）`);
 }
 
-console.log(`检查了 ${catalog.workflows.length} 个工作流`);
+console.log(`检查了 ${catalog.workflows.length} 个工作流 · 主题 ${themeIds().length} 个（默认 ${DEFAULT_THEME}）`);
 console.log(
   `  双语 ${catalog.workflows.filter((w) => w.promptEn).length} · 可填字段 ${catalog.workflows.reduce(
     (n, w) => n + w.fields.length,

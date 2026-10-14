@@ -11,6 +11,9 @@ apps/site/.wrangler/
 # 构建期生成的目录数据，源是 workflows/**/*.md
 apps/site/src/data/workflows.json
 
+# 临时产物（主题预览、构建中间件）
+.tmp/
+
 # 本地机密
 .env
 .dev.vars

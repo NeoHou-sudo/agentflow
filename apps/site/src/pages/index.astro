@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import WorkflowCard from '../components/WorkflowCard.astro';
 import { workflows, categories, byCategory, stats } from '../lib/catalog';
-import { SITE, abs } from '../lib/site';
+import { SITE, THEME, abs } from '../lib/site';
 
 export const prerender = true;
 
@@ -46,11 +46,11 @@ const jsonLd = [
 >
   <div class="wrap">
     <section class="hero">
-      <h1>不是「10 个超好用的提示词」<br />是<em>真跑过、真出过结果</em>的工作流</h1>
-      <p class="lead">
-        {workflows.length} 个工作流，覆盖 {categories.length} 个真实场景。每个都拆成了可以填的输入项：
-        填完参数，提示词自动拼好，复制走或者直接在这里跑一遍。
-      </p>
+      <h1>
+        {THEME.hero.line1}<br />
+        {THEME.hero.line2Pre}<em>{THEME.hero.em}</em>{THEME.hero.line2Post}
+      </h1>
+      <p class="lead">{THEME.hero.lead}</p>
       <div class="cta">
         <a class="btn primary" href="/workflows/">浏览全部 {workflows.length} 个工作流</a>
         <a class="btn" href={SITE.repo} target="_blank" rel="noopener">⭐ Star on GitHub</a>
