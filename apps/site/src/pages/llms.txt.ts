@@ -37,6 +37,13 @@ export const GET: APIRoute = (ctx) => {
     out.push('');
   }
 
+  out.push('## 机器可读端点');
+  out.push('');
+  out.push(`- 全量索引（JSON）：${abs(ctx, '/workflows.json')}`);
+  out.push(`- 单个工作流（JSON，含提示词 / 参数 / 输出格式）：${abs(ctx, '/workflows/<slug>.json')}`);
+  out.push(`- 单个工作流（原始 markdown）：${abs(ctx, '/workflows/<slug>.raw.md')}`);
+  out.push(`- 全部提示词正文（纯文本）：${abs(ctx, '/llms-full.txt')}`);
+  out.push('');
   out.push('## 使用说明');
   out.push('');
   out.push(

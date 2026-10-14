@@ -14,6 +14,8 @@ interface Props { w: Workflow }
 const { w } = Astro.props;
 const url = `/workflows/${w.slug}/`;
 const others = related(w, 4);
+const base = abs(Astro, '');
+const curlCmd = `curl -s ${base}/workflows/${w.slug}.json | jq .prompts.zh`;
 
 // 传给前端脚本的数据（页面上的表单/复制/试跑全靠它）
 const payload = JSON.stringify({
@@ -181,11 +183,25 @@ const jsonLd = [
               <button class="btn sm primary" id="af-run" type="button">▶ 用 AI 跑一遍</button>
               <button class="btn sm" id="af-stop" type="button" disabled>停止</button>
               <button class="btn sm" id="af-copy-out" type="button">复制结果</button>
+              <button class="btn sm" id="af-save-out" type="button">⬇ 存结果（含参数）</button>
             </div>
-            <div class="run-out" id="af-out">点「用 AI 跑一遍」，把上面填好的提示词直接发给模型，结果流式打在这里。不用它也行 —— 复制提示词去你自己的 Agent 里跑，效果一样。</div>
+            <div class="run-out" id="af-out"></div>
+            <p class="run-note">
+              结果只在浏览器里，刷新就没 —— 有价值的就点「存结果」，会把参数、实际发的提示词和输出一起
+              存成一个 .md，方便贴回文档或者发给同事。
+            </p>
             <p class="run-note">
               模型由部署者配置（默认 Llama 3.1 8B）。<strong style="color:var(--text-dim)">输出未经人工校验，涉及医学 / 投资 / 法律的内容请自行复核。</strong>
             </p>
+
+            <div id="af-fb" style="margin-top:18px;padding-top:15px;border-top:1px solid var(--line-soft)">
+              <div style="font-size:13px;color:var(--text-dim);margin-bottom:9px">这条提示词对你有用吗？</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <button class="btn sm" data-fb="1" type="button">👍 跑通了</button>
+                <button class="btn sm" data-fb="0" type="button">👎 没用</button>
+                <span id="af-fb-msg" style="font-size:12.5px;color:var(--text-mute)"></span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -201,6 +217,29 @@ const jsonLd = [
             <pre class="code" id="af-format">{w.outputFormat}</pre>
           </div>
         )}
+      </div>
+    </div>
+
+    <!-- 机器可读：让别人不用爬 HTML 就能把这个工作流接走 -->
+    <div class="stack">
+      <div class="section-card">
+        <h2>🤖 不想爬 HTML？直接取走</h2>
+        <div class="prose">
+          <p>这个工作流有两个结构化端点，都带 CORS，可以直接 <code>fetch</code> 进你自己的 Agent：</p>
+          <ul>
+            <li><code>/workflows/{w.slug}.json</code> —— 提示词 + 参数 + 预期输出格式</li>
+            <li><code>/workflows/{w.slug}.raw.md</code> —— 仓库里的原始 markdown</li>
+          </ul>
+          <pre id="af-curl">{curlCmd}</pre>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <button class="btn sm" data-copy="#af-curl" data-copy-msg="命令已复制" type="button">复制 curl 命令</button>
+            <a class="btn sm" href={`/workflows/${w.slug}.json`}>看 JSON</a>
+            <a class="btn sm" href={`/workflows/${w.slug}.raw.md`}>看 raw.md</a>
+          </div>
+          <p style="margin-top:14px">
+            全量索引 <code>/workflows.json</code>　·　给模型的完整版 <code>/llms-full.txt</code>　·　协议 MIT
+          </p>
+        </div>
       </div>
     </div>
 
@@ -248,6 +287,16 @@ const jsonLd = [
     const countEl = document.getElementById('af-count') as HTMLElement;
     const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('#af-form input[data-field]'));
 
+    const OUT_PLACEHOLDER =
+      '点「用 AI 跑一遍」，把上面填好的提示词直接发给模型，结果会流式打在这里。\n不用它也行 —— 复制提示词去你自己的 Agent 里跑，效果一样。';
+    outEl.textContent = OUT_PLACEHOLDER;
+    // 占位文案和真结果要分得清，否则「存结果」会把这段提示语也存进 .md
+    let hasOutput = false;
+    const setOut = (text: string) => {
+      outEl.textContent = text;
+      hasOutput = Boolean(text.trim());
+    };
+
     const state = { lang: 'zh', values: {} as Record<string, string> };
 
     function currentPrompt(): string {
@@ -256,8 +305,11 @@ const jsonLd = [
       for (const f of data.fields) {
         const v = state.values[String(f.i)];
         if (!v) continue;
-        const token = state.lang === 'en' && f.enToken ? f.enToken : f.zhToken;
-        if (token) text = text.split(token).join(v);
+        const tokens =
+          state.lang === 'en' && f.enTokens.length ? f.enTokens : f.zhTokens;
+        for (const token of tokens) {
+          if (token) text = text.split(token).join(v);
+        }
       }
       return text;
     }
@@ -336,7 +388,89 @@ const jsonLd = [
       void copy(currentPrompt(), '提示词已复制，去 Agent 里粘贴');
     });
     document.getElementById('af-copy-out')?.addEventListener('click', () => {
+      if (!hasOutput) {
+        toast('还没有结果');
+        return;
+      }
       void copy(outEl.textContent || '', '结果已复制');
+    });
+
+    // ---- 存结果：参数 + 实际发出的提示词 + 输出，一个 .md 全带走 ----
+    document.getElementById('af-save-out')?.addEventListener('click', () => {
+      if (!hasOutput) {
+        toast('还没有结果，先跑一遍');
+        return;
+      }
+      const out = (outEl.textContent || '').trim();
+      const filled = data.fields.filter((f: any) => state.values[String(f.i)]?.trim());
+      const paramRows = filled.length
+        ? filled.map((f: any) => `| ${f.label} | ${state.values[String(f.i)].trim()} |`).join('\n')
+        : '| （没有填参数） | |';
+      const now = new Date();
+      const md = [
+        `# ${data.title} — 试跑结果`,
+        '',
+        `> 由 AgentFlow 生成 · ${now.toLocaleString('zh-CN', { hour12: false })}`,
+        `> 工作流：${location.origin}${location.pathname}`,
+        `> 机器可读版：${location.origin}/workflows/${data.slug}.json`,
+        '',
+        '## 我填的参数',
+        '',
+        '| 参数 | 值 |',
+        '|------|-----|',
+        paramRows,
+        '',
+        `## 实际发给模型的提示词（${state.lang === 'en' ? 'English' : '中文'}）`,
+        '',
+        '```text',
+        currentPrompt(),
+        '```',
+        '',
+        '## 输出',
+        '',
+        out,
+        '',
+        '---',
+        '',
+        '⚠️ 输出由模型生成、未经人工校验。涉及医学 / 投资 / 法律的内容请自行复核。',
+        '',
+      ].join('\n');
+
+      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+      a.download = `agentflow-${data.slug}-结果-${stamp}.md`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast('已存成 .md');
+    });
+
+    // ---- 反馈 ----
+    const fbMsg = document.getElementById('af-fb-msg') as HTMLElement | null;
+    document.querySelectorAll<HTMLButtonElement>('button[data-fb]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const useful = btn.dataset.fb === '1';
+        for (const b of document.querySelectorAll('button[data-fb]')) {
+          (b as HTMLButtonElement).disabled = true;
+        }
+        if (fbMsg) fbMsg.textContent = '提交中…';
+        try {
+          const res = await fetch('/api/feedback', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ slug: data.slug, useful }),
+          });
+          const j = await res.json();
+          if (fbMsg) {
+            if (j.stored) fbMsg.textContent = `谢谢，已记录（第 ${j.count} 个 ${useful ? '👍' : '👎'}）`;
+            else if (j.ok) fbMsg.textContent = j.note ?? '记录功能没开启，这次没记上';
+            else fbMsg.textContent = `没提交成功：${j.error ?? res.status}`;
+          }
+        } catch (err) {
+          if (fbMsg) fbMsg.textContent = `没提交成功：${(err as Error).message}`;
+        }
+      });
     });
 
     // ---- 站内试跑 ----
@@ -346,7 +480,7 @@ const jsonLd = [
 
     runBtn?.addEventListener('click', async () => {
       const prompt = currentPrompt();
-      outEl.textContent = '';
+      setOut('');
       runBtn.disabled = true;
       stopBtn.disabled = false;
       controller = new AbortController();
@@ -359,12 +493,13 @@ const jsonLd = [
         });
         if (!res.ok) {
           const j = await res.json().catch(() => ({}));
-          outEl.textContent = `⚠️ ${(j as any).message || (j as any).error || `请求失败 ${res.status}`}`;
+          setOut(`⚠️ ${(j as any).message || (j as any).error || `请求失败 ${res.status}`}`);
+          hasOutput = false; // 报错不算结果，别让它被存下来
           return;
         }
         const ct = res.headers.get('content-type') || '';
         if (!ct.includes('text/event-stream') || !res.body) {
-          outEl.textContent = await res.text();
+          setOut(await res.text());
           return;
         }
         const reader = res.body.getReader();
@@ -382,7 +517,7 @@ const jsonLd = [
             if (!raw || raw === '[DONE]') continue;
             try {
               const j = JSON.parse(raw);
-              if (j.response) outEl.textContent += j.response;
+              if (j.response) setOut(outEl.textContent + j.response);
             } catch {
               /* 非 JSON 的心跳行，忽略 */
             }
@@ -390,8 +525,8 @@ const jsonLd = [
           outEl.scrollTop = outEl.scrollHeight;
         }
       } catch (err) {
-        if ((err as Error).name === 'AbortError') outEl.textContent += '\n\n[已停止]';
-        else outEl.textContent += `\n\n⚠️ ${(err as Error).message}`;
+        if ((err as Error).name === 'AbortError') setOut(`${outEl.textContent}\n\n[已停止]`);
+        else setOut(`${outEl.textContent}\n\n⚠️ ${(err as Error).message}`);
       } finally {
         runBtn.disabled = false;
         stopBtn.disabled = true;

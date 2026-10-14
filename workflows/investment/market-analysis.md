@@ -50,6 +50,49 @@
 请给出结构化分析，结论先行。
 ```
 
+### English Version
+
+```
+You are a market analyst. Help me assess the opportunity in [sector / industry / theme].
+
+## What I'm looking at
+- Sector / industry: [e.g. semiconductors, AI chips, gold]
+- Specific fund or stock (if any): [name]
+
+## Context
+- My investment horizon: [1Y / 5Y / 10Y]
+- How I'd enter: [DCA / lump sum / both]
+- Related existing positions: [if any]
+
+## What to analyze
+
+### 1. Macro backdrop
+- Policy impact on this sector (tailwind / headwind)
+- Where the industry is heading
+
+### 2. Valuation
+- Current level (high / mid / low)
+- Historical percentile
+- Versus other sectors
+
+### 3. Catalysts
+- Near-term positive events
+- Potential negative risks
+
+### 4. Technicals (optional)
+- Recent trend (up / down / sideways)
+
+### 5. Risk
+- Estimated maximum drawdown
+- Worst-case scenario
+
+### 6. Action
+- Buy / add / hold / reduce right now?
+- Specific price levels
+
+Give me a structured analysis, conclusion first.
+```
+
 ---
 
 ## 📊 Expected Output Format

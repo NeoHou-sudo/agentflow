@@ -50,6 +50,9 @@ You are an Amazon listing optimization expert. Help me optimize the following pr
 - Target customer: [Student/Business/Gaming]
 - Differentiation: [competitive advantage]
 
+## Existing listing (if any)
+[paste your current title and description]
+
 ## Sections to optimize
 [ ] Title
 [ ] Bullet Points

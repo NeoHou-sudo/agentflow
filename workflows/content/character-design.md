@@ -54,6 +54,53 @@
 请给出完整角色设计。
 ```
 
+### English Version
+
+```
+You are a content creator. Help me design a character for a short-form video or micro-drama.
+
+## Basics
+- Genre: [romance / workplace / thriller / comedy]
+- Platform: [Douyin / Kuaishou / Bilibili]
+- Role: [male lead / female lead / antagonist / supporting]
+
+## Character brief
+- Core traits: [1-2 keywords]
+- Occupation: [e.g. CEO / top student / founder / doctor]
+- Age range: [20-30]
+- Look: [e.g. cold and sharp / sweet and cute / sunny and energetic]
+
+## Deliverables
+
+### 1. Character card
+- Name (Chinese + English)
+- Age, occupation, appearance
+- 3-5 personality keywords
+- Catchphrase / signature gesture
+- Backstory in 1-2 sentences
+
+### 2. Personality in depth
+- Strengths
+- Flaws
+- Behavioral patterns
+- How they react to other characters
+
+### 3. AI image prompts
+- Base look: outfit, occupation, expression
+- Scene variants: how they dress in different settings
+- Full SD / MJ prompt
+
+### 4. Dialogue style
+- 5 example lines
+- Tone and rhythm
+
+### 5. Relationships
+- Romantic dynamic (if applicable)
+- Relationship with the supporting cast
+
+Give me the complete character design.
+```
+
 ---
 
 ## 📊 Expected Output Format

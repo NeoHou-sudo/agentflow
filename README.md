@@ -50,7 +50,7 @@
 | 🩺 医学研究 | 2 | 临床证据分析、鉴别诊断 |
 | 🛡️ 安全审计 | 2 | 威胁建模、漏洞报告分析 |
 
-每个工作流都有：完整提示词（部分含中英双语）· 参数表单 · **预期输出格式** · **真实案例**。
+每个工作流都有：完整提示词（**16/16 中英双语**）· 参数表单 · **预期输出格式** · **真实案例**。
 
 ## 怎么用
 
@@ -73,8 +73,19 @@ workflows/
 **方式三：接进自己的系统**
 
 每个工作流都是一个 md 文件，结构固定（见下）。任何 Agent 框架都能直接解析。
-另外站点还提供 `/llms.txt` 和 `/llms-full.txt` —— 给模型抓的完整索引，
-一次请求就能拿到全部提示词正文。
+站点还提供三个可以直接 `fetch` 的端点（都带 CORS）：
+
+| 端点 | 拿到什么 |
+|---|---|
+| `/workflows/<slug>.json` | 提示词 + 参数 + 输出格式（`schemaVersion: 1`） |
+| `/workflows/<slug>.raw.md` | 仓库里的原始 markdown |
+| `/workflows.json` | 全量索引 |
+
+```bash
+curl -s https://你的域名/workflows/product-research.json | jq .prompts.zh
+```
+
+给模型的索引另有 `/llms.txt`（目录）和 `/llms-full.txt`（全部提示词正文）。
 
 ## 仓库结构
 
@@ -97,6 +108,14 @@ pnpm dev      # http://localhost:4321
 ```
 
 改 `workflows/*.md`，刷新页面就能看到变化 —— 页面是构建时从 md 生成的。
+
+| 命令 | 作用 |
+|---|---|
+| `pnpm dev` | 本地开发（自动先跑一次内容编译） |
+| `pnpm catalog` | 把 md 编译成数据 **+ 跑内容不变式检查**（有问题直接报错） |
+| `pnpm build` | 构建 Cloudflare 产物 |
+| `pnpm deploy` | 部署前检查 → 构建 → 推送 |
+| `pnpm og` | 重新生成分享卡 `og.png`（改了内容数字后跑） |
 
 ## 部署
 

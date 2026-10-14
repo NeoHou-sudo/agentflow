@@ -72,6 +72,7 @@ You are an AI short drama scriptwriter. Help me create a short video script.
 ## Character Setup
 - Female lead: [Personality, identity, appearance]
 - Male lead: [Personality, identity, appearance]
+- Supporting character (if any): [brief description]
 
 ## Deliverables
 

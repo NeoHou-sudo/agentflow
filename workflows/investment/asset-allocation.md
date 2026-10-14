@@ -57,6 +57,56 @@
 请给出结构化方案，附具体计算依据。
 ```
 
+### English Version
+
+```
+You are an asset allocation specialist. Help me design or optimize my overall investment plan.
+
+## Basics
+- Total investable assets: CNY X
+- Monthly amount I can invest: CNY X
+- Investment horizon: [1Y / 5Y / 10Y]
+- Risk tolerance: [Conservative / Moderate / Aggressive]
+
+## Current holdings (if any)
+| Asset class | Amount | Weight |
+|-------------|--------|--------|
+| [Asset class A] | CNY X | X% |
+| [Asset class B] | CNY X | X% |
+
+## Target allocation (if any)
+[list target weights]
+
+## What I need
+[ ] Design a new allocation from scratch
+[ ] Optimize what I already have
+[ ] Rebalance only
+
+## Deliver
+
+1. **Recommended allocation**
+   - Target weight for each asset class
+   - Specific funds or products to use within each class
+
+2. **Entry strategy**
+   - Lump sum vs. phased entry
+   - How much to deploy at each stage
+
+3. **DCA plan**
+   - Monthly contribution per asset
+   - Rules for adjusting it dynamically
+
+4. **Risk control**
+   - Maximum position size per asset
+   - Conditions that trigger a rebalance
+
+5. **5-year / 10-year projection**
+   - Expected balance per class
+   - Overall return estimate
+
+Give me a structured plan with the calculations shown.
+```
+
 ---
 
 ## 📊 Expected Output Format

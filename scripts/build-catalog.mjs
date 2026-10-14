@@ -174,9 +174,17 @@ function metaValue(text, keys) {
  * 在这里显式登记，宁可手写六行，也不让页面上出现看不懂的输入框。
  */
 const FIELD_OVERRIDES = {
+  // 早先这里 deny 掉资产2/资产3，想避免「三个长得一样的输入框」；
+  // 但那会让 [资产2]/[资产3] 永远替换不掉，生成的提示词里留两个方括号。
+  // 正确的做法是给它们各自起个说得清的名字。
   'security/threat-modeling': {
-    deny: ['资产2', '资产3'],
-    relabel: { 资产1: '关键资产（名称）', 描述: '关键资产（描述）', '高/中/低': '机密性需求' },
+    relabel: {
+      资产1: '关键资产 1（名称）',
+      资产2: '关键资产 2（名称）',
+      资产3: '关键资产 3（名称）',
+      描述: '关键资产描述（如：订单库）',
+      '高/中/低': '机密性需求',
+    },
   },
   'investment/asset-allocation': {
     relabel: { 类别A: '资产类别 A', 类别B: '资产类别 B', 列出希望达到的比例: '目标配置比例' },
@@ -265,7 +273,9 @@ function extractTokens(text) {
   const order = [];
   const byToken = new Map();
   for (const line of text.split('\n')) {
-    const re = /\[([^[\]\n]{1,60})\]|\{\{([^}\n]{1,40})\}\}/g;
+    // 上限放到 120：占位符经常写成「你的主题，例如：A / B / C」这种带备选的长提示，
+    // 卡在 60 会让这些直接被当成不存在（英文版尤其容易超）。
+    const re = /\[([^[\]\n]{1,120})\]|\{\{([^}\n]{1,40})\}\}/g;
     let m;
     while ((m = re.exec(line)) !== null) {
       const bracket = m[1] !== undefined;
@@ -273,7 +283,9 @@ function extractTokens(text) {
       if (!token) continue;
       if (bracket && line[m.index + m[0].length] === '(') continue; // markdown 链接
       if (bracket && line[m.index - 1] === '!') continue; // 图片
-      if (bracket && /^[\s\-x*]$/i.test(token)) continue; // 任务列表复选框
+      // 任务列表复选框（`- [x] 做完的事`）：必须是「列表项 + 单个字符」这种形态。
+      // 早先只判 token 是不是单个 x，结果把 `[X]`（「填个数字」最常用的写法）也杀掉了。
+      if (bracket && token.length === 1 && /^\s*[-*+]\s+$/.test(line.slice(0, m.index))) continue;
       const label = bracket ? cleanLabel(line.slice(0, m.index)) : '';
       const rec = byToken.get(token);
       if (!rec) {
@@ -543,20 +555,28 @@ async function main() {
         // relabel 可以按占位符原文写，也可以按机器猜出来的字段名写
         const relabel = overrides.relabel || {};
         const label = relabel[rawToken] || relabel[baseLabel] || baseLabel;
-        // 同一件事被写了两遍的（如 trend-analysis 的「平台」），合成一个字段、把选项补上
+        // 同一件事被写了两遍的（如 trend-analysis 的「平台」），合成一个字段。
+        // 注意两处写法并不一样（`[平台]` 与 `[抖音/快手/B站/小红书]`），
+        // 所以两种都要记下来 —— 只记第一个的话，第二处在提示词里不会被替换掉。
         const dup = fields.find((f) => f.label === label);
         if (dup) {
           if (!dup.options.length && toOptions(rawToken).length) dup.options = toOptions(rawToken);
-          if (z && !dup.zhToken) dup.zhToken = z.braces ? `{{${z.token}}}` : `[${z.token}]`;
-          if (e && !dup.enToken) dup.enToken = e.braces ? `{{${e.token}}}` : `[${e.token}]`;
+          if (z) {
+            const t = z.braces ? `{{${z.token}}}` : `[${z.token}]`;
+            if (!dup.zhTokens.includes(t)) dup.zhTokens.push(t);
+          }
+          if (e) {
+            const t = e.braces ? `{{${e.token}}}` : `[${e.token}]`;
+            if (!dup.enTokens.includes(t)) dup.enTokens.push(t);
+          }
           continue;
         }
         fields.push({
           i: fields.length,
           label,
           hint: rawToken,
-          zhToken: z ? (z.braces ? `{{${z.token}}}` : `[${z.token}]`) : '',
-          enToken: e ? (e.braces ? `{{${e.token}}}` : `[${e.token}]`) : '',
+          zhTokens: z ? [z.braces ? `{{${z.token}}}` : `[${z.token}]`] : [],
+          enTokens: e ? [e.braces ? `{{${e.token}}}` : `[${e.token}]`] : [],
           options: toOptions(rawToken),
         });
       }
@@ -605,6 +625,8 @@ async function main() {
         fields,
         path: `workflows/${slugDir}.md`,
         extras,
+        // 原始 markdown 全文，供 /workflows/<slug>.raw.md 端点直接吐给调用方
+        raw: md,
         stats: {
           zhChars: promptZh.length,
           enChars: promptEn.length,

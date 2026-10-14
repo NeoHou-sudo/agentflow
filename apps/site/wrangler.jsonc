@@ -19,8 +19,24 @@
   "ai": {
     "binding": "AI"
   },
+  // 可选绑定。都不配也能跑，只是功能降级：
+  //
+  //   RATE_LIMIT (KV) —— /api/run 按 IP 每小时限次（默认 30，可用
+  //                      RUN_RATE_LIMIT_PER_HOUR 调）。没绑就不限流。
+  //   FEEDBACK   (KV) —— 详情页的「跑通了 / 没用」按钮落库。没绑的话接口会
+  //                      如实返回 stored:false，前端显示「这次没记上」，
+  //                      不会假装记录成功。不单独建的话会复用 RATE_LIMIT。
+  //
+  //   npx wrangler kv namespace create RATE_LIMIT
+  //   → 把输出的 id 填成下面这样再 deploy：
+  //
+  // "kv_namespaces": [
+  //   { "binding": "RATE_LIMIT", "id": "<粘进来>" }
+  // ],
   "vars": {
-    "SITE_URL": "https://agentflow.workers.dev",
+    // 站点地址不在这里配 —— 它是构建期的事（canonical / sitemap / llms.txt 都是
+    // 构建时烘进静态 HTML 的），唯一来源是 apps/site/site-url.txt。
+    // 放在这里只会让人以为改了有用。
     "MODEL": "@cf/meta/llama-3.1-8b-instruct",
     "RUN_MAX_PROMPT_CHARS": "12000"
   },

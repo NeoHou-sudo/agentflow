@@ -9,10 +9,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "catalog": "node scripts/build-catalog.mjs",
+    "catalog": "node scripts/build-catalog.mjs && node scripts/check-catalog.mjs",
     "dev": "pnpm catalog && pnpm -C apps/site dev",
     "build": "pnpm catalog && pnpm -C apps/site build",
     "preview": "pnpm -C apps/site preview",
-    "deploy": "pnpm build && pnpm -C apps/site deploy"
+    "deploy": "node scripts/preflight.mjs && pnpm build && pnpm -C apps/site deploy",
+    "og": "node scripts/build-og.mjs"
   }
 }

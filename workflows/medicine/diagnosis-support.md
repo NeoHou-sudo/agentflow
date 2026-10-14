@@ -64,6 +64,55 @@
 请给出结构化分析，保持客观。
 ```
 
+### English Version
+
+```
+You are a clinical diagnostician. Help me work through a differential diagnosis.
+
+## Patient
+- Age / sex: [e.g. 45-year-old male]
+- Chief complaint: [main symptom]
+- Associated symptoms: [other symptoms]
+- Course: [e.g. sudden / progressive / intermittent]
+- Past medical history: [relevant history]
+- Medications: [current medications]
+- Allergies: [drug allergies]
+
+## Available workup (if any)
+- Labs: [values]
+- Imaging: [findings]
+- Other: [ECG, etc.]
+
+## Requirements
+
+### 1. Differential diagnosis list
+Rank by likelihood:
+1. [most likely]
+2. [next most likely]
+3. [must rule out]
+
+### 2. Supporting and opposing evidence
+For each diagnosis:
+- Evidence that supports it
+- Evidence that argues against it
+
+### 3. Suggested further workup
+- History still to fill in
+- Physical exam focus
+- Lab tests to order
+- Imaging to order
+
+### 4. Urgency
+- Does this need emergency care?
+- Follow-up timeline
+
+### 5. References
+- Relevant guidelines
+- Representative studies
+
+Give me a structured analysis and stay objective.
+```
+
 ---
 
 ## 📊 Expected Output Format

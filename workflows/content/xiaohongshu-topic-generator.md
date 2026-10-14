@@ -15,6 +15,8 @@
 
 ## 提示词
 
+### 中文版
+
 ```
 你是一位小红书资深运营，对平台热点和用户真实需求有敏锐洞察。
 
@@ -41,6 +43,36 @@
 |---|------|----------|----------|
 | 1 | 听劝！这5款"马年爆火面包"到底是神颜还是诈骗？ | 结合"听劝"热搜 + 马年热度，解决选择困难 | 价格/口味/造型"抽象程度"三维测评 |
 | ... | ... | ... | ... |
+```
+
+### English Version
+
+```
+You are a veteran Xiaohongshu (RED) operator with a sharp read on what the platform rewards right now.
+
+Give me 15 topics in my niche that could take off in the near term.
+
+## My niche
+[your niche, e.g. food reviews / office outfits / parenting / fitness / side income]
+
+## Requirements
+
+Every topic must include:
+1. **Title** (under 20 characters, click-worthy)
+2. **Why it could blow up** (one line: why now, who it speaks to, what need it meets)
+3. **The angle** (specific, not generic — "how to do eye makeup for puffy lids", not "how to do makeup")
+
+## Blend in
+
+- Current season / holidays / hot shows / memes
+- Different pain points: avoiding pitfalls, saving money, efficiency, looking better, making money, emotional resonance
+- Trending RED search terms
+
+## Output Format
+
+| # | Topic | Why it could blow up | Angle |
+|---|-------|----------------------|-------|
+| 1 | ... | ... | ... |
 ```
 
 ---

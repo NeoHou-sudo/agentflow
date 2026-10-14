@@ -48,6 +48,47 @@
 请给出结构化分析。
 ```
 
+### English Version
+
+```
+You are a short-form video content strategist. Help me analyze what is working on [platform] right now.
+
+## Platform
+- Platform: [Douyin / Kuaishou / Bilibili / Xiaohongshu]
+- Niche: [e.g. relationships, career, food, knowledge]
+
+## Context
+- My account positioning: [e.g. career growth]
+- What I'm good at: [e.g. how-to / storytelling]
+- Audience profile: [e.g. women 22-30 in office jobs]
+
+## What to analyze
+
+### 1. Topics trending right now
+- Top 10 topics or challenges by current traffic
+- Momentum behind each (emerging / steady / fading)
+
+### 2. Formats that are landing
+- Video structures and pacing that work now
+- Common opening hooks
+- Interaction devices (comment prompts, etc.)
+
+### 3. Competitors
+- What the top 10 accounts in my niche are doing
+- The pattern behind their hits
+
+### 4. Where the gap is
+- Audience needs nobody is meeting
+- Sub-angles that are still open
+
+### 5. What to do
+- 3 trends worth riding this week
+- Topic suggestions
+- Posting cadence
+
+Give me a structured analysis.
+```
+
 ---
 
 ## 📊 Expected Output Format

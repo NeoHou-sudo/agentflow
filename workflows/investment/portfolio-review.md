@@ -63,6 +63,7 @@ You are an investment advisor. Help me review my fund portfolio.
 | Fund Name | Amount | Daily Invest | Category |
 |-----------|--------|--------------|----------|
 | [Fund A] | ¥X | ¥X/day | [Category] |
+| [Fund B] | ¥X | ¥X/day | [Category] |
 ...
 
 ## Capital Situation

@@ -16,6 +16,8 @@
 
 ## 提示词
 
+### 中文版
+
 ```
 你是一个小红书爆款文案专家。
 
@@ -57,6 +59,51 @@
 【标签】#xxx #xxx #xxx
 ---
 （重复10次）
+```
+
+### English Version
+
+```
+You are an expert at writing posts that travel on Xiaohongshu (RED).
+
+Write 10 posts on my topic, each in a different style.
+
+## My topic
+[your topic, e.g. side income with AI / office outfits / meal prep]
+
+## Requirements
+
+Every post must include:
+1. **Title** (under 20 characters, with emoji, click-worthy)
+2. **Body** (300-500 characters, in paragraphs, with emoji)
+3. **Tags** (5-10, each starting with #)
+
+## Titles should use one of:
+- Numbers (5 things / 3 minutes / 100 RMB)
+- Curiosity (didn't expect / turns out)
+- Emotion (must-read / life-saving)
+- At least 1 emoji
+
+## Body styles must differ. Cover all of these angles:
+1. How-to (methods and steps)
+2. Emotional (resonance, story)
+3. Pitfall warning (what to avoid)
+4. Recommendation (products or methods worth trying)
+5. Comparison (A vs B)
+6. Humorous (light and funny)
+7. Anxiety (poke the pain point)
+8. Explainer (why it works)
+9. Personal story (real experience)
+10. Tools and resources (something usable)
+
+## Output Format
+
+---
+Title: xxx
+Body: xxx
+Tags: #xxx #xxx #xxx
+---
+(repeat 10 times)
 ```
 
 ---

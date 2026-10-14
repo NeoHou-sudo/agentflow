@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  /* 1200×630 的社交分享卡。由 scripts/build-og.mjs 注入数字后交给 chromium 截图。
+     这里的样式是独立的一份 —— 不能引用站点的 global.css，因为分享卡会被
+     截图工具在没有任何页面上下文的条件下渲染。 */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #0a0a0f;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", sans-serif;
+    color: #e8e8ef;
+    position: relative;
+  }
+  .accent {
+    position: absolute; inset: 0 0 auto 0; height: 7px;
+    background: linear-gradient(90deg, #ff6b35, #ff2d55);
+  }
+  .glow {
+    position: absolute; top: -260px; right: -180px; width: 900px; height: 700px;
+    background: radial-gradient(closest-side, rgba(255,45,85,0.32), rgba(255,45,85,0));
+  }
+  .glow2 {
+    position: absolute; bottom: -320px; left: -160px; width: 780px; height: 620px;
+    background: radial-gradient(closest-side, rgba(255,107,53,0.20), rgba(255,107,53,0));
+  }
+  .inner { position: relative; padding: 70px 82px 0; }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 33px; font-weight: 800; letter-spacing: .3px; color: #fff;
+  }
+  .brand .emoji { font-size: 40px; line-height: 1; }
+  h1 {
+    margin-top: 40px;
+    font-size: 74px; font-weight: 800; line-height: 1.16; letter-spacing: -1.5px;
+    color: #fff;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(100deg, #ff6b35, #ff2d55);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .sub { margin-top: 24px; font-size: 31px; color: #9a9aae; font-weight: 500; }
+  .pills { position: absolute; left: 82px; bottom: 108px; display: flex; gap: 14px; }
+  .pill {
+    padding: 13px 26px; border-radius: 999px; font-size: 23px; font-weight: 600;
+    background: #14141e; border: 1.5px solid #2a2a3a; color: #e8e8ef;
+  }
+  .pill.hot { border-color: #ff6b35; color: #ff9f6a; background: rgba(255,107,53,.10); }
+  .url {
+    position: absolute; left: 82px; bottom: 46px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 23px; color: #6b6b80;
+  }
+</style>
+</head>
+<body>
+  <div class="accent"></div>
+  <div class="glow"></div>
+  <div class="glow2"></div>
+  <div class="inner">
+    <div class="brand"><span class="emoji">🦞</span><span>AgentFlow</span></div>
+    <h1>真跑过的<br><em>AI Agent 工作流</em></h1>
+    <div class="sub">填参数 → 提示词自动拼好 → 复制走，或者当场跑一遍</div>
+  </div>
+  <div class="pills">
+    <div class="pill">__TOTAL__ 个工作流</div>
+    <div class="pill">__CATS__ 个领域</div>
+    <div class="pill">__BILINGUAL__ 个中英双语</div>
+    <div class="pill hot">MIT 开源</div>
+  </div>
+  <div class="url">github.com/NeoHou-sudo/agentflow</div>
+</body>
+</html>

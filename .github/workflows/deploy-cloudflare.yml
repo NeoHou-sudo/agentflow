@@ -18,8 +18,14 @@ jobs:
       - name: Check Cloudflare secrets
         id: guard
         run: |
-          if [ -z "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || [ -z "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ]; then
-            echo "跳过一次：仓库还没配 CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID"
+          missing=""
+          [ -z "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] && missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -z "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] && missing="$missing CLOUDFLARE_ACCOUNT_ID"
+          [ -z "${{ vars.SITE_URL }}" ] && missing="$missing vars.SITE_URL"
+          if [ -n "$missing" ]; then
+            echo "跳过一次，仓库还缺：$missing"
+            echo "SITE_URL 是 repo variable（Settings → Secrets and variables → Actions → Variables），"
+            echo "要填成站点正式地址，否则 canonical / sitemap 会指向占位域名。"
             echo "ready=false" >> "$GITHUB_OUTPUT"
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"

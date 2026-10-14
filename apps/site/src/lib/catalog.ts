@@ -1,11 +1,17 @@
 import data from '../data/workflows.json';
 
+/**
+ * 一个可填字段。
+ * `zhTokens` / `enTokens` 是数组：同一个字段在提示词里可能有好几种写法
+ * （比如 trend-analysis 的「平台」既写成 `[平台]` 也写成 `[抖音/快手/B站/小红书]`），
+ * 生成时必须把每一种都替换掉。
+ */
 export interface Field {
   i: number;
   label: string;
   hint: string;
-  zhToken: string;
-  enToken: string;
+  zhTokens: string[];
+  enTokens: string[];
   options: string[];
 }
 
@@ -38,6 +44,7 @@ export interface Workflow {
   fields: Field[];
   extras: Extra[];
   path: string;
+  raw: string;
   stats: { zhChars: number; enChars: number; placeholders: number };
 }
 
