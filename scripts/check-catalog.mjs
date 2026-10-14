@@ -14,7 +14,8 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { assertThemesValid, themeIds, THEMES, DEFAULT_THEME } from '../apps/site/themes.mjs';
+import { assertShellsValid, shellIds, SHELLS, DEFAULT_SHELL } from '../apps/site/shells.mjs';
+import { checkReadme } from './build-readme.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CATALOG = path.join(ROOT, 'apps/site/src/data/workflows.json');
@@ -48,11 +49,12 @@ function residual(prompt, fields, key) {
   return [...new Set(text.match(PLACEHOLDER) ?? [])];
 }
 
-// 主题定义也得校验：tokens 少一个键、id 写错，都会让某个壳静默退回默认颜色
+// 壳定义也得校验：tokens/copy 少一个键、id 写错，都会让某个壳静默退回默认值
+// （表现为「配色换了一半、文案还是旧的」—— 只看页面不容易发现）
 try {
-  assertThemesValid();
+  assertShellsValid();
 } catch (err) {
-  console.error(`✖ 主题定义有问题：${err.message}`);
+  console.error(`✖ 壳定义有问题：${err.message}`);
   process.exit(1);
 }
 
@@ -124,13 +126,21 @@ for (const w of catalog.workflows) {
   if (!w.raw) problems.push(`${where}: 缺 raw markdown（raw.md 端点会返回空）`);
 }
 
-console.log(`检查了 ${catalog.workflows.length} 个工作流 · 主题 ${themeIds().length} 个（默认 ${DEFAULT_THEME}）`);
+console.log(`检查了 ${catalog.workflows.length} 个工作流 · 壳 ${shellIds().length} 个（当前 ${process.env.SHELL || '见 shell.txt'}）`);
 console.log(
   `  双语 ${catalog.workflows.filter((w) => w.promptEn).length} · 可填字段 ${catalog.workflows.reduce(
     (n, w) => n + w.fields.length,
     0,
   )} · 有输出格式 ${catalog.workflows.filter((w) => w.outputFormat).length}`,
 );
+
+// README 是壳的编译产物。这里只提醒（不阻断 dev），CI 里 `pnpm readme --check` 会硬拦。
+try {
+  const r = await checkReadme();
+  if (!r.ok) warnings.push(`${r.reason} → 跑 \`pnpm readme\` 重新合成`);
+} catch (err) {
+  warnings.push(`README 检查跳过：${err.message}`);
+}
 
 if (warnings.length) {
   console.log(`\n⚠️  ${warnings.length} 条提醒（不阻断）：`);

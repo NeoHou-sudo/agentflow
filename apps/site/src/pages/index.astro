@@ -2,9 +2,12 @@
 import Base from '../layouts/Base.astro';
 import WorkflowCard from '../components/WorkflowCard.astro';
 import { workflows, categories, byCategory, stats } from '../lib/catalog';
-import { SITE, THEME, abs } from '../lib/site';
+import { SITE, SHELL, abs } from '../lib/site';
+import { fillCounts } from '../lib/shell';
 
 export const prerender = true;
+
+const counts = { n: workflows.length };
 
 const featured = [
   ...byCategory('ecommerce').slice(0, 2),
@@ -40,17 +43,17 @@ const jsonLd = [
 
 <Base
   title="AgentFlow"
-  description={`${workflows.length} 个真跑过的 AI Agent 工作流：电商选品、内容创作、持仓诊断、威胁建模…每个都能在线填参数、一键复制提示词，或直接在页面上跑出结果。MIT 开源。`}
+  description={SHELL.copy.description.replace('{n}', String(workflows.length))}
   path="/"
   jsonLd={jsonLd}
 >
   <div class="wrap">
     <section class="hero">
       <h1>
-        {THEME.hero.line1}<br />
-        {THEME.hero.line2Pre}<em>{THEME.hero.em}</em>{THEME.hero.line2Post}
+        {SHELL.hero.line1}<br />
+        {SHELL.hero.line2Pre}<em>{SHELL.hero.em}</em>{SHELL.hero.line2Post}
       </h1>
-      <p class="lead">{THEME.hero.lead}</p>
+      <p class="lead">{SHELL.hero.lead}</p>
       <div class="cta">
         <a class="btn primary" href="/workflows/">浏览全部 {workflows.length} 个工作流</a>
         <a class="btn" href={SITE.repo} target="_blank" rel="noopener">⭐ Star on GitHub</a>
@@ -79,6 +82,22 @@ const jsonLd = [
           </a>
         ))}
       </div>
+    </section>
+
+    <section>
+      <div class="sec-head">
+        <h2>为什么是这几条</h2>
+        <p>{SHELL.copy.pitch}</p>
+      </div>
+      <div class="steps">
+        {SHELL.copy.props.map((prop, i) => (
+          <div class="step">
+            <b><i>{i + 1}</i>{fillCounts(prop.title, counts)}</b>
+            <p>{fillCounts(prop.body, counts)}</p>
+          </div>
+        ))}
+      </div>
+      <p style="margin-top:16px;font-size:13.5px;color:var(--text-mute)">适合：{SHELL.copy.audience}</p>
     </section>
 
     <section>

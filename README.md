@@ -1,64 +1,87 @@
+<!--
+  这个文件由 `pnpm readme` 从 apps/site/shells/ 合成 —— 直接改这里，下次生成会被覆盖。
+
+  改壳的定位 / 口吻 / 实际效果 → apps/site/shells/<壳>.readme.md
+  改仓库说明（怎么用 / 结构 / 部署 / 贡献） → apps/site/shells/_shared.md
+  换壳 → pnpm shell set <id>
+-->
 # AgentFlow
 
 > 16 条真跑过的 AI Agent 工作流。**填参数 → 提示词自动拼好 → 复制走，或者当场跑一遍。**
 
-外壳可换（见 [换壳](#换壳)），工作流不变 —— 内容和壳是分开的。
+浅处起云，忆通四海。这一版按《浅忆云_品牌视觉手册_V1》做 —— 靛海、曦金、月白，
+宋体标题、黑体正文。不制造概念，不堆术语，把复杂的事做到浅白可用。
 
 站点跑在 Cloudflare Workers 上，免费档足够。
 
-[English](#english) · [部署文档](docs/DEPLOY.md) · [往哪走](docs/ROADMAP.md)
+[部署文档](docs/DEPLOY.md) · [往哪走](docs/ROADMAP.md) · [换壳](#换壳)
 
 ---
 
 ## 它解决什么问题
 
-网上到处都是「10 个超好用的 ChatGPT 提示词」，抄下来发现两件事：
+提示词这个东西，大部分时候长这样：一段话，里面挖了几个空，谁都能改，改完不知道对不对。
 
-1. 提示词里的 `[占位符]` 得自己一个个找、一个个改；
-2. 改完了不知道别人用它是出了什么结果。
+拿去做正经事就会发现问题 —— 它不可复现，也不可交付。
 
-这里反过来：**每个工作流都拆成了可填的输入项**。打开页面就是一张表单，
-填完参数，提示词自动拼好，一键复制；想直接看结果，点「用 AI 跑一遍」。
+这里换了个做法：**每条工作流都拆成了可填的输入项，并且规定了输出长什么样。**
+填完参数，拿到的是一份能直接交出去的东西，而不是一段还要自己整理的原料。
 
+```bash
+# 给人用
+打开站点 → 填参数 → 复制提示词，或者点「用 AI 跑一遍」
+
+# 给程序用
+curl -s https://你的域名/workflows/product-research.json | jq '.fields[].label'
 ```
-选品调研 → 填「芯片平台 / 屏幕 / 成本」→ 提示词拼好 → 复制 或 直接跑
-```
 
-### 实际效果长什么样
+## 实际效果长什么样
 
-**电商选品调研**（填 8 个参数，约 3 分钟）
+**电商选品调研**（填 8 个参数）
 
 > **你填**：CPU N100 / 15.6" IPS / 成本 ¥800 / 目标 Amazon US
 >
-> **Agent 出**：$280–350 价格带有空缺，只有 3 个主要卖家。建议售价 $299–329，毛利 22–26%。
+> **拿到**：$280–350 价格带有空缺，只有 3 个主要卖家。建议售价 $299–329，毛利 22–26%。
 > 风险：美国站要 FCC、欧盟要 CE。建议先测 20 台。
 
-**持仓诊断**（填 7 个参数，约 2 分钟）
+**持仓诊断**（填 7 个参数）
 
 > **你填**：网店 ¥50,000 + 成长型基金 ¥30,000 / 总资产 ¥120,000 / 年目标 ¥100,000
 >
-> **Agent 出**：网店占 41%，过度集中。30 天内调到股债 60/40。成长型基金日投从 ¥25 提到 ¥60，
-> 补齐年度目标的缺口。
+> **拿到**：网店占 41%，过度集中。30 天内调到股债 60/40。成长型基金日投从 ¥25 提到 ¥60。
 
-每个工作流都带**预期输出格式**，所以结果能直接进会议、进表格，不用再收拾一遍。
+每条都带**预期输出格式**和**真实案例**，所以它的产出是表格、是结论，
+可以直接放进文档、周报、会议材料里。
+
+## 适合谁
+
+把中国工厂的生意做到海外的人 —— 以及所有不想每次从零憋提示词的人。
+
+我们先把这套东西在自己公司跑通了，才拿出来的。
+
+<!--
+  仓库共用部分。所有壳共用这一份 —— 因为「仓库结构」「怎么部署」「怎么贡献」
+  跟对外说法无关，跟着壳变只会让维护变成三倍。
+  壳相关的那半在 shells/<id>.readme.md，由 scripts/build-readme.mjs 合成根 README.md。
+-->
 
 ## 现在有什么
 
 | 分类 | 数量 | 例子 |
 |---|---|---|
-| 🛒 电商运营 | 3 | 选品调研、竞品分析、Listing 优化 |
-| 📈 投资分析 | 3 | 持仓诊断、市场分析、资产配置 |
-| 🎬 内容创作 | 6 | 分镜脚本、批量文案、人设设计、爆款选题 |
-| 🩺 医学研究 | 2 | 临床证据分析、鉴别诊断 |
-| 🛡️ 安全审计 | 2 | 威胁建模、漏洞报告分析 |
+| 📈 投资分析 | 3 | 资产配置策略、市场分析、持仓诊断 |
+| 🩺 医学研究 | 2 | 临床研究分析、鉴别诊断辅助 |
+| 🛡️ 安全审计 | 2 | 威胁建模、漏洞扫描报告分析 |
+| 🎬 内容创作 | 6 | 分镜脚本生成、角色人设设计、内容趋势分析 等 |
+| 🛒 电商运营 | 3 | 竞品分析、电商选品调研、Listing 优化 |
 
-每个工作流都有：完整提示词（**16/16 中英双语**）· 参数表单 · **预期输出格式** · **真实案例**。
+每条工作流都有：完整提示词（**16/16 中英双语**）· 参数表单 · **预期输出格式** · **真实案例**。
 
 ## 怎么用
 
 **方式一：在网站上用（推荐）**
 
-打开站点 → 挑一个工作流 → 填参数 → 复制提示词，或点「用 AI 跑一遍」。
+打开站点 → 挑一条工作流 → 填参数 → 复制提示词，或点「用 AI 跑一遍」。
 
 **方式二：把提示词放进自己的 Agent**
 
@@ -74,7 +97,7 @@ workflows/
 
 **方式三：接进自己的系统**
 
-每个工作流都是一个 md 文件，结构固定（见下）。任何 Agent 框架都能直接解析。
+每条工作流都是一个 md 文件，结构固定（见下）。任何 Agent 框架都能直接解析。
 站点还提供三个可以直接 `fetch` 的端点（都带 CORS）：
 
 | 端点 | 拿到什么 |
@@ -93,13 +116,14 @@ curl -s https://你的域名/workflows/product-research.json | jq .prompts.zh
 
 ```
 workflows/          ← 唯一内容源。加工作流 = 加一个 md 文件，不碰任何代码
-platforms/          ← Coze / Dify / OpenClaw 的部署指南
 apps/site/          ← Astro 5 + Cloudflare Workers 站点
+  shells.mjs        ← 壳注册表：视觉 + 站点文案 + 口吻（唯一真源）
+  shells/           ← 每个壳的 README 与营销素材
   src/pages/        ← 首页 / 列表 / 详情 / 分类，构建时预渲染成静态 HTML
-  src/pages/api/run.ts   ← 唯一走 Worker 的路由：站内试跑
-scripts/build-catalog.mjs ← 把 workflows/*.md 编译成结构化数据，并校验内容
+  src/pages/api/    ← 走 Worker 的路由：站内试跑、反馈、机器可读端点
+scripts/            ← 内容编译与校验、分享卡、README 合成、换壳工具
 docs/               ← 部署 runbook、路线图
-legacy/             ← 旧的静态 launcher 页，留档用
+legacy/             ← v1 的静态 launcher 页，留档用
 ```
 
 ## 本地跑
@@ -114,11 +138,12 @@ pnpm dev      # http://localhost:4321
 | 命令 | 作用 |
 |---|---|
 | `pnpm dev` | 本地开发（自动先跑一次内容编译） |
-| `pnpm catalog` | 把 md 编译成数据 **+ 跑内容不变式检查**（有问题直接报错） |
+| `pnpm catalog` | 把 md 编译成数据 **+ 跑内容与壳的不变式检查**（有问题直接报错） |
 | `pnpm build` | 构建 Cloudflare 产物 |
 | `pnpm deploy` | 部署前检查 → 构建 → 推送 |
-| `pnpm og` | 重新生成分享卡 `og.png`（按当前主题） |
-| `pnpm theme` | 列/切换/预览主题（换壳） |
+| `pnpm shell` | 列 / 切换 / 预览壳，打印营销素材包 |
+| `pnpm readme` | 按当前壳重新合成 README.md |
+| `pnpm og` | 重新生成分享卡 `og.png`（按当前壳） |
 
 ## 部署
 
@@ -129,7 +154,7 @@ pnpm deploy
 
 完整步骤（自定义域名、Workers AI、限流、GitHub Actions 自动部署）见 **[docs/DEPLOY.md](docs/DEPLOY.md)**。
 
-## 想贡献一个工作流？
+## 想贡献一条工作流？
 
 规则只有两条：**你自己真跑过**，**有真实案例**。
 
@@ -190,32 +215,53 @@ pnpm deploy
 
 ## 换壳
 
-这个仓库从一开始踩过的坑：把品牌写死在组件里（v1 的 🦞「龙虾工具包」散在
-`Base.astro`、`site.ts`、`404`、README 和分享卡模板里），结果「换个壳」等于重做一遍。
+一个「壳」不只是配色，是**一整套对外说法**：
 
-现在外观与文案口吻全部由 `apps/site/themes.mjs` 定义，**换壳 = 改 `apps/site/theme.txt` 一行**：
+| 层 | 在哪 | 换壳时会跟着变 |
+|---|---|---|
+| 视觉 | `shells.mjs` 的 `tokens` / `fonts` | 颜色、圆角、字体、站点图标、分享卡 |
+| 站点文案 | `shells.mjs` 的 `name/tagline/hero/copy` | 标题、hero、meta description、副标题 |
+| README | `shells/<id>.readme.md` + `shells/_shared.md` | 根 README.md 由 `pnpm readme` 重新合成 |
+| 营销素材 | `shells/<id>.marketing.md` | 定位、价值主张、渠道稿、FAQ、口吻规则 |
+
+都从这里读，改一处即可：
 
 ```bash
-pnpm theme                  # 列出所有壳 + 当前是哪个
-pnpm theme set atelier      # 切过去
-pnpm theme preview          # 把每个壳的分享卡都渲一张出来对比
-pnpm og                     # 重出分享卡
+pnpm shell                  # 列出所有壳
+pnpm shell set atelier      # 切过去（改 apps/site/shell.txt）
+pnpm shell preview          # 每个壳的分享卡各渲一张对比
+pnpm shell kit              # 打印当前壳的营销素材包（可直接粘贴）
+pnpm readme                 # 重新合成 README.md
+pnpm og                     # 重新生成分享卡
 ```
 
-| id | 壳 | 说明 |
-|---|---|---|
-| `harness` | Harness 装配线 | 深色 + 冷绿 + 等宽标题。面向「能被程序调用」这件事 |
-| `atelier` | Atelier 高定 | 浅色 + 高定橙 + 宋体标题 + 直角。视觉上借鉴奢侈品的语言 |
-| `lobster` | 龙虾工具包 | v1 原貌，留档对比用 |
+现有壳：
 
-一个主题要提供：25 个颜色/圆角变量、字体栈、logo 标记、副标题、tagline 模板、hero 文案。
-缺任何一个键 `pnpm catalog` 会直接报错（不然浅色壳会静默退回深色默认值）。
+| id | 壳 | 明暗 | 一句话 |
+|---|---|---|---|
+| `qianyi` | 浅忆云（品牌壳） | 浅色 | 把提示词做成记得住的资产。 ← 当前 |
+| `harness` | Harness 装配线 | 深色 | 把提示词库做成基础设施：填参数、拿 JSON、接进你的流水线。 |
+| `atelier` | Atelier 高定 | 浅色 | 把提示词做成可交付的东西。 |
+| `lobster` | 龙虾工具包（v1 原貌） | 深色 | 拿来即用，不用每次从零憋提示词。 |
+
+缺任何一个 token 或 copy 字段，`pnpm catalog` 会直接报错 ——
+不让它静默退回默认值（不然某个壳会变成「配色换了一半、文案还是旧的」）。
+
+### 品牌壳（qianyi）
+
+`qianyi` 不是项目自己的皮肤，是**浅忆云的品牌壳**，完全按
+《浅忆云_品牌视觉手册_V1》做。**那份手册是唯一真源**
+（<https://www.workbuddy.cn/space/d/uqmKNDdieQ2CHutPSlF7TE>）——
+改这个壳之前先读手册，不要凭感觉调色；手册管不到、但 CSS 必须表态的地方才动
+`global.css` 里 `[data-shell="qianyi"]` 那一段。
+
+品牌壳的 Logo 是手册里的主符号原样取出，**不重绘、不改色、不拆件**（手册纪律）。
+
+对外投放前先看 `pnpm shell kit qianyi` 末尾那两条合规提示 ——
+商标未注册（别用 ®）、经营范围不含进出口（要签约得先变更）。
 
 > ⚠️ 视觉可以借鉴，**名字别用真实奢侈品牌**。`atelier` 这种通用词没问题，
 > 叫「爱马仕」就是商标问题，不是审美问题。
->
-> 另外 `platforms/openclaw/` 那份部署指南是绑在 v1「小龙虾」这个概念上的，
-> 换壳之后它和站点已经没关系了 —— 要留要删自己定。
 
 ## 技术栈
 
@@ -224,26 +270,30 @@ Astro 5（SSR，内容页预渲染）· Cloudflare Workers + 静态资源 · Wor
 
 ---
 
-<a id="english"></a>
-## English
-
-**AgentFlow** is a collection of 16 battle-tested AI agent workflows — e-commerce product research,
-portfolio review, content scripting, clinical literature analysis, threat modeling.
-
-Each workflow is a Markdown file with a structured prompt, a list of **fill-in parameters**,
-an expected output format, and a real-world example. The site turns those parameters into a form:
-fill it in and the prompt is assembled for you. Copy it into any agent, or run it right there.
-
-```bash
-pnpm install && pnpm dev        # local
-npx wrangler login && pnpm deploy   # Cloudflare Workers
-```
-
-See [docs/DEPLOY.md](docs/DEPLOY.md). MIT licensed.
-
----
-
 ⭐ [github.com/NeoHou-sudo/agentflow](https://github.com/NeoHou-sudo/agentflow)
 
 [![Stars](https://img.shields.io/github/stars/NeoHou-sudo/agentflow?style=social)](https://github.com/NeoHou-sudo/agentflow/stargazers)
 [![Forks](https://img.shields.io/github/forks/NeoHou-sudo/agentflow?style=social)](https://github.com/NeoHou-sudo/agentflow/network/members)
+
+## English
+
+**AgentFlow** is a collection of 16 AI agent workflows that were actually used,
+with the outputs they actually produced.
+
+Each one ships with a fill-in form, a defined **expected output format**, and a real example.
+Fill in the parameters and you get something you can hand over — not raw material you still
+have to clean up.
+
+```bash
+pnpm install && pnpm dev             # local
+npx wrangler login && pnpm deploy    # Cloudflare Workers
+```
+
+For programmatic use, every workflow is also an endpoint (CORS enabled):
+
+```bash
+curl -s https://your-domain/workflows/product-research.json   # prompt + fields + output format
+curl -s https://your-domain/workflows/product-research.raw.md # the raw markdown
+```
+
+See [docs/DEPLOY.md](docs/DEPLOY.md). MIT licensed.

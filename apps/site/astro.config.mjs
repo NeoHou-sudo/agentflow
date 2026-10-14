@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { existsSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
-import { THEMES, DEFAULT_THEME } from './themes.mjs';
+import { SHELLS, DEFAULT_SHELL } from './shells.mjs';
 
 /** 站点没改成自己域名时用的占位值。scripts/preflight.mjs 会拦住它不让部署。 */
 export const DEFAULT_SITE_URL = 'https://agentflow.workers.dev';
@@ -34,30 +34,30 @@ export function resolveSiteUrl() {
 }
 
 /**
- * 主题在这里解析，然后通过 vite.define 注入成编译期常量。
+ * 壳在这里解析，然后通过 vite.define 注入成编译期常量。
  *
- * 为什么不在 src/lib/theme.ts 里读 process.env：那个模块是走 Vite 的 SSR 转换的，
- * 里面的 process.env 读不到外层环境变量（实测 THEME=atelier 时页面仍是默认主题）。
+ * 为什么不在 src/lib/shell.ts 里读 process.env：那个模块走 Vite 的 SSR 转换，
+ * 里面的 process.env 读不到外层环境变量（实测 SHELL=atelier 时页面仍是默认壳）。
  * astro.config.mjs 跑在真正的 Node 里，所以在这里读，结果当常量发下去。
  *
- * 代价：改 theme.txt 要重启 dev server。astro.config 变了 Astro 自己会重启，
- * theme.txt 不会 —— 所以 `pnpm theme set` 会提示你重启。
+ * 代价：改 shell.txt 要重启 dev server。astro.config 变了 Astro 自己会重启，
+ * shell.txt 不会 —— 所以 `pnpm shell set` 会提示你重启。
  */
-function resolveThemeId() {
-  const fromEnv = process.env.THEME?.trim();
-  if (fromEnv && THEMES[fromEnv]) return fromEnv;
-  const file = fileURLToPath(new URL('./theme.txt', import.meta.url));
+function resolveShellId() {
+  const fromEnv = process.env.SHELL?.trim();
+  if (fromEnv && SHELLS[fromEnv]) return fromEnv;
+  const file = fileURLToPath(new URL('./shell.txt', import.meta.url));
   if (existsSync(file)) {
     const v = readFileSync(file, 'utf8').trim();
-    if (v && !THEMES[v]) {
-      throw new Error(`apps/site/theme.txt 里的主题「${v}」不存在。可选：${Object.keys(THEMES).join(' / ')}`);
+    if (v && !SHELLS[v]) {
+      throw new Error(`apps/site/shell.txt 里的壳「${v}」不存在。可选：${Object.keys(SHELLS).join(' / ')}`);
     }
     if (v) return v;
   }
-  return DEFAULT_THEME;
+  return DEFAULT_SHELL;
 }
 
-const themeId = resolveThemeId();
+const shellId = resolveShellId();
 
 export default defineConfig({
   site: resolveSiteUrl(),
@@ -78,7 +78,7 @@ export default defineConfig({
   vite: {
     build: { cssMinify: true },
     define: {
-      __AF_THEME__: JSON.stringify(themeId),
+      __AF_SHELL__: JSON.stringify(shellId),
     },
   },
 });

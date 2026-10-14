@@ -1,15 +1,16 @@
 import type { APIContext } from 'astro';
 import { stats } from './catalog';
-import { currentTheme, taglineWith } from './theme';
+import { currentShell, fillCounts } from './shell';
+import { stats as catalogStats } from './catalog';
 
-/** 当前主题。整站外观与文案口吻都由它决定，见 apps/site/themes.mjs。 */
-export const THEME = currentTheme();
+/** 当前壳。整站外观、站点文案、README、营销素材都由它决定，见 apps/site/shells.mjs。 */
+export const SHELL = currentShell();
 
 export const SITE = {
-  name: THEME.name,
-  cn: THEME.subtitle,
+  name: SHELL.name,
+  cn: SHELL.subtitle,
   // 数字从 catalog 算出来，tagline 口吻从主题来 —— 都不硬编码。
-  tagline: taglineWith(THEME, stats.total),
+  tagline: fillCounts(SHELL.tagline, { n: catalogStats.total }),
   repo: 'https://github.com/NeoHou-sudo/agentflow',
 };
 

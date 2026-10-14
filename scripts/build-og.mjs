@@ -21,7 +21,7 @@ import { promisify } from 'node:util';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { THEMES, DEFAULT_THEME, assertThemesValid } from '../apps/site/themes.mjs';
+import { SHELLS, DEFAULT_SHELL, assertShellsValid } from '../apps/site/shells.mjs';
 
 const run = promisify(execFile);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -33,7 +33,7 @@ const OUT = (() => {
 })();
 const W = 1200;
 const H = 630;
-const THEME_FILE = path.join(ROOT, 'apps/site/theme.txt');
+const SHELL_FILE = path.join(ROOT, 'apps/site/shell.txt');
 
 /** 按可能性排的候选浏览器；CHROME 环境变量优先 */
 async function findChrome() {
@@ -77,8 +77,8 @@ async function findChrome() {
 }
 
 /** 全双语时显示「中英双语」，否则显示具体的双语条数 */
-function languagePill(theme, bilingual, total) {
-  if (bilingual >= total) return theme.id === 'atelier' ? '中英双语' : '中 / EN 双语';
+function languagePill(shell, bilingual, total) {
+  if (bilingual >= total) return shell.id === 'atelier' ? '中英双语' : '中 / EN 双语';
   return `${bilingual} 条中英双语`;
 }
 
@@ -95,17 +95,17 @@ async function main() {
     process.exit(1);
   }
 
-  assertThemesValid();
+  assertShellsValid();
 
-  // 主题：跟站点用同一份来源（环境变量 → theme.txt → 默认），
+  // 壳：跟站点用同一份来源（环境变量 → shell.txt → 默认），
   // 否则会出现「站上是新壳、分享卡还是旧壳」这种最难发现的不一致。
-  const themeId =
-    (process.env.THEME && THEMES[process.env.THEME] && process.env.THEME) ||
-    (existsSync(THEME_FILE) && (await readFile(THEME_FILE, 'utf8')).trim()) ||
-    DEFAULT_THEME;
-  const theme = THEMES[themeId];
-  if (!theme) {
-    console.error(`✖ 主题「${themeId}」不存在。可选：${Object.keys(THEMES).join(' / ')}`);
+  const shellId =
+    (process.env.SHELL && SHELLS[process.env.SHELL] && process.env.SHELL) ||
+    (existsSync(SHELL_FILE) && (await readFile(SHELL_FILE, 'utf8')).trim()) ||
+    DEFAULT_SHELL;
+  const shell = SHELLS[shellId];
+  if (!shell) {
+    console.error(`✖ 壳「${shellId}」不存在。可选：${Object.keys(SHELLS).join(' / ')}`);
     process.exit(1);
   }
 
@@ -119,40 +119,40 @@ async function main() {
   const pills = [
     pill(`${total} 条工作流`),
     pill(`${filled} 个可填参数`),
-    pill(languagePill(theme, bilingual, total)),
+    pill(languagePill(shell, bilingual, total)),
     pill('MIT 开源', true),
   ].join('');
 
   // 高定壳走衬线、字距收紧；工程壳走等宽、字号略小才不挤
   const tuned =
-    theme.id === 'atelier'
+    shell.id === 'atelier'
       // 宋体加粗是「合成加粗」，笔画会糊；衬线标题用 500 才像那么回事
       ? { h1: '76px', track: '0.005em', em: 'italic', pill: '2px', weight: '500' }
-      : theme.id === 'harness'
+      : shell.id === 'harness'
         ? { h1: '66px', track: '-0.02em', em: 'normal', pill: '999px', weight: '800' }
         : { h1: '74px', track: '-1.5px', em: 'normal', pill: '999px', weight: '800' };
 
   // 分享卡上那句话单独写，不要截站点正文 —— 截出来会断在半句上（"或者在这里当场…"）
-  const heroLead = theme.hero.ogLead ?? theme.hero.lead;
+  const heroLead = shell.hero.ogLead ?? shell.hero.lead;
 
   const html = (await readFile(TEMPLATE, 'utf8'))
-    .replaceAll('__BG__', theme.tokens.bg)
-    .replaceAll('__TEXT__', theme.tokens.text)
-    .replaceAll('__DIM__', theme.tokens['text-dim'])
-    .replaceAll('__PANEL__', theme.tokens.panel)
-    .replaceAll('__LINE__', theme.tokens.line)
-    .replaceAll('__BRAND__', theme.tokens.brand)
-    .replaceAll('__BRAND2__', theme.tokens['brand-2'])
-    .replaceAll('__BRAND_RGB__', theme.tokens['brand-rgb'])
-    .replaceAll('__BRAND2_RGB__', theme.tokens['brand2-rgb'])
-    .replaceAll('__BODY_FONT__', theme.fonts?.body ?? 'sans-serif')
-    .replaceAll('__DISPLAY_FONT__', theme.fonts?.display ?? 'sans-serif')
-    .replaceAll('__MARK__', theme.mark)
-    .replaceAll('__NAME__', theme.name)
-    .replaceAll('__SUBTITLE__', theme.subtitle)
-    .replaceAll('__H_LINE1__', theme.hero.line1)
-    .replaceAll('__H_EM__', theme.hero.em)
-    .replaceAll('__H_LINE2__', theme.hero.line2Post)
+    .replaceAll('__BG__', shell.tokens.bg)
+    .replaceAll('__TEXT__', shell.tokens.text)
+    .replaceAll('__DIM__', shell.tokens['text-dim'])
+    .replaceAll('__PANEL__', shell.tokens.panel)
+    .replaceAll('__LINE__', shell.tokens.line)
+    .replaceAll('__BRAND__', shell.tokens.brand)
+    .replaceAll('__BRAND2__', shell.tokens['brand-2'])
+    .replaceAll('__BRAND_RGB__', shell.tokens['brand-rgb'])
+    .replaceAll('__BRAND2_RGB__', shell.tokens['brand2-rgb'])
+    .replaceAll('__BODY_FONT__', shell.fonts?.body ?? 'sans-serif')
+    .replaceAll('__DISPLAY_FONT__', shell.fonts?.display ?? 'sans-serif')
+    .replaceAll('__MARK__', shell.mark)
+    .replaceAll('__NAME__', shell.name)
+    .replaceAll('__SUBTITLE__', shell.subtitle)
+    .replaceAll('__H_LINE1__', shell.hero.line1)
+    .replaceAll('__H_EM__', shell.hero.em)
+    .replaceAll('__H_LINE2__', shell.hero.line2Post)
     .replaceAll('__LEAD__', heroLead)
     .replaceAll('__PILLS__', pills)
     .replaceAll('__URL__', 'github.com/NeoHou-sudo/agentflow')
@@ -222,7 +222,7 @@ async function main() {
 
   await stat(OUT);
   console.log(`✔ og.png 已生成：${size.width}×${size.height}，${(size.bytes / 1024).toFixed(1)} KB`);
-  console.log(`  主题：${theme.label}（${theme.id}，${theme.scheme}）`);
+  console.log(`  壳：${shell.label}（${shell.id}，${shell.scheme}）`);
   console.log(
     `  ${path.relative(ROOT, OUT)}  （数字来自 catalog：${total} 条工作流 / ${filled} 个可填参数 / ${bilingual} 条双语）`,
   );

@@ -28,6 +28,10 @@ jobs:
       - name: Build catalog from workflows/*.md
         run: pnpm catalog
 
+      # README 是壳的编译产物：手改 README 或改了壳没重跑 readme，这里直接红
+      - name: Check README matches current shell
+        run: pnpm readme --check
+
       - name: Build site
         run: pnpm -C apps/site build
 

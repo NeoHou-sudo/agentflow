@@ -1,8 +1,8 @@
 {
   "name": "agentflow",
-  "version": "2.0.0",
+  "version": "2.3.0",
   "private": true,
-  "description": "18+ AI Agent 工作流 · 可搜索 / 可填空 / 可站内试跑",
+  "description": "真跑过的 AI Agent 工作流 · 可填空 / 可复制 / 可被程序调用",
   "type": "module",
   "packageManager": "pnpm@11.25.0",
   "engines": {
@@ -10,7 +10,8 @@
   },
   "scripts": {
     "catalog": "node scripts/build-catalog.mjs && node scripts/check-catalog.mjs",
-    "theme": "node scripts/theme.mjs",
+    "shell": "node scripts/shell.mjs",
+    "readme": "node scripts/build-readme.mjs",
     "og": "node scripts/build-og.mjs",
     "dev": "pnpm catalog && pnpm -C apps/site dev",
     "build": "pnpm catalog && pnpm -C apps/site build",
